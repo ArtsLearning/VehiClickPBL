@@ -1,4 +1,6 @@
 @extends('layouts.app')
+
+@section('content')
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,12 +10,10 @@
 
     <div class="relative w-screen h-screen ">
         <div id="moving-bg" 
-             class="absolute top-[-5%] left-[-5%] w-[110%] h-[80%] bg-cover bg-center transition-transform duration-200 ease-out"
+             class="absolute top-[-5%] left-[-5%] w-[110%] h-[65%] bg-cover bg-center transition-transform duration-200 ease-out"
              style="background-image: url('{{ asset('images/background.png') }}');">
         </div>
 
-        <!-- Navbar -->
-        @include('components.navbar')
    <!-- Hero Section -->
    <section class="relative h-96">
         <!-- Background Image -->
@@ -93,5 +93,5 @@
     @include('components.footer')
     </div>
 </body>
-
+@endsection
 

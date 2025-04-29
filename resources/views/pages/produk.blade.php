@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('content')
 <body class="h-screen m-0 p-0">
 
     <div class="relative w-screen h-screen">
@@ -7,9 +8,6 @@
              class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center transition-transform duration-200 ease-out"
              style="background-image: url('{{ asset('images/background.png') }}');">
         </div>
-
-        <!-- Navbar -->
-        @include('components.navbar')
 
         <main class="relative max-w-6xl mx-auto pt-36 px-4 sm:px-6 md:px-10 pb-14">
             <!-- Title -->
@@ -92,4 +90,4 @@
 
     </div> 
 </body>
-
+@endsection
