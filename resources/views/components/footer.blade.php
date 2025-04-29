@@ -5,11 +5,11 @@
                 <!-- Column 1 -->
                 <div>
                     <h4 class="text-lg font-bold mb-4">Tempat Kami</h4>
-                    <p class="text-gray-400">Gedung Soekarno-Hatta 1,<br>
-                    Jl. Dr. Soetomo No.6-8,<br>
-                    Surabaya, Jawa Timur, Indonesia<br>
-                    60264</p>
-                    <p class="mt-4 text-gray-400">support@rentlclick.id</p>
+                    <p class="text-gray-400">Politeknik Negeri Batam,<br>
+                    Jl. Ahmad Yani, Tlk. Tering,<br>
+                    Kec. Batam Kota, Kota Batam,<br>
+                    Kepulauan Riau, 29461</p>
+                    <p class="mt-4 text-gray-400">support@VehiClick.id</p>
                 </div>
                 
                 <!-- Column 2 -->
