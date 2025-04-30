@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="h-screen  m-0 p-0">
-
     <div class="relative w-screen h-screen ">
         <div id="moving-bg" 
              class="absolute top-[-5%] left-[-5%] w-[110%] h-[65%] bg-cover bg-center transition-transform duration-200 ease-out"
@@ -23,31 +16,17 @@
         
         <!-- Hero Content -->
         <div class="relative h-full flex flex-col justify-center px-8 text-white">
-            <h3 class="text-orange-500 text-2xl font-bold">RentlClick</h3>
+            <h3 class="text-orange-500 text-2xl font-bold">VehiClick</h3>
             <h1 class="text-4xl font-bold mt-2">Solusi Praktis untuk Perjalanan <br/>Bebas Ribet: Klik, Sewa, & <br/><span class="text-orange-500">Berangkat!</span></h1>
             <p class="mt-4 max-w-xl">Nikmati kemudahan menyewa kendaraan untuk perjalanan Anda. Kami menyediakan layanan rental mobil dan motor dengan proses cepat dan mudah.</p>
-            <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded w-40 mt-6">Jelajahi</button>
+            <a href="/produk" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded w-40 mt-6 inline-block text-center">
+                Jelajahi
+            </a>
         </div>
     </section>
 
     <!-- Featured Section -->
-    <section class="py-12 px-8 bg-white">
-        <h2 class="text-center text-3xl font-bold mb-12">Pilih Platform Rental <br/>Yang Anda Cari</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Rental Mobil -->
-            <div class="bg-gray-200 p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Rental Mobil</h3>
-                <p class="text-gray-700 mb-6">Nikmati layanan sewa mobil terbaik yang tersedia untuk berbagai kebutuhan perjalanan dengan proses mudah. Mulai pilihan driver terlengkap.</p>
-            </div>
-            
-            <!-- Rental Motor -->
-            <div class="bg-gray-200 p-6 rounded-lg">
-                <h3 class="text-xl font-bold mb-4">Rental Motor</h3>
-                <p class="text-gray-700 mb-6">Lebih hemat dan juga ekonomis, sewa motor untuk kegiatan sehari-hari dengan fasilitas terbaik dalam 1000+ motor.</p>
-            </div>
-        </div>
-    </section>
+    @include('components.card_index')
 
     <!-- Benefits Section -->
     <section class="py-12 px-8 bg-gray-100">
@@ -92,6 +71,5 @@
     <!-- Footer -->
     @include('components.footer')
     </div>
-</body>
 @endsection
 

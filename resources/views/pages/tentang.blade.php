@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div>
-                            <p class="font-semibold">0812-7899-9987</p>
+                            <p class="font-semibold">0812-6734-3080</p>
                             <p class="text-sm text-gray-600">Senin - Jum'at : 09.00 - 17.00</p>
                             <p class="text-sm text-gray-600">Sabtu - Minggu : 10.00 - 16.00</p>
                         </div>
@@ -61,7 +61,7 @@
         </section>
     </main>
 
-    <!-- Footer (included as component) -->
+    <!-- Footer -->
     @include('components.footer')
 </body>
 @endsection

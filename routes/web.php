@@ -36,6 +36,3 @@ Route::get('riwayat_pemesanan', function () {
 Route::get('tentang', function () {
     return view('pages.tentang');
 });
-Route::get('detail_penyewaan', function () {
-    return view('pages.detail_penyewaan');
-});

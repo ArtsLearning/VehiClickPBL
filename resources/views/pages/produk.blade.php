@@ -36,52 +36,67 @@
                 </div>
             </form>
 
-            <!-- Product Card -->
+            <!-- Product Card 1 -->
             <div class="max-w-7xl mx-auto mt-6 space-y-4 px-4 sm:px-6">
-                <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02]">
-                    <div class="flex items-center gap-3">
-                        <div aria-label="Placeholder for Toyota Calya 2023 vehicle image" class="w-[120px] h-[90px] bg-gray-300 flex items-center justify-center text-xs text-gray-600 select-none">Gambar Kendaraan</div>
-                        <div>
-                            <div class="text-[12px] font-bold mb-1">Toyota Calya 2023</div>
-                            <div class="text-[11px]">Deskripsi<br />Toyota Calya 2023</div>
+                <a href="/detail_kendaraan" class="block">
+                    <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center gap-3">
+                            <img src="{{ asset('images/calya2023.png') }}" alt="Toyota Calya 2023" class="w-[120px] h-[90px] object-cover rounded bg-gray-100" />
+                            <div>
+                                <div class="text-[12px] font-bold mb-1">Toyota Calya 2023</div>
+                                <div class="text-[11px]">Deskripsi<br />Toyota Calya 2023</div>
+                            </div>
+                        </div>
+                        <div class="text-right min-w-[140px]">
+                            <div class="text-[10px] font-semibold">Harga 1 Hari</div>
+                            <div class="text-[12px] font-bold mb-1">Rp. 420.000,00</div>
+                            <span class="bg-orange-600 text-[10px] font-semibold text-white px-2 py-[3px] rounded hover:bg-orange-700">
+                                Sewa Sekarang
+                            </span>
                         </div>
                     </div>
-                    <div class="text-right min-w-[140px]">
-                        <div class="text-[10px] font-semibold">Harga 1 Hari</div>
-                        <div class="text-[12px] font-bold mb-1">Rp. 420.000,00</div>
-                        <button class="bg-orange-600 text-[10px] font-semibold text-white px-2 py-[3px] rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500">Sewa Sekarang</button>
-                    </div>
-                </div>
+                </a>
 
-                <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02]">
-                    <div class="flex items-center gap-3">
-                        <div aria-label="Placeholder for Honda Beat 2018 vehicle image" class="w-[120px] h-[90px] bg-gray-300 flex items-center justify-center text-xs text-gray-600 select-none">Gambar Kendaraan</div>
-                        <div>
-                            <div class="text-[12px] font-bold mb-1">Honda Beat 2018</div>
-                            <div class="text-[11px]">Deskripsi<br />Honda Beat 2018</div>
+                <!-- Product Card 2 -->
+                <a href="/detail_kendaraan" class="block">
+                    <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center gap-3">
+                            <img src="{{ asset('images/beat2018.png') }}" alt="Honda Beat 2018" class="w-[120px] h-[90px] object-cover rounded bg-gray-100" />
+                            <div>
+                                <div class="text-[12px] font-bold mb-1">Honda Beat 2018</div>
+                                <div class="text-[11px]">Deskripsi<br />Honda Beat 2018</div>
+                            </div>
+                        </div>
+                        <div class="text-right min-w-[140px]">
+                            <div class="text-[10px] font-semibold">Harga 1 Hari</div>
+                            <div class="text-[12px] font-bold mb-1">Rp. 120.000,00</div>
+                            <span class="bg-orange-600 text-[10px] font-semibold text-white px-2 py-[3px] rounded hover:bg-orange-700">
+                                Sewa Sekarang
+                            </span>
                         </div>
                     </div>
-                    <div class="text-right min-w-[140px]">
-                        <div class="text-[10px] font-semibold">Harga 1 Hari</div>
-                        <div class="text-[12px] font-bold mb-1">Rp. 120.000,00</div>
-                        <button class="bg-orange-600 text-[10px] font-semibold text-white px-2 py-[3px] rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500">Sewa Sekarang</button>
-                    </div>
-                </div>
+                </a>
 
-                <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02]">
-                    <div class="flex items-center gap-3">
-                        <div aria-label="Placeholder for All New Avanza G 2023 vehicle image" class="w-[120px] h-[90px] bg-gray-300 flex items-center justify-center text-xs text-gray-600 select-none">Gambar Kendaraan</div>
-                        <div>
-                            <div class="text-[12px] font-bold mb-1">All New Avanza G 2023</div>
-                            <div class="text-[11px]">Deskripsi<br />All New Avanza G 2023</div>
+                <!-- Product Card 3 -->
+                <a href="/detail_kendaraan" class="block">
+                    <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center gap-3">
+                            <img src="{{ asset('images/avanza2023.png') }}" alt="All New Avanza G 2023" class="w-[120px] h-[90px] object-cover rounded bg-gray-100" />
+                            <div>
+                                <div class="text-[12px] font-bold mb-1">All New Avanza G 2023</div>
+                                <div class="text-[11px]">Deskripsi<br />All New Avanza G 2023</div>
+                            </div>
+                        </div>
+                        <div class="text-right min-w-[140px]">
+                            <div class="text-[10px] font-semibold">Harga 1 Hari</div>
+                            <div class="text-[12px] font-bold mb-1">Rp. 450.000,00</div>
+                            <span class="bg-orange-600 text-[10px] font-semibold text-white px-2 py-[3px] rounded hover:bg-orange-700">
+                                Sewa Sekarang
+                            </span>
                         </div>
                     </div>
-                    <div class="text-right min-w-[140px]">
-                        <div class="text-[10px] font-semibold">Harga 1 Hari</div>
-                        <div class="text-[12px] font-bold mb-1">Rp. 450.000,00</div>
-                        <button class="bg-orange-600 text-[10px] font-semibold text-white px-2 py-[3px] rounded hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500">Sewa Sekarang</button>
-                    </div>
-                </div>
+                </a>
+
             </div> 
         </main>
 

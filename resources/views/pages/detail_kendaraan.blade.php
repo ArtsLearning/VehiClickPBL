@@ -19,7 +19,7 @@
         <!-- Detail Card -->
         <div class="bg-gray-100 bg-opacity-90 rounded-lg p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-10 mb-10">
           <div class="w-40 h-40 bg-gray-300 flex items-center justify-center text-gray-500 text-sm font-semibold rounded">
-            Gambar Kendaraan
+          <img src="{{ asset('images/calya2023.png') }}" alt="Gambar Kendaraan" class="object-cover w-full h-full">
           </div>
 
           <div class="flex-1 text-gray-900 text-sm sm:text-base">
@@ -74,17 +74,17 @@
           <div class="divide-y divide-gray-300 border border-gray-300 rounded-lg overflow-auto max-h-[300px]">
             @foreach (range(1, 3) as $i)
               <article class="flex items-start space-x-4 p-4">
-                <img src="https://storage.googleapis.com/a1aa/image/3676dbcf-25b3-4775-533e-f7f01c803bf2.jpg" alt="User avatar" class="w-10 h-10 rounded-full flex-shrink-0" />
+                <img src="{{ asset('images/artur.png') }}" alt="User" class="w-10 h-10 rounded-full flex-shrink-0" />
                 <div class="flex-1 text-xs sm:text-sm text-gray-700">
-                  <p class="font-semibold mb-0.5">namaakun{{ $i }}</p>
-                  <p class="text-gray-500 mb-0.5">yyyy-mm-dd hh:mm</p>
+                  <p class="font-semibold mb-0.5">Muhammad Arthur</p>
+                  <p class="text-gray-500 mb-0.5">2025-04-29 19:30</p>
                   <p class="text-orange-500 mb-1">
                     @for ($s = 0; $s < 5; $s++)
                       <i class="fas fa-star"></i>
                     @endfor
                   </p>
                   @if ($i === 1)
-                    <p>ini adalah contoh ulasan dengan komentar.</p>
+                    <p>Mobilnya Bagus Bagus Anjir.</p>
                   @endif
                 </div>
               </article>
@@ -103,51 +103,9 @@
         </section>
       </main>
       <!-- Modal Popup -->
-      <div id="popupModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
-        <div class="relative bg-white rounded-lg w-[90%] max-w-4xl p-6 md:p-10 shadow-lg">
-          <!-- Tombol Close -->
-          <button onclick="document.getElementById('popupModal').classList.add('hidden')" class="absolute top-4 right-5 text-2xl text-gray-700 hover:text-black">
-            &times;
-          </button>
-          <!-- Judul -->
-          <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Detail Pesanan</h2>
-          <!-- Konten Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Gambar & Info -->
-            <div class="flex flex-col items-center text-center">
-              <div class="w-60 h-60 bg-gray-200 flex items-center justify-center text-gray-500 rounded">
-                Gambar Kendaraan
-              </div>
-              <h3 class="text-lg font-semibold mt-4">Toyota Calya 2023</h3>
-              <p class="text-sm text-gray-600">Rp. 420.000,00 / hari</p>
-            </div>
-            <!-- Formulir Pemesanan -->
-            <form class="space-y-4">
-              <div>
-                <label class="block font-semibold mb-1">Tanggal Mulai Sewa</label>
-                <input type="date" class="w-full border rounded px-3 py-2" />
-              </div>
-              <div>
-                <label class="block font-semibold mb-1">Tanggal Selesai Sewa</label>
-                <input type="date" class="w-full border rounded px-3 py-2" />
-              </div>
-              <div>
-                <label class="block font-semibold mb-1">Metode Pembayaran</label>
-                <select class="w-full border rounded px-3 py-2">
-                  <option selected disabled>== Pilih Metode Pembayaran ==</option>
-                  <option>Cash on Delivery (COD)</option>
-                  <option>QRIS</option>
-                </select>
-              </div>
-              <div class="text-right pt-4">
-                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-4 py-2 rounded">
-                  Pesan Sekarang
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      @include('components.pop-up_pesan')
+
+
     </div>
 </body>
 @endsection
