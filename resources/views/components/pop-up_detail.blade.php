@@ -46,7 +46,7 @@
 
       <!-- QR Code -->
       <div class="flex-shrink-0">
-        <img src="{{ asset('images/artur.png') }}" alt="QR Code" class="w-32 h-32" />
+        <img src="{{ asset('images/QR.png') }}" alt="QR Code" class="w-32 h-32" />
         <p class="text-xs text-gray-500 mt-2 hidden md:block text-center">Scan untuk membayar</p>
       </div>
     </div>

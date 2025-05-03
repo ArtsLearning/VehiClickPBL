@@ -84,7 +84,7 @@
                     @endfor
                   </p>
                   @if ($i === 1)
-                    <p>Mobilnya Bagus Bagus Anjir.</p>
+                    <p>Kendaraan yang saya pinjam pada aplikasi ini sangat bersih.</p>
                   @endif
                 </div>
               </article>
