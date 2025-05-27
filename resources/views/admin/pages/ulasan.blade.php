@@ -12,7 +12,8 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Lengkap</th>
-                    <th>Ulasan</th>               
+                    <th>Ulasan</th>  
+                    <th>Opsi</th>             
                 </tr>
             </thead>
             <tbody>

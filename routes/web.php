@@ -2,6 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UbahSandiController;
+use App\Http\Controllers\DaftarController;
+use App\Http\Controllers\DetailKendaraanController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\TentangController;
+
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KategoriController;
@@ -11,40 +22,21 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\UlasanController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('change_password', function () {
-    return view('pages.change_password');
-});
-Route::get('daftar', function () {
-    return view('pages.daftar');
-});
-Route::get('detail_kendaraan', function () {
-    return view('pages.detail_kendaraan');
-});
-Route::get('index', function () {
-    return view('pages.index');
-});
-Route::get('login', function () {
-    return view('pages.login');
-});
-Route::get('pembayaran', function () {
-    return view('pages.pembayaran');
-});
-Route::get('produk', function () {
-    return view('pages.produk');
-});
-Route::get('profil', function () {
-    return view('pages.profil');
-});
-Route::get('riwayat_pemesanan', function () {
-    return view('pages.riwayat_pemesanan');
-});
-Route::get('tentang', function () {
-    return view('pages.tentang');
-});
+Route::get('/change_password', [UbahSandiController::class,'show']);
+Route::get('/daftar', [DaftarController::class,'show']);
+Route::get('/detail_kendaraan', [DetailKendaraanController::class,'show']);
+Route::get('/index', [IndexController::class,'show']);
+Route::get('/login', [LoginController::class,'show']);
+Route::get('/pembayaran', [PembayaranController::class,'show']);
+Route::get('/produk', [BarangController::class,'show']);
+Route::get('/profil', [ProfilController::class,'show']);
+Route::get('/riwayat', [RiwayatController::class,'show']);
+Route::get('/tentang', [TentangController::class,'show']);
 
 Route::get('/admin/index', [AdminController::class,'index']);
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
