@@ -1,15 +1,13 @@
 @extends('layouts.app')
 
-<body class="h-screen overflow-hidden m-0 p-0">
+@section('title', 'Daftar')
+@section('content')
 
   <div class="relative w-screen h-screen overflow-hidden">
     <div id="moving-bg" 
          class="absolute top-[-5%] left-[-5%] w-[110%] h-[110%] bg-cover bg-center transition-transform duration-200 ease-out" 
          style="background-image: url('{{ asset('images/background.png') }}');">
     </div>
-
-    <!-- Navbar -->
-    @include('components.navbar')
 
     <!-- Main Content -->
     <div class="relative z-10 flex items-center justify-center h-[calc(100vh-58px)]">
@@ -76,4 +74,6 @@
       movingBg.style.transform = 'translate(0, 0)';
     });
   </script>
+
+@endsection
 
