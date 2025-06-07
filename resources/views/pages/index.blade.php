@@ -151,10 +151,10 @@
         <div class="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
             <div class="space-y-6 max-w-4xl mx-auto">
                 <h1 class="text-6xl md:text-8xl font-light text-white mb-4 float-animation">
-                    <span class="text-gradient">Premium</span> Vehicle
+                    <span class="text-gradient">Vehi</span>Click
                 </h1>
                 <h2 class="text-3xl md:text-5xl font-light text-orange-400 typing-animation">
-                    VehiClick Platform
+                    VehiClick Vehicle Rental App
                 </h2>
                 <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto slide-in-left">
                     Experience luxury and convenience with our premium fleet of vehicles
