@@ -355,6 +355,10 @@
             <div class="absolute bottom-20 left-32 w-12 h-12 border-4 border-black rounded-full animate-bounce"></div>
         </div>
     </section>
+    <footer>
+                <!-- Footer -->
+                @include('components.footer')
+            </footer>
 
     
 </div>
