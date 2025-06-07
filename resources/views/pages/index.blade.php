@@ -356,7 +356,7 @@
         </div>
     </section>
 
-    @include('components.footer')
+    
 </div>
 
 <script>
