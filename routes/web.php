@@ -26,7 +26,7 @@ Route::get('/detail_kendaraan', [DetailKendaraanController::class,'show']);
 Route::get('/pembayaran', [PembayaranController::class,'show']);
 Route::get('/produk', [BarangController::class,'show']);
 Route::get('/profil', [ProfilController::class,'show']);
-Route::get('/riwayat', [RiwayatController::class,'show']);
+Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
 Route::get('/tentang', [TentangController::class,'show']);
 
 Route::get('/dashboard', function () {
