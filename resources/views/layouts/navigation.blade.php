@@ -44,7 +44,7 @@
 
             <!-- Desktop Navigation Links -->
             <div class="hidden md:flex items-center space-x-1">
-                <a href="#hero" 
+                <a href="" 
                    class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10">
                     Home
                 </a>
@@ -83,7 +83,7 @@
                                 </div>
                             </a>
                             
-                            <a href="#bike-rental" class="dropdown-item group flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
+                            <a href="dashboard" class="dropdown-item group flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
                                 <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
                                     <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -95,17 +95,7 @@
                                 </div>
                             </a>
                             
-                            <a href="#delivery" class="dropdown-item group flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
-                                <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
-                                    <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="font-medium text-orange-400">Delivery Service</div>
-                                    <div class="text-xs text-orange-300 group-hover:text-orange-200">Fast & reliable delivery</div>
-                                </div>
-                            </a>
+                            
                         </div>
                     </div>
                 </div>

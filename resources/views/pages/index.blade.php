@@ -214,7 +214,7 @@
                 <!-- Motorcycle Rental Card -->
                 <div class="card-hover bg-black/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800 hover:border-orange-400 glow-orange">
                     <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                        <img src="https://imgs.search.brave.com/YyVn34AEErITANPrD6K6Hhsk8rnOOKNiJ9D84C6tZ1s/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQ1/NzA5MzAzMS9waG90/by9tb3RvcmN5Y2xl/LXBhcmtlZC1vbi10/aGUtcm9hZC5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9VTFz/cURyTGRjNV9zUDI3/X2ZXMXlyZTlnNnF4/akJXc0pXOHJaMXJ0/VHVDaz0" 
                              alt="Motorcycle Rental" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                         <div class="absolute bottom-4 left-4">
@@ -230,21 +230,21 @@
                     </div>
                 </div>
 
-                <!-- Truck Rental Card -->
+                <!-- bicycle Rental Card -->
                 <div class="card-hover bg-black/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-800 hover:border-orange-400 glow-orange">
                     <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                        <img src="https://imgs.search.brave.com/IrFjD_xJBQxPpr4Fpzhe5jtBpBGxA15QRZZlUcYYyrI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAxLzY4Lzk2Lzg5/LzM2MF9GXzE2ODk2/ODk1MV8xc0JoRFBQ/RENkVGdlY1NXQ2RX/QkV6bGFreHozTkhO/Ri5qcGc" 
                              alt="Truck Rental" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                         <div class="absolute bottom-4 left-4">
-                            <i class="fas fa-truck text-orange-400 text-3xl"></i>
+                            <i class="fas fa-bicycle text-orange-400 text-3xl"></i>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-4 text-gradient">Truck Rental</h3>
-                        <p class="text-gray-300 mb-6">Heavy-duty trucks for your business needs. Reliable and efficient transportation.</p>
+                        <h3 class="text-2xl font-bold mb-4 text-gradient">Bicycle Rental</h3>
+                        <p class="text-gray-300 mb-6">High-performance bikes for your daily rides. Reliable and eco-friendly transportation.</p>
                         <button class="w-full gradient-orange hover:glow-orange-strong py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                            Explore Trucks
+                            Explore Bicycle
                         </button>
                     </div>
                 </div>

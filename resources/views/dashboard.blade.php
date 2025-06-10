@@ -174,21 +174,21 @@
     </style>
 
     <div class="min-h-screen bg-gray-900 text-white">
-<!-- Setelah navbar -->
-<div class="pt-24 px-6"> <!-- ganti p-6 menjadi pt-24 px-6 -->
-    <div class="welcome-card text-white relative z-10">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-4xl font-bold mb-2">Welcome Back!</h1>
-                <p class="text-xl opacity-90">Ready to explore our vehicle collection?</p>
+            <!-- Setelah navbar -->
+            <div class="pt-24 px-6"> <!-- ganti p-6 menjadi pt-24 px-6 -->
+                <div class="welcome-card text-white relative z-10">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-4xl font-bold mb-2">Welcome Back!</h1>
+                            <p class="text-xl opacity-90">Ready to explore our vehicle collection?</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold">{{ date('d') }}</div>
+                            <div class="text-lg">{{ date('M Y') }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="text-right">
-                <div class="text-3xl font-bold">{{ date('d') }}</div>
-                <div class="text-lg">{{ date('M Y') }}</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
             <!-- Quick Stats Overview -->
@@ -321,11 +321,11 @@
                         <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="car">
                             <i class="fas fa-car mr-2"></i>Cars
                         </button>
-                        <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="motorcycle">
+                        <button  class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="motorcycle">
                             <i class="fas fa-motorcycle mr-2"></i>Motorcycles
                         </button>
-                        <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="truck">
-                            <i class="fas fa-truck mr-2"></i>Trucks
+                        <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="bicycle">
+                            <i class="fas fa-bicycle mr-2"></i>Bicycles
                         </button>
                     </div>
                 </div>
@@ -334,7 +334,7 @@
             <!-- Available Vehicles Section -->
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold">
-                    Available <span class="text-gradient">Vehicles</span>
+                    Ketersediaan <span class="text-gradient">kendaraan</span>
                 </h2>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-400">Found 58 vehicles</span>
@@ -401,19 +401,19 @@
                     </div>
                 </div>
 
-                <!-- Truck 1 -->
-                <div class="vehicle-card card-hover rounded-xl overflow-hidden relative" data-category="truck">
+                <!-- Bicycle 1 -->
+                <div class="vehicle-card card-hover rounded-xl overflow-hidden relative" data-category="bicycle">
                     <div class="availability-badge available">Available</div>
                     <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             alt="Ford F-150" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Mountain Bike" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Ford F-150 2023</h3>
-                        <p class="text-gray-400 mb-4">License: B 9012 GHI</p>
+                        <h3 class="text-xl font-bold mb-2">Trek Mountain Bike</h3>
+                        <p class="text-gray-400 mb-4">ID: BK-001</p>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-2xl font-bold text-gradient">$120/day</span>
+                            <span class="text-2xl font-bold text-gradient">$15/day</span>
                             <div class="flex items-center text-yellow-400">
                                 <i class="fas fa-star"></i>
                                 <span class="ml-1">4.7</span>
@@ -517,22 +517,22 @@
                     </div>
                 </div>
 
-                <!-- Truck 2 -->
-                <div class="vehicle-card card-hover rounded-xl overflow-hidden relative" data-category="truck">
+                <!-- Bicycle 2 -->
+                <div class="vehicle-card card-hover rounded-xl overflow-hidden relative" data-category="bicycle">
                     <div class="availability-badge available">Available</div>
                     <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             alt="Chevrolet Silverado" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Road Bike" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Chevrolet Silverado</h3>
-                        <p class="text-gray-400 mb-4">License: B 1357 STU</p>
+                        <h3 class="text-xl font-bold mb-2">Specialized Road Bike</h3>
+                        <p class="text-gray-400 mb-4">ID: BK-002</p>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-2xl font-bold text-gradient">$110/day</span>
+                            <span class="text-2xl font-bold text-gradient">$20/day</span>
                             <div class="flex items-center text-yellow-400">
                                 <i class="fas fa-star"></i>
-                                <span class="ml-1">4.5</span>
+                                <span class="ml-1">4.8</span>
                             </div>
                         </div>
                         <div class="flex gap-2">
@@ -575,6 +575,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <!-- Pagination -->
             <div class="flex justify-center mt-12 pb-8">
