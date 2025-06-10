@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
-use App\Models\Customer;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,7 +19,7 @@ use Filament\Tables\Columns\ImageColumn;
 
 class CustomerResource extends Resource
 {
-    protected static ?string $model = Customer::class;
+    protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
@@ -69,12 +69,11 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('username')
+                TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('nama_customer')
-                    ->label('Nama'),
-                TextColumn::make('email_customer')
+                TextColumn::make('email')
                     ->label('Email'),
+                TextColumn::make('password'),
                 TextColumn::make('telepon')
                     ->label('Nomor Telepon'),
                 TextColumn::make('alamat'),
