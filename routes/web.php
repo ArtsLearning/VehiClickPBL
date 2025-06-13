@@ -12,6 +12,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
+use App\Http\Controllers\Pesan\ContactController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -20,14 +21,25 @@ use App\Http\Controllers\TentangController;
 Route::get('/', [IndexController::class,'show']);
 
 Route::get('/change_password', [UbahSandiController::class,'show']);
+
 Route::get('/daftar', [DaftarController::class,'show']);
+
 Route::get('/detail_kendaraan', [DetailKendaraanController::class,'show']);
+
 // Route::get('/login', [LoginController::class,'show']);
+
 Route::get('/pembayaran', [PembayaranController::class,'show']);
+
 Route::get('/produk', [BarangController::class,'show']);
+
 Route::get('/profil', [ProfilController::class,'show']);
+
 Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
+
 Route::get('/tentang', [TentangController::class,'show']);
+
+// Pesan didalam footer
+Route::post('/kontak', [ContactController::class, 'store'])->name('pesan.simpan');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

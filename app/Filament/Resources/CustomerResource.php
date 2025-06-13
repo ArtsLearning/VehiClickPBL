@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
+// use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 // use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
@@ -23,7 +23,7 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationLabel = 'Users';
+    protected static ?string $navigationLabel = 'User';
 
     protected static ?string $slug = 'users';
 
