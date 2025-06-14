@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
+use App\Http\Controllers\RiwayatTransaksiController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Riwayat Transaksi
+    Route::get('/riwayat-transaksi', [RiwayatTransaksiController::class, 'index'])->name('riwayat.index');
 });
 
 require __DIR__.'/auth.php';
