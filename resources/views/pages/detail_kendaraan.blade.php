@@ -158,16 +158,16 @@
             <div class="card-hover bg-black/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 mb-16 border border-gray-800 hover:border-orange-400 glow-orange slide-in-right">
                 <!-- Vehicle Image -->
                 <div class="w-80 h-80 bg-gray-800 rounded-2xl overflow-hidden flex-shrink-0 float-animation glow-orange">
-                    <img src="{{ asset('images/calya2023.png') }}" alt="Toyota Calya 2023" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
+                    <img src="{{ asset('images/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
                 </div>
 
                 <!-- Vehicle Info -->
                 <div class="flex-1 text-white">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">Toyota Calya 2023</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">{{ $barangs->nama_barang }}</h2>
                     
                     <!-- Rating -->
                     <div class="flex items-center space-x-2 mb-4">
-                        <span class="text-xl font-semibold">4,9/5</span>
+                        <span class="text-xl font-semibold">{{ $barangs->rating }}/5</span>
                         <div class="star-rating text-xl">
                             @for ($i = 0; $i < 5; $i++)
                                 <i class="fas fa-star"></i>
@@ -177,16 +177,14 @@
                     
                     <!-- Price & Availability -->
                     <div class="space-y-2 mb-6">
-                        <p class="text-2xl font-bold text-gradient">Rp. 420.000,00 / hari</p>
-                        <p class="text-lg text-gray-300">Tersedia: <span class="text-orange-400 font-semibold">5 Unit</span></p>
+                        <p class="text-2xl font-bold text-gradient">Rp. {{ number_format($barangs->harga_barang, 0, ',', '.') }},00 / Hari</p>
+                        <p class="text-lg text-gray-300">Tersedia: <span class="text-orange-400 font-semibold">{{ $barangs->stok }} Unit</span></p>
                     </div>
 
                     <!-- Description -->
                     <div class="mb-8">
                         <h3 class="text-xl font-semibold mb-3 text-gradient">Deskripsi Produk</h3>
-                        <p class="text-gray-300 text-lg leading-relaxed">
-                            Toyota Calya 2023 adalah kendaraan keluarga yang nyaman dan ekonomis. Dilengkapi dengan fitur-fitur modern dan sistem keamanan terdepan untuk perjalanan yang aman dan menyenangkan.
-                        </p>
+                        <p class="text-gray-300 text-lg leading-relaxed">{{ $barangs->deskripsi }}</p>
                     </div>
 
                     <!-- Action Button -->
