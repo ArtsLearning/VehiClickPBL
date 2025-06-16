@@ -13,7 +13,6 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\RiwayatPemesananController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -34,7 +33,7 @@ Route::get('/pembayaran', [PembayaranController::class,'show']);
 Route::get('/produk', [BarangController::class,'show']);
 
 Route::get('/profil', [ProfilController::class,'show']);
-Route::get('/riwayat', [RiwayatPemesananController::class, 'index'])->name('riwayat');
+Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
 Route::get('/tentang', [TentangController::class,'show']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/pembayaran/proses', [PaymentController::class, 'process'])->name('payment.process');
@@ -46,10 +45,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    // Resource route untuk riwayat pemesanan
-    Route::resource('riwayat', RiwayatPemesananController::class);
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
