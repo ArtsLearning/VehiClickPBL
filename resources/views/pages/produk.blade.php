@@ -5,6 +5,52 @@
         body {
             font-family: 'Poppins', serif;
             }
+            .text-gradient {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.2);
+        }
+        .vehicle-card {
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border: 1px solid #333;
+        }
+        
+        .vehicle-card:hover {
+            border-color: #ff6b35;
+        }
+        .availability-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .available {
+            background: #10b981;
+            color: white;
+        }
+        
+        .rented {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .maintenance {
+            background: #f59e0b;
+            color: white;
+        }
     </style>
 
     <div class="bg-[#0a0e1a] min-h-screen text-white py-20">

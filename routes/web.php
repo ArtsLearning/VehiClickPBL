@@ -14,6 +14,8 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
 use App\Http\Controllers\RiwayatTransaksiController;
+use App\Http\Controllers\PaymentController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -31,20 +33,20 @@ Route::get('/detail_kendaraan', [DetailKendaraanController::class,'show']);
 
 Route::get('/pembayaran', [PembayaranController::class,'show']);
 
-Route::get('/produk', [BarangController::class,'show']);
+Route::get('/produk', [BarangController::class,'showProduct']);
+Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('produk.detail');
 
 Route::get('/profil', [ProfilController::class,'show']);
-
 Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
-
 Route::get('/tentang', [TentangController::class,'show']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/pembayaran/proses', [PaymentController::class, 'process'])->name('payment.process');
 
 // Pesan didalam footer
 Route::post('/kontak', [ContactController::class, 'store'])->name('pesan.simpan');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [BarangController::class,'showDashboard'])
+->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
