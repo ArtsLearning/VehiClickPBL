@@ -122,16 +122,16 @@
                                 Platform rental kendaraan terpercaya yang menghubungkan penyedia dengan pelanggan melalui teknologi digital.
                             </p>
                             <div class="flex space-x-4 pt-4">
-                                <a href="#" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
+                                <a href="https://www.facebook.com/ArtsLearning12/" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
                                     <i class="fab fa-facebook-f text-orange-400 group-hover:text-white"></i>
                                 </a>
-                                <a href="#" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
+                                <a href="https://www.instagram.com/mhdtur_kc/" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
                                     <i class="fab fa-instagram text-orange-400 group-hover:text-white"></i>
                                 </a>
-                                <a href="#" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
+                                <a href="https://x.com/ArtsHeree" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
                                     <i class="fab fa-twitter text-orange-400 group-hover:text-white"></i>
                                 </a>
-                                <a href="#" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
+                                <a href="https://www.youtube.com/@VehiClickPBLIF-001" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
                                     <i class="fab fa-youtube text-orange-400 group-hover:text-white"></i>
                                 </a>
                             </div>

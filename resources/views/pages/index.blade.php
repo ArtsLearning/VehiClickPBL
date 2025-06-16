@@ -314,7 +314,7 @@
                     
                     <!-- Floating Stats -->
                     <div class="absolute -top-6 -right-6 bg-orange-500 text-black p-4 rounded-2xl shadow-2xl float-animation" style="animation-delay: 1s;">
-                        <div class="text-2xl font-bold">1000+</div>
+                        <div class="text-2xl font-bold">0+</div>
                         <div class="text-sm">Happy Customers</div>
                     </div>
                     

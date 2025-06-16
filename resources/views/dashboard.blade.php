@@ -172,7 +172,7 @@
             transform: translateX(5px);
         }
     </style>
-
+     
     <div class="min-h-screen bg-gray-900 text-white">
             <!-- Setelah navbar -->
             <div class="pt-24 px-6"> <!-- ganti p-6 menjadi pt-24 px-6 -->
