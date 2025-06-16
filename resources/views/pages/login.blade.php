@@ -65,7 +65,7 @@
         container.addEventListener('mousemove', (e) => {
             const xPos = (e.clientX / window.innerWidth) * 15;
             const yPos = (e.clientY / window.innerHeight) * 15;
-            movingBg.style.transform = `translate(${-xPos}px, ${-yPos}px)`;
+            movingBg.style.transform = translate(${-xPos}px, ${-yPos}px);
         });
 
         container.addEventListener('mouseleave', () => {
@@ -73,4 +73,3 @@
         });
     </script>
 @endsection
-

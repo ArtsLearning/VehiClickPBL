@@ -466,7 +466,7 @@
 
             ordersList.style.display = 'block';
             noOrders.style.display = 'none';
-            orderCount.textContent = `Ditemukan ${ordersToShow.length} pesanan`;
+            orderCount.textContent = Ditemukan ${ordersToShow.length} pesanan;
 
             ordersList.innerHTML = ordersToShow.map(order => {
                 const statusInfo = getStatusInfo(order.status);
@@ -544,7 +544,7 @@
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+            document.querySelector([data-filter="${filter}"]).classList.add('active');
 
             // Filter orders
             if (filter === 'semua') {
@@ -589,7 +589,7 @@
             const order = orders.find(o => o.id === orderId);
             if (order) {
                 const statusInfo = getStatusInfo(order.status);
-                alert(`Detail Pesanan #${order.id}\n\nKendaraan: ${order.vehicle}\nPlat Nomor: ${order.licensePlate}\nTanggal Booking: ${order.bookingDate}\nTanggal Sewa: ${order.date}\nDurasi: ${order.duration}\nTotal: ${order.price}\nStatus: ${statusInfo.text}\n\n(Dalam aplikasi nyata, ini akan membuka halaman detail)`);
+                alert(Detail Pesanan #${order.id}\n\nKendaraan: ${order.vehicle}\nPlat Nomor: ${order.licensePlate}\nTanggal Booking: ${order.bookingDate}\nTanggal Sewa: ${order.date}\nDurasi: ${order.duration}\nTotal: ${order.price}\nStatus: ${statusInfo.text}\n\n(Dalam aplikasi nyata, ini akan membuka halaman detail));
             }
         }
 
@@ -597,7 +597,7 @@
         function payOrder(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (order) {
-                if (confirm(`Lanjutkan pembayaran untuk ${order.vehicle}?\nTotal: ${order.price}`)) {
+                if (confirm(Lanjutkan pembayaran untuk ${order.vehicle}?\nTotal: ${order.price})) {
                     // In real app, redirect to payment gateway
                     alert('Redirecting to payment gateway...');
                 }
@@ -608,7 +608,7 @@
         function cancelOrder(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (order) {
-                if (confirm(`Apakah Anda yakin ingin membatalkan pesanan ${order.vehicle}?`)) {
+                if (confirm(Apakah Anda yakin ingin membatalkan pesanan ${order.vehicle}?)) {
                     order.status = 'dibatalkan';
                     displayOrders(filteredOrders);
                     updateStats();
