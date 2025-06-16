@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>VehiClick - Modern Footer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -52,6 +53,26 @@
                 radial-gradient(circle at 20% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(251, 146, 60, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(253, 186, 116, 0.1) 0%, transparent 50%);
+        }
+
+        /* Contact Form Styles */
+        .contact-form input:focus, 
+        .contact-form textarea:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.2);
+        }
+
+        .contact-form input:hover, 
+        .contact-form textarea:hover {
+            border-color: rgba(249, 115, 22, 0.5);
+        }
+
+        .contact-form button:hover {
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.3);
+        }
+
+        .contact-form textarea {
+            resize: none;
         }
     </style>
 </head>
@@ -248,22 +269,59 @@
                     </div>
                 </div>
 
-                <!-- Newsletter Section -->
-                <div class="glass-morphism rounded-2xl p-8 mb-12 text-center">
-                    <h3 class="text-2xl font-bold gradient-text mb-4">Berlangganan Newsletter</h3>
-                    <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
-                        Dapatkan penawaran terbaik, tips perjalanan, dan update terbaru langsung di email Anda.
-                    </p>
-                    <div class="flex flex-col sm:flex-row max-w-md mx-auto gap-3">
-                        <input 
-                            type="email" 
-                            placeholder="Masukkan email Anda"
-                            class="flex-1 px-4 py-3 bg-white/10 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        >
-                        <button class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 pulse-glow">
-                            Berlangganan
-                        </button>
+                <!-- Pesan Form Section -->
+                <div class="glass-morphism rounded-2xl p-8 mb-12 contact-form">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold gradient-text mb-4 flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-3"></i>
+                            Kirim Pesan Kepada Kami
+                        </h3>
+                        <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                            Ada pertanyaan, saran, atau ingin berbagi pengalaman? Kirim pesan kepada kami dan tim akan merespons dengan cepat.
+                        </p>
                     </div>
+
+                    @if(session('success'))
+                        <div class="bg-green-600 text-white text-center p-4 mb-4 rounded">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form  method="POST" action="{{ route('pesan.simpan') }}" class="max-w-2xl mx-auto space-y-6" id="contactForm">
+                        @csrf
+                        <!-- Email Input -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                                <i class="fas fa-envelope mr-2 text-orange-400"></i>
+                                Email
+                            </label>
+                            <input type="email" id="email" name="email" placeholder="Masukkan email Anda"                             
+                                class="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300" required                         
+                            >                         
+                        </div>
+                        
+                        <!-- Pesan Textarea -->
+                        <div>
+                            <label for="pesan" class="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                                <i class="fas fa-comment-alt mr-2 text-orange-400"></i>
+                                Pesan
+                            </label>
+                            <textarea id="pesan" name="pesan" rows="5" placeholder="Tulis pesan Anda di sini..."                             
+                                class="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300" required                         
+                            ></textarea>                         
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button 
+                                type="submit"
+                                class="px-8 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 pulse-glow transform hover:scale-105 flex items-center justify-center mx-auto"
+                            >
+                                <i class="fas fa-paper-plane mr-2"></i>                           
+                                Kirim Pesan                         
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Bottom Section -->
@@ -313,29 +371,43 @@
     </footer>
 
     <script>
-        // Add smooth scrolling and interactive effects
-        document.addEventListener('DOMContentLoaded', function() {
-            // Newsletter subscription
-            const newsletterForm = document.querySelector('input[type="email"]');
-            const subscribeBtn = document.querySelector('button');
+        // Contact form functionality
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const contactForm = document.getElementById('contactForm');
             
-            if (newsletterForm && subscribeBtn) {
-                subscribeBtn.addEventListener('click', function() {
-                    const email = newsletterForm.value;
-                    if (email && email.includes('@')) {
-                        alert('Terima kasih! Anda telah berlangganan newsletter kami.');
-                        newsletterForm.value = '';
-                    } else {
-                        alert('Mohon masukkan email yang valid.');
-                    }
-                });
-                
-                newsletterForm.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        subscribeBtn.click();
-                    }
-                });
-            }
+        //     if (contactForm) {
+        //         contactForm.addEventListener('submit', function(e) {
+        //             e.preventDefault();
+                    
+        //             const email = document.getElementById('email').value;
+        //             const pesan = document.getElementById('pesan').value;
+                    
+        //             // Validate form
+        //             if (!email || !pesan) {
+        //                 alert('Mohon lengkapi semua field yang diperlukan.');
+        //                 return;
+        //             }
+                    
+        //             if (!email.includes('@')) {
+        //                 alert('Mohon masukkan email yang valid.');
+        //                 return;
+        //             }
+                    
+        //             // Simulate form submission
+        //             const submitBtn = contactForm.querySelector('button[type="submit"]');
+        //             const originalText = submitBtn.innerHTML;
+                    
+        //             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mengirim...';
+        //             submitBtn.disabled = true;
+                    
+        //             setTimeout(() => {
+        //                 alert('Terima kasih! Pesan Anda telah terkirim.');
+        //                 contactForm.reset();
+        //                 submitBtn.innerHTML = originalText;
+        //                 submitBtn.disabled = false;
+        //             }, 2000);
+        //         });
+        //     }
             
             // Add hover effects to social media icons
             const socialIcons = document.querySelectorAll('.fab');

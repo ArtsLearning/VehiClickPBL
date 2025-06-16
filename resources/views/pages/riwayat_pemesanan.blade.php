@@ -375,12 +375,11 @@
         <button class="back-btn" onclick="window.history.back()" title="Kembali">
             <i class="fas fa-arrow-left"></i>
         </button>
+        <!-- Footer -->
+        <footer class="bg-gray-900">
+            @include('components.footer')
+        </footer>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900">
-        @include('components.footer')
-    </footer>
 
     <script>
         // Sample data for orders (in real app, this would come from Laravel backend)

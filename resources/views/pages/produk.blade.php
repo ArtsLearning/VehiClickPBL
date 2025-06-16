@@ -1,21 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-<body class="h-screen m-0 p-0">
+    <style>
+        body {
+            font-family: 'Poppins', serif;
+            }
+    </style>
 
-    <div class="relative  h-screen">
-        <div id="moving-bg" 
-             class="absolute top-0 left-0 w-full h-1/2 bg-cover bg-center transition-transform duration-200 ease-out"
-             style="background-image: url('{{ asset('images/background.png') }}');">
-        </div>
-
-        <main class="relative max-w-6xl mx-auto pt-36 px-4 sm:px-6 md:px-10 pb-14">
+    <div class="bg-[#0a0e1a] min-h-screen text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 py-10">
+    
             <!-- Title -->
-            <h1 class="text-center text-2xl sm:text-3xl md:text-4xl -mt-16 font-extrabold mb-6 text-white">
+            <h1 class="text-center text-white text-2xl font-extrabold mb-8">
                 Produk
             </h1>
 
             <!-- Search Card -->
+            <form action="#" class="bg-[#1c2533] rounded-lg p-6 max-w-5xl mx-auto mb-10 grid grid-cols-1 md:grid-cols-3 gap-6" method="get">
+                <div class="col-span-1 md:col-span-3">
+                    <label for="kendaraan" class="block text-xs font-medium mb-1 text-white">Kendaraan</label>
+                    <input type="text" id="kendaraan" placeholder="Kendaraan apa yang mau anda cari?" class="w-full text-xs h-7 px-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-600">
+                </div>
+                <div>
+                    <label for="tanggalMulai" class="block text-xs font-medium mb-1 text-white">Tanggal Mulai</label>
+                    <input type="date" id="tanggalMulai" value="dd-mm-yyyy" class="w-full text-xs h-7 px-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-600">
+                </div>
+                <div>
+                    <label for="tanggalSelesai" class="block text-xs font-medium mb-1 text-white">Tanggal Selesai</label>
+                    <input type="date" id="tanggalSelesai" value="dd-mm-yyyy" class="w-full text-xs h-7 px-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-600">
+                </div>
+                <div class="flex items-end justify-end">
+                    <button type="submit" class="bg-[#f97316] text-xs font-semibold rounded px-4 py-1 hover:bg-[#e07b2f] transition-colors">Cari Kendaraan</button>
+                </div>
+            </form>
+        
+            <!-- Product Card -->
+            @include('components.product_card')
+
+            <!-- Footer -->
+            @include('components.footer')
+
+        </div>     
+    </div>
+
+@endsection
+
+        <!-- <main class="relative max-w-6xl mx-auto pt-36 px-4 sm:px-6 md:px-10 pb-14">
+            Title
+            <h1 class="text-center text-2xl sm:text-3xl md:text-4xl -mt-16 font-extrabold mb-6 text-white">
+                Produk
+            </h1>
+
+            Search Card
             <form class="bg-gray-100 sm:p-6 space-y-4 mt-6 max-w-5xl mx-auto">
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12 sm:col-span-12">
@@ -36,7 +72,7 @@
                 </div>
             </form>
 
-            <!-- Product Card 1 -->
+            Product Card 1
             <div class="max-w-7xl mx-auto mt-6 space-y-4 px-4 sm:px-6">
                 <a href="/detail_kendaraan" class="block">
                     <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02] transition-transform">
@@ -57,7 +93,7 @@
                     </div>
                 </a>
 
-                <!-- Product Card 2 -->
+                Product Card 2
                 <a href="/detail_kendaraan" class="block">
                     <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02] transition-transform">
                         <div class="flex items-center gap-3">
@@ -77,7 +113,7 @@
                     </div>
                 </a>
 
-                <!-- Product Card 3 -->
+                Product Card 3
                 <a href="/detail_kendaraan" class="block">
                     <div class="bg-gray-100 p-4 flex flex-wrap items-center justify-between gap-4 hover:scale-[1.02] transition-transform">
                         <div class="flex items-center gap-3">
@@ -98,11 +134,4 @@
                 </a>
 
             </div> 
-        </main>
-
-        <!-- Footer -->
-        @include('components.footer')
-
-    </div> 
-</body>
-@endsection
+        </main> -->

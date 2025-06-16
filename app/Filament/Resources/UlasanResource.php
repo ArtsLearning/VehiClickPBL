@@ -19,7 +19,7 @@ class UlasanResource extends Resource
 {
     protected static ?string $model = Ulasan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-star';
 
     protected static ?string $navigationLabel = 'Ulasan';
 
