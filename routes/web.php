@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Pesan\ContactController;
 
 // Route::get('/', function () {
 //     return view('welcome');
