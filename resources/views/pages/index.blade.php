@@ -161,8 +161,10 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8 slide-in-right">
                     <button class="gradient-orange hover:glow-orange-strong px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+                        <a href="dashboard">
                         <i class="fas fa-car mr-2"></i>
                         Explore Vehicles
+                        </a>
                     </button>
                     <button class="border-2 border-orange-400 hover:bg-orange-400 hover:text-black px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-play mr-2"></i>
@@ -206,7 +208,9 @@
                         <h3 class="text-2xl font-bold mb-4 text-gradient">Car Rental</h3>
                         <p class="text-gray-300 mb-6">Premium cars for your perfect journey. From luxury sedans to sporty convertibles.</p>
                         <button class="w-full gradient-orange hover:glow-orange-strong py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                        <a href="dashboard">
                             Explore Cars
+                        </a>
                         </button>
                     </div>
                 </div>
@@ -225,7 +229,9 @@
                         <h3 class="text-2xl font-bold mb-4 text-gradient">Motorcycle Rental</h3>
                         <p class="text-gray-300 mb-6">Feel the freedom with our premium motorcycle collection for urban adventures.</p>
                         <button class="w-full gradient-orange hover:glow-orange-strong py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <a href="dashboard">
                             Explore Bikes
+                            </a>
                         </button>
                     </div>
                 </div>
@@ -244,7 +250,9 @@
                         <h3 class="text-2xl font-bold mb-4 text-gradient">Bicycle Rental</h3>
                         <p class="text-gray-300 mb-6">High-performance bikes for your daily rides. Reliable and eco-friendly transportation.</p>
                         <button class="w-full gradient-orange hover:glow-orange-strong py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <a href="dashboard">
                             Explore Bicycle
+                            </a>
                         </button>
                     </div>
                 </div>
