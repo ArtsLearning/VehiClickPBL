@@ -225,6 +225,31 @@
                 @endif
             </div>
 
+            <!-- reCAPTCHA -->
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-300 mb-2">
+                    <i class="fas fa-shield-alt mr-2 text-orange-400"></i>
+                    Verifikasi Keamanan
+                </label>
+                <!-- reCAPTCHA Widget -->
+                <div class="flex justify-center">
+                    <!-- Untuk Laravel dengan NoCaptcha package -->
+                    <!-- {!! NoCaptcha::display() !!} -->
+                    
+                    <!-- Contoh reCAPTCHA placeholder (ganti dengan yang asli) -->
+                    <div class="g-recaptcha" data-sitekey="6LcMoGIrAAAAACZL8-TTA6p8Z7d4ROhZy9qWQqEK"></div>
+                </div>
+                
+                <!-- reCAPTCHA Error Messages -->
+                <!-- @if ($errors->has('g-recaptcha-response'))
+                    <div class="error-message">
+                        @foreach ($errors->get('g-recaptcha-response') as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif -->
+            </div>
+
             <!-- Submit Button -->
             <div class="pt-2">
                 <button type="submit"
@@ -269,6 +294,13 @@
             </p>
         </div>
     </div>
+
+    <!-- reCAPTCHA Script -->
+    <!-- Untuk Laravel dengan NoCaptcha package -->
+    <!-- {!! NoCaptcha::renderJs() !!} -->
+    
+    <!-- Manual reCAPTCHA Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script>
         // Password toggle functionality
@@ -362,6 +394,17 @@
             input.addEventListener('input', function() {
                 if (this.value.trim() !== '') {
                     this.style.borderColor = '#4b5563';
+                }
+            });
+        });
+
+        // Add error styling to inputs with validation errors
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(function(errorMsg) {
+                const input = errorMsg.previousElementSibling?.querySelector('input');
+                if (input) {
+                    input.classList.add('input-error');
                 }
             });
         });

@@ -86,6 +86,34 @@
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad1" cx="20%" cy="30%"><stop offset="0%" stop-color="%23f97316" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient><radialGradient id="grad2" cx="80%" cy="70%"><stop offset="0%" stop-color="%23fb923c" stop-opacity="0.08"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><rect width="1000" height="1000" fill="url(%23grad1)"/><rect width="1000" height="1000" fill="url(%23grad2)"/></svg>') center/cover;
             pointer-events: none;
         }
+
+        /* Error message styling */
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            color: #fca5a5;
+            font-size: 0.875rem;
+        }
+
+        /* Success message styling */
+        .success-message {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            color: #86efac;
+            font-size: 0.875rem;
+        }
+
+        /* Input error state */
+        .input-error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen relative">
@@ -96,35 +124,34 @@
         <div class="absolute top-3/4 left-1/3 w-16 h-16 bg-orange-300 rounded-full blur-xl opacity-10 floating-animation" style="animation-delay: -4s;"></div>
     </div>
 
-    <div class="glass-morphism w-full max-w-3xl  p-10 rounded-2xl shadow-2xl relative z-10">
+    <div class="glass-morphism w-full max-w-3xl p-10 rounded-2xl shadow-2xl relative z-10">
         <!-- Header with Logo -->
-                <div class="text-center mb-8">
-                <!-- Logo Image -->
-                <div class="flex justify-center mb-4">
-                    <img src="/images/logo.png" alt="Logo VehiClick" class="w-20 h-20 object-contain rounded-full shadow-2xl">
-                </div>
-
-                <!-- Icon (opsional, bisa dihapus jika sudah ada gambar) -->
-                <!--
-                <div class="flex justify-center mb-4">
-                    <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-2xl">
-                        <i class="fas fa-car text-white text-2xl"></i>
-                    </div>
-                </div>
-                -->
-
-                <h2 class="text-3xl font-extrabold text-center text-white mb-2">
-                    Selamat Datang
-                </h2>
-                <p class="text-center text-gray-300 text-sm mb-2">
-                    Masuk ke akun <span class="gradient-text font-semibold">VehiClick</span> Anda
-                </p>
+        <div class="text-center mb-8">
+            <!-- Logo Image -->
+            <div class="flex justify-center mb-4">
+                <img src="/images/logo.png" alt="Logo VehiClick" class="w-20 h-20 object-contain rounded-full shadow-2xl">
             </div>
 
+            <h2 class="text-3xl font-extrabold text-center text-white mb-2">
+                Selamat Datang
+            </h2>
+            <p class="text-center text-gray-300 text-sm mb-2">
+                Masuk ke akun <span class="gradient-text font-semibold">VehiClick</span> Anda
+            </p>
+        </div>
+
+        <!-- Session Status / Success Message -->
+        <!-- Jika menggunakan Laravel, uncomment baris berikut -->
+        <!-- @if (session('status'))
+            <div class="success-message">
+                {{ session('status') }}
+            </div>
+        @endif -->
 
         <!-- Login Form -->
         <form method="POST" action="{{ route('login') }}" class="space-y-6">
-            @csrf
+            <!-- CSRF Token - Jika menggunakan Laravel -->
+             @csrf 
 
             <!-- Email -->
             <div>
@@ -135,11 +162,20 @@
                 <div class="relative">
                     <input type="email" name="email" id="email" required autofocus
                         placeholder="Masukkan email Anda"
+                        value="{{ old('email') }}"
                         class="input-focus w-full px-4 py-3 pr-12 bg-white/10 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <i class="fas fa-envelope text-gray-400"></i>
                     </div>
                 </div>
+                <!-- Email Error Messages -->
+                <!-- @if ($errors->has('email'))
+                    <div class="error-message">
+                        @foreach ($errors->get('email') as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif -->
             </div>
 
             <!-- Password -->
@@ -157,6 +193,14 @@
                         <i class="fas fa-eye" id="eyeIcon"></i>
                     </button>
                 </div>
+                <!-- Password Error Messages -->
+                <!-- @if ($errors->has('password'))
+                    <div class="error-message">
+                        @foreach ($errors->get('password') as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif -->
             </div>
 
             <!-- Remember Me & Forgot Password -->
@@ -169,6 +213,31 @@
                 <a href="{{ route('password.request') }}" class="text-orange-400 hover:text-orange-300 hover:underline transition-colors duration-200">
                     Lupa password?
                 </a>
+            </div>
+
+            <!-- reCAPTCHA -->
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-300 mb-2">
+                    <i class="fas fa-shield-alt mr-2 text-orange-400"></i>
+                    Verifikasi Keamanan
+                </label>
+                <!-- reCAPTCHA Widget -->
+                <div class="flex justify-center">
+                    <!-- Untuk Laravel dengan NoCaptcha package -->
+                    <!-- {!! NoCaptcha::display() !!} -->
+                    
+                    <!-- Contoh reCAPTCHA placeholder (ganti dengan yang asli) -->
+                    <div class="g-recaptcha" data-sitekey="6LcMoGIrAAAAACZL8-TTA6p8Z7d4ROhZy9qWQqEK"></div>
+                </div>
+                
+                <!-- reCAPTCHA Error Messages -->
+                <!-- @if ($errors->has('g-recaptcha-response'))
+                    <div class="error-message">
+                        @foreach ($errors->get('g-recaptcha-response') as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif -->
             </div>
 
             <!-- Submit Button -->
@@ -215,6 +284,13 @@
             </p>
         </div>
     </div>
+
+    <!-- reCAPTCHA Script -->
+    <!-- Untuk Laravel dengan NoCaptcha package -->
+    <!-- {!! NoCaptcha::renderJs() !!} -->
+    
+    <!-- Manual reCAPTCHA Script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script>
         // Password toggle functionality
@@ -272,13 +348,25 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>MASUK...';
                 submitBtn.disabled = true;
                 
-                // In real application, remove this setTimeout
+                // Note: In real Laravel application, remove this setTimeout
+                // Laravel will handle the form submission
                 setTimeout(() => {
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                 }, 2000);
             });
         }
+
+        // Add error styling to inputs with validation errors
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(function(errorMsg) {
+                const input = errorMsg.previousElementSibling?.querySelector('input');
+                if (input) {
+                    input.classList.add('input-error');
+                }
+            });
+        });
     </script>
 </body>
 </html>
