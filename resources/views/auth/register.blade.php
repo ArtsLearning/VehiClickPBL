@@ -234,10 +234,10 @@
                 <!-- reCAPTCHA Widget -->
                 <div class="flex justify-center">
                     <!-- Untuk Laravel dengan NoCaptcha package -->
-                    <!-- {!! NoCaptcha::display() !!} -->
+                    <!-- {!! NoCaptcha::display() !!} --> 
                     
                     <!-- Contoh reCAPTCHA placeholder (ganti dengan yang asli) -->
-                    <div class="g-recaptcha" data-sitekey="6LcMoGIrAAAAACZL8-TTA6p8Z7d4ROhZy9qWQqEK"></div>
+                    <div class="g-recaptcha" data-sitekey="6Lc7FWQrAAAAAHkknzK9BefIewPNeoQhF7754nT8"></div>
                 </div>
                 
                 <!-- reCAPTCHA Error Messages -->

@@ -52,4 +52,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Tambahkan temporary di routes/web.php untuk debug
+Route::get('/test-recaptcha', function() {
+    return [
+        'site_key' => config('services.recaptcha.site_key'),
+        'secret_key' => config('services.recaptcha.secret_key') ? 'exists' : 'null'
+    ];
+});
+
 require __DIR__.'/auth.php';
