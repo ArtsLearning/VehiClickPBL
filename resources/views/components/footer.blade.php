@@ -271,7 +271,7 @@
 
                 <!-- Pesan Form Section -->
                 <div class="glass-morphism rounded-2xl p-8 mb-12 contact-form">
-                    <div class="text-center mb-8">
+                    <div id="contact" class="text-center mb-8">
                         <h3 class="text-2xl font-bold gradient-text mb-4 flex items-center justify-center">
                             <i class="fas fa-paper-plane mr-3"></i>
                             Kirim Pesan Kepada Kami

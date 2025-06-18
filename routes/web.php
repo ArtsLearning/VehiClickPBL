@@ -15,6 +15,7 @@ use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
 use App\Http\Controllers\RiwayatTransaksiController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Pesan\ContactController;
 
 
 // Route::get('/', function () {
@@ -55,6 +56,14 @@ Route::middleware('auth')->group(function () {
 
     // Riwayat Transaksi
     Route::get('/riwayat-transaksi', [RiwayatTransaksiController::class, 'index'])->name('riwayat.index');
+});
+
+// Tambahkan temporary di routes/web.php untuk debug
+Route::get('/test-recaptcha', function() {
+    return [
+        'site_key' => config('services.recaptcha.site_key'),
+        'secret_key' => config('services.recaptcha.secret_key') ? 'exists' : 'null'
+    ];
 });
 
 require __DIR__.'/auth.php';
