@@ -334,10 +334,11 @@
         <!-- Vehicles Grid -->
         @include('components.product_card')
 
-        <!-- Pagination -->
-        <div class="flex justify-center mt-12 pb-8">
-            {{ $barangs->links('pagination::tailwind') }}
-        </div>
+        <!-- Pagination Right-aligned -->
+            <div class="flex justify-end mt-12 pb-8 pr-6">
+                {{ $barangs->links('pagination::tailwind') }}
+            </div>
+
     </div>
 
     <!-- Footer -->

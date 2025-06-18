@@ -158,7 +158,7 @@
             <div class="card-hover bg-black/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 mb-16 border border-gray-800 hover:border-orange-400 glow-orange slide-in-right">
                 <!-- Vehicle Image -->
                 <div class="w-80 h-80 bg-gray-800 rounded-2xl overflow-hidden flex-shrink-0 float-animation glow-orange">
-                    <img src="{{ asset('images/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
+                    <img src="{{ asset('storage/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
                 </div>
 
                 <!-- Vehicle Info -->

@@ -9,7 +9,7 @@ class BarangController extends Controller
 {
     public function showProduct()
     {
-        $barangs = Barang::all();
+        $barangs = Barang::paginate(6);
         return view('pages.produk', compact('barangs'));
     }
     public function showDashboard()

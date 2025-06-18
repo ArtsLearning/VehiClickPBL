@@ -21,7 +21,7 @@
             <!-- Vehicle Image & Info -->
             <div class="flex flex-col items-center text-center space-y-6">
                 <div class="w-72 h-72 bg-gray-800 rounded-2xl overflow-hidden flex items-center justify-center glow-orange float-animation">
-                    <img src="{{ asset('images/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
+                    <img src="{{ asset('storage/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
                 </div>
                         
                 <div class="space-y-3">

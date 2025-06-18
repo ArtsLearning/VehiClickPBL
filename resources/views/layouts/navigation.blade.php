@@ -49,56 +49,15 @@
                     Home
                 </a>
                 
-                <!-- Services Dropdown -->
-                <div class="relative" x-ref="servicesDropdown">
-                    <button @click="servicesOpen = !servicesOpen"
-                            class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10 flex items-center space-x-1">
-                        <span>Services</span>
-                        <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': servicesOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    
-                    <!-- Services Dropdown Menu -->
-                    <div x-show="servicesOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 scale-95 -translate-y-2"
-                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 scale-95 -translate-y-2"
-                         class="absolute top-full left-0 mt-2 w-64 bg-black rounded-xl shadow-2xl border border-orange-500/20 overflow-hidden"
-                         style="display: none;">
-                        
-                        <div class="py-2">
-                            <a href="dashboard" class="dropdown-item group flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
-                                <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
-                                    <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="font-medium text-orange-400">Car Rental</div>
-                                    <div class="text-xs text-orange-300 group-hover:text-orange-200">Rent premium vehicles</div>
-                                </div>
-                            </a>
-                            
-                            <a href="dashboard" class="dropdown-item group flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
-                                <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
-                                    <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="font-medium text-orange-400">Bike Rental</div>
-                                    <div class="text-xs text-orange-300 group-hover:text-orange-200">Eco-friendly transport</div>
-                                </div>
-                            </a>
-                            
-                            
-                        </div>
+                <!-- Catalog Button (Dropdown Removed) -->
+                    <div class="relative">
+                        <a href="dashboard"
+                        class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10 flex items-center space-x-1">
+                            <span>Catalog</span>
+                        </a>
                     </div>
-                </div>
+
+
                 
                 <a href="#benefits" class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10">
                     Benefits
@@ -136,12 +95,6 @@
                             style="display: none;">
                             
                             <div class="py-2">
-                                <a href="{{ route('dashboard') }}" class="dropdown-item flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
-                                    <svg class="w-4 h-4 mr-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
-                                    </svg>
-                                    Dashboard
-                                </a>
                                 <a href="{{ route('profile.edit') }}" class="dropdown-item flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
                                     <svg class="w-4 h-4 mr-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
