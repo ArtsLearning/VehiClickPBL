@@ -174,30 +174,30 @@
     </style>
      
     <div class="min-h-screen bg-gray-900 text-white">
-            <!-- Setelah navbar -->
-            <div class="pt-24 px-6"> <!-- ganti p-6 menjadi pt-24 px-6 -->
-                <div class="welcome-card text-white relative z-10">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h1 class="text-4xl font-bold mb-2">Welcome Back!</h1>
-                            <p class="text-xl opacity-90">Ready to explore our vehicle collection?</p>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-3xl font-bold">{{ date('d') }}</div>
-                            <div class="text-lg">{{ date('M Y') }}</div>
-                        </div>
+        <!-- Setelah navbar -->
+        <div class="pt-24 px-6"> <!-- ganti p-6 menjadi pt-24 px-6 -->
+            <div class="welcome-card text-white relative z-10">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-4xl font-bold mb-2">Welcome Back!</h1>
+                        <p class="text-xl opacity-90">Ready to explore our vehicle collection?</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold">{{ date('d') }}</div>
+                        <div class="text-lg">{{ date('M Y') }}</div>
                     </div>
                 </div>
             </div>
+        </div>
 
-
-            <!-- Quick Stats Overview -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="max-w-screen-xl mx-auto px-6">
+        <!-- Quick Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <div class="stats-card rounded-xl p-6 text-center">
                     <div class="flex items-center justify-center mb-4">
                         <i class="fas fa-car text-orange-400 text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gradient">32</h3>
+                    <h3 class="text-2xl font-bold text-gradient">{{ $jumlahMobil }}</h3>
                     <p class="text-gray-300">Available Cars</p>
                 </div>
                 
@@ -205,18 +205,10 @@
                     <div class="flex items-center justify-center mb-4">
                         <i class="fas fa-motorcycle text-orange-400 text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gradient">18</h3>
+                    <h3 class="text-2xl font-bold text-gradient">{{ $jumlahMotor }}</h3>
                     <p class="text-gray-300">Available Motorcycles</p>
                 </div>
-                
-                <div class="stats-card rounded-xl p-6 text-center">
-                    <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-truck text-orange-400 text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gradient">8</h3>
-                    <p class="text-gray-300">Available Trucks</p>
-                </div>
-                
+                    
                 <div class="stats-card rounded-xl p-6 text-center">
                     <div class="flex items-center justify-center mb-4">
                         <i class="fas fa-clock text-orange-400 text-3xl"></i>
@@ -225,7 +217,7 @@
                     <p class="text-gray-300">Active Rentals</p>
                 </div>
             </div>
-
+        
             <!-- My Rentals Section -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                 <div class="lg:col-span-2">
@@ -236,7 +228,7 @@
                         <div class="vehicle-card rounded-xl p-6 flex items-center justify-between">
                             <div class="flex items-center">
                                 <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
-                                     alt="Toyota Camry" class="w-16 h-16 rounded-lg object-cover mr-4">
+                                    alt="Toyota Camry" class="w-16 h-16 rounded-lg object-cover mr-4">
                                 <div>
                                     <h3 class="text-lg font-bold">Toyota Camry 2023</h3>
                                     <p class="text-gray-400">B 1234 ABC</p>
@@ -254,7 +246,7 @@
                         <div class="vehicle-card rounded-xl p-6 flex items-center justify-between">
                             <div class="flex items-center">
                                 <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
-                                     alt="Yamaha R1" class="w-16 h-16 rounded-lg object-cover mr-4">
+                                    alt="Yamaha R1" class="w-16 h-16 rounded-lg object-cover mr-4">
                                 <div>
                                     <h3 class="text-lg font-bold">Yamaha R1 2022</h3>
                                     <p class="text-gray-400">B 5678 DEF</p>
@@ -300,64 +292,51 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Search and Filter Section -->
-            <div class="bg-gray-800 rounded-xl p-6 mb-8">
-                <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
-                    <!-- Search Bar -->
-                    <div class="search-container w-full lg:w-1/2">
-                        <input type="text" 
-                               id="searchInput"
-                               placeholder="Search vehicles by name, model, or license plate..." 
-                               class="search-input w-full px-4 py-3 rounded-lg focus:outline-none">
-                        <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    </div>
+        <!-- Search and Filter Section -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+            <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
+                <!-- Search Bar -->
+                <div class="search-container w-full lg:w-1/2">
+                    <input type="text" 
+                           id="searchInput"
+                           placeholder="Search vehicles by name, model, or license plate..." 
+                            class="search-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
                     
-                    <!-- Category Filters -->
-                    <div class="flex flex-wrap gap-3">
-                        <button class="filter-btn active px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="all">
-                            All Vehicles
-                        </button>
-                        <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="car">
-                            <i class="fas fa-car mr-2"></i>Cars
-                        </button>
-                        <button  class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="motorcycle">
-                            <i class="fas fa-motorcycle mr-2"></i>Motorcycles
-                        </button>
-                        <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="bicycle">
-                            <i class="fas fa-bicycle mr-2"></i>Bicycles
-                        </button>
-                    </div>
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-3">
+                    <button class="filter-btn active px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="all">
+                        All Vehicles
+                    </button>
+                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="Mobil">
+                        <i class="fas fa-car mr-2"></i>Cars
+                    </button>
+                    <button  class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="Motor">
+                        <i class="fas fa-motorcycle mr-2"></i>Motorcycles
+                    </button>
                 </div>
             </div>
+        </div>
 
-            <!-- Available Vehicles Section -->
-            <div class="flex justify-between items-center mb-6">
+        <!-- Available Vehicles Section -->
+        <div class="max-w-screen-xl mx-auto px-6">
+            <div class="flex justify-between items-center mb-4">
                 <h2 class="text-3xl font-bold">
-                    Ketersediaan <span class="text-gradient">kendaraan</span>
+                    Ketersediaan <span class="text-gradient">Kendaraan</span>
                 </h2>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-400">Found 58 vehicles</span>
-                </div>
+                <span class="text-gray-400">Found {{ $jumlah }} Vehicles</span>
             </div>
+        </div>
 
-            <!-- Vehicles Grid -->
-            @include('components.product_card')
+        <!-- Vehicles Grid -->
+        @include('components.product_card')
 
-            <!-- Pagination -->
-            <div class="flex justify-center mt-12 pb-8">
-                <div class="flex items-center space-x-2">
-                    <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="px-4 py-2 bg-orange-500 text-white rounded-lg">1</button>
-                    <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">2</button>
-                    <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">3</button>
-                    <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
+        <!-- Pagination -->
+        <div class="flex justify-center mt-12 pb-8">
+            {{ $barangs->links('pagination::tailwind') }}
         </div>
     </div>
 

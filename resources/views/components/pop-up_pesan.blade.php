@@ -59,21 +59,6 @@
                     <input type="date" id="tanggalSelesai" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" />
                 </div>
 
-                <!-- Payment Method -->
-                <div class="space-y-2">
-                    <label class="block font-semibold text-lg text-gradient">
-                        <i class="fas fa-credit-card mr-2"></i>
-                        Metode Pembayaran
-                    </label>
-                    <select class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white transition-colors duration-300 backdrop-blur-sm">
-                        <option selected disabled class="text-gray-400">== Pilih Metode Pembayaran ==</option>
-                        <option value="cod" class="bg-gray-800 text-white">💰 Cash on Delivery (COD)</option>
-                        <option value="qris" class="bg-gray-800 text-white">📱 QRIS</option>
-                        <option value="bank" class="bg-gray-800 text-white">🏦 Transfer Bank</option>
-                        <option value="ewallet" class="bg-gray-800 text-white">💳 E-Wallet</option>
-                    </select>
-                </div>
-
                 <!-- Rental Duration & Total -->
                 <div class="bg-gray-800/30 rounded-xl p-4 border border-gray-700">
                     <div class="flex justify-between items-center mb-2">
