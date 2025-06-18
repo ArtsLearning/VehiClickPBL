@@ -15,7 +15,7 @@ use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
 use App\Http\Controllers\RiwayatTransaksiController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\Pesan\ContactController;
+
 
 
 // Route::get('/', function () {
