@@ -59,9 +59,7 @@
 
 
                 
-                <a href="#benefits" class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10">
-                    Benefits
-                </a>
+                
                 <a href="#contact" class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10">
                     Contact
                 </a>
@@ -191,7 +189,7 @@
             
             <div class="px-4 pt-4 pb-6 space-y-2">
                 <!-- Mobile Navigation Links -->
-                <a href="#hero" 
+                <a href="{{ url('/') }}" 
                    class="mobile-nav-link block px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
                     Home
                 </a>
@@ -199,68 +197,15 @@
                 <!-- Mobile Services Section -->
                 <div class="space-y-2">
                     <button @click="servicesOpen = !servicesOpen"
-                            class="mobile-nav-link w-full flex items-center justify-between px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
-                        <span>Services</span>
-                        <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': servicesOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
+   
+                         class="mobile-nav-link w-full flex items-center justify-between px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
+                        <a href="dashboard">
+                            <span>catalog</span>
+                        </a>
                     </button>
                     
-                    <!-- Mobile Services Dropdown -->
-                    <div x-show="servicesOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 max-h-0"
-                         x-transition:enter-end="opacity-100 max-h-48"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 max-h-48"
-                         x-transition:leave-end="opacity-0 max-h-0"
-                         class="ml-4 overflow-hidden"
-                         style="display: none;">
-                        
-                        <div class="space-y-1 border-l-2 border-orange-500/30 pl-4">
-                            <a href="#car-rental" class="mobile-service-link group flex items-center px-3 py-2 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
-                                <div class="w-6 h-6 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
-                                    <svg class="w-3 h-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="font-medium">Car Rental</div>
-                                    <div class="text-xs text-orange-300">Rent premium vehicles</div>
-                                </div>
-                            </a>
-                            
-                            <a href="#bike-rental" class="mobile-service-link group flex items-center px-3 py-2 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
-                                <div class="w-6 h-6 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
-                                    <svg class="w-3 h-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="font-medium">Bike Rental</div>
-                                    <div class="text-xs text-orange-300">Eco-friendly transport</div>
-                                </div>
-                            </a>
-                            
-                            <a href="#delivery" class="mobile-service-link group flex items-center px-3 py-2 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
-                                <div class="w-6 h-6 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500/30 transition-colors">
-                                    <svg class="w-3 h-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="font-medium">Delivery Service</div>
-                                    <div class="text-xs text-orange-300">Fast & reliable delivery</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <a href="#benefits" 
-                   class="mobile-nav-link block px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
-                    Benefits
-                </a>
+
+                                
                 <a href="#contact" 
                    class="mobile-nav-link block px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
                     Contact

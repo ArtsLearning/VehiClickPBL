@@ -24,9 +24,9 @@ use App\Http\Controllers\PaymentController;
 
 Route::get('/', [IndexController::class,'show']);
 
-Route::get('/change_password', [UbahSandiController::class,'show']);
 
-Route::get('/daftar', [DaftarController::class,'show']);
+
+
 
 Route::get('/detail_kendaraan', [DetailKendaraanController::class,'show']);
 
@@ -37,10 +37,10 @@ Route::get('/pembayaran', [PembayaranController::class,'show']);
 Route::get('/produk', [BarangController::class,'showProduct']);
 Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('produk.detail');
 
-Route::get('/profil', [ProfilController::class,'show']);
+
 Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
-Route::get('/tentang', [TentangController::class,'show']);
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+
 Route::post('/pembayaran/proses', [PaymentController::class, 'process'])->name('payment.process');
 
 // Pesan didalam footer
