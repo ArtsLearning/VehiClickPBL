@@ -39,7 +39,8 @@
             </div>
 
             <!-- Booking Form -->
-            <form class="space-y-6" method="POST" action="{{ url('/pembayaran/proses') }}" id="bookingForm">
+            <form method="POST" action="{{ route('payment.process') }}" id="bookingForm">
+
                 @csrf
                 <!-- Name -->
                 <div class="space-y-2">

@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UbahSandiController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 
 // Landing Page
 Route::get('/', [IndexController::class, 'show']);
@@ -30,9 +31,12 @@ Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('prod
 Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
 
 // Pembayaran
-Route::get('/pembayaran', [PembayaranController::class, 'show']);
-Route::post('/pembayaran/proses', [PembayaranController::class, 'process'])->name('payment.process');
-Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('payment.show');
+
+
+//midtrans
+Route::post('/payment/process', [PaymentController::class, 'prosesPemesanan'])->name('payment.process');
+Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
+Route::post('/payment/snap/{id}', [PaymentController::class, 'createSnap'])->name('payment.snap');
 
 
 // Google Auth
