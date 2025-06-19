@@ -35,6 +35,12 @@ return [
         ],
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URL'),
+    ],
+
     'recaptcha' => [
         'site_key' => env('RECAPTCHA_SITEKEY'),
         'secret_key' => env('RECAPTCHA_SECRET'),

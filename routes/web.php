@@ -15,7 +15,7 @@ use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
 use App\Http\Controllers\RiwayatTransaksiController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\GoogleController;
 
 
 // Route::get('/', function () {
@@ -42,6 +42,9 @@ Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
 Route::get('/tentang', [TentangController::class,'show']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/pembayaran/proses', [PaymentController::class, 'process'])->name('payment.process');
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
 
 // Pesan didalam footer
 Route::post('/kontak', [ContactController::class, 'store'])->name('pesan.simpan');
