@@ -39,25 +39,54 @@ class BarangResource extends Resource
                     ->required()
                     ->label('Nama Barang')
                     ->placeholder('Masukkan Nama Barang'),
+
+                TextInput::make('kategori')
+                    ->required()
+                    ->placeholder('Masukkan Kategori'),
+
                 TextInput::make('stok')
                     ->required()
+                    ->numeric()
                     ->placeholder('Masukkan Stok Barang'),
+
+                TextInput::make('rating')
+                    ->required()
+                    ->numeric()
+                    ->placeholder('Masukkan Rating'),
+
                 TextInput::make('deskripsi')
                     ->required()
                     ->placeholder('Masukkan Deskripsi Barang'),
+
+                TextInput::make('kapasitas')
+                    ->required()
+                    ->numeric()
+                    ->placeholder('Masukkan Kapasitas'),
+
+                TextInput::make('nomor_plat')
+                    ->required()
+                    ->placeholder('Masukkan Nomor Plat Kendaraan'),
+
                 TextInput::make('harga_barang')
                     ->required()
+                    ->numeric()
                     ->placeholder('Masukkan Harga Barang')
                     ->label('Harga Barang'),
+
                 FileUpload::make('foto_barang')
                     ->label('Foto Barang')
-                    ->visibility('public')
-                    ->directory('foto-barang') // folder di storage/app/public/foto-barang
-                    ->image() // memastikan hanya gambar
-                    ->imageEditor() // editor crop bawaan
+                    ->directory('foto-barang') // Disimpan di storage/app/public/foto-barang
+                    ->visibility('public')    // Agar bisa diakses via /storage/foto-barang/
+                    ->image()                 // Validasi hanya file gambar
+                    ->imageEditor()          // Crop bawaan
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->downloadable()
-                    ->previewable(), 
-            ]); 
+                    ->previewable()
+                    ->getUploadedFileNameForStorageUsing(function ($file) {
+                        // Simpan nama dengan UUID + ekstensi asli
+                        return (string) str()->uuid() . '.' . $file->getClientOriginalExtension();
+                    }),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -67,10 +96,23 @@ class BarangResource extends Resource
                 TextColumn::make('nama_barang')
                     ->searchable()
                     ->label('Nama Barang'),
+                
+                TextColumn::make('kategori')
+                    ->searchable(),
+
                 TextColumn::make('stok'),
+
+                TextColumn::make('rating'),
+
                 TextColumn::make('deskripsi'),
+
+                TextColumn::make('kapasitas'),
+
+                TextColumn::make('nomor_plat'),
+
                 TextColumn::make('harga_barang')
                     ->label('Harga Barang'),
+
                 ImageColumn::make('foto_barang')
                     ->label('Foto')
                     ->disk('public')

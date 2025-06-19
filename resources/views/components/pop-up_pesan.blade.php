@@ -21,7 +21,7 @@
             <!-- Vehicle Image & Info -->
             <div class="flex flex-col items-center text-center space-y-6">
                 <div class="w-72 h-72 bg-gray-800 rounded-2xl overflow-hidden flex items-center justify-center glow-orange float-animation">
-                    <img src="{{ asset('images/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
+                    <img src="{{ asset('storage/' . $barangs->foto_barang) }}" alt="{{ $barangs->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
                 </div>
                         
                 <div class="space-y-3">
@@ -57,21 +57,6 @@
                         Tanggal Selesai Sewa
                     </label>
                     <input type="date" id="tanggalSelesai" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" />
-                </div>
-
-                <!-- Payment Method -->
-                <div class="space-y-2">
-                    <label class="block font-semibold text-lg text-gradient">
-                        <i class="fas fa-credit-card mr-2"></i>
-                        Metode Pembayaran
-                    </label>
-                    <select class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white transition-colors duration-300 backdrop-blur-sm">
-                        <option selected disabled class="text-gray-400">== Pilih Metode Pembayaran ==</option>
-                        <option value="cod" class="bg-gray-800 text-white">💰 Cash on Delivery (COD)</option>
-                        <option value="qris" class="bg-gray-800 text-white">📱 QRIS</option>
-                        <option value="bank" class="bg-gray-800 text-white">🏦 Transfer Bank</option>
-                        <option value="ewallet" class="bg-gray-800 text-white">💳 E-Wallet</option>
-                    </select>
                 </div>
 
                 <!-- Rental Duration & Total -->

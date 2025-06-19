@@ -257,12 +257,12 @@
             <div class="flex-grow border-t border-gray-600"></div>
         </div>
 
-        <!-- Social Buttons -->
+        <!-- Social Buttons - Bagian yang dimodifikasi -->
         <div class="space-y-3">
-            <button class="social-btn w-full flex items-center justify-center gap-3 rounded-xl py-3 hover:bg-white/20 transition-all duration-200">
+            <a href="{{ route('google.redirect') }}" class="social-btn w-full flex items-center justify-center gap-3 rounded-xl py-3 hover:bg-white/20 transition-all duration-200">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
                 <span class="text-white font-medium">Google</span>
-            </button>
+            </a>
             <button class="social-btn w-full flex items-center justify-center gap-3 rounded-xl py-3 hover:bg-white/20 transition-all duration-200">
                 <img src="https://www.svgrepo.com/show/448224/facebook.svg" alt="Facebook" class="w-5 h-5">
                 <span class="text-white font-medium">Facebook</span>

@@ -9,13 +9,16 @@ class BarangController extends Controller
 {
     public function showProduct()
     {
-        $barangs = Barang::all();
+        $barangs = Barang::paginate(6);
         return view('pages.produk', compact('barangs'));
     }
     public function showDashboard()
     {
-        $barangs = Barang::all();
-        return view('dashboard', compact('barangs'));
+        $barangs = Barang::paginate(6);
+        $jumlah = Barang::count();
+        $jumlahMobil = Barang::where('kategori', 'Mobil')->count();
+        $jumlahMotor = Barang::where('kategori', 'Motor')->count();
+        return view('dashboard', compact('barangs', 'jumlah', 'jumlahMobil', 'jumlahMotor'));
     }
     public function showDetails($id)
     {

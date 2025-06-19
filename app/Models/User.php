@@ -24,6 +24,8 @@ class User extends Authenticatable
         'telepon',
         'alamat',
         'foto_customer',
+        'google_id',
+        'avatar',
     ];
 
     /**

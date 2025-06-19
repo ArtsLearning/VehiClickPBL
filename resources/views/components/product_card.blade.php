@@ -1,8 +1,8 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-24">
     @foreach ($barangs as $kendaraan)
-        <div class="vehicle-card card-hover rounded-xl overflow-hidden relative">
+        <div class="vehicle-card card-hover rounded-xl overflow-hidden relative" data-category="{{ $kendaraan->kategori }}">
             <div class="relative h-48 overflow-hidden">
-                <img src="{{ asset('images/' . $kendaraan->foto_barang) }}" alt="{{ $kendaraan->nama_barang }}" class="w-full h-full object-cover">
+                <img src="{{ asset('storage/' . $kendaraan->foto_barang) }}" alt="{{ $kendaraan->nama_barang }}" class="w-full h-full object-cover">
             </div>
             <div class="p-6">
                 <h3 class="text-xl font-bold mb-2">{{ $kendaraan->nama_barang }}</h3>

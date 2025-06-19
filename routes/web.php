@@ -1,59 +1,61 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\UbahSandiController;
-use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DetailKendaraanController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
 use App\Http\Controllers\RiwayatTransaksiController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UbahSandiController;
+use App\Http\Controllers\DaftarController;
+use App\Http\Controllers\LoginController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Landing Page
+Route::get('/', [IndexController::class, 'show']);
 
-Route::get('/', [IndexController::class,'show']);
-Route::get('/change_password', [UbahSandiController::class,'show']);
-Route::get('/daftar', [DaftarController::class,'show']);
-Route::get('/detail_kendaraan', [DetailKendaraanController::class,'show']);
-Route::get('/pembayaran', [PembayaranController::class,'show']);
-Route::get('/produk', [BarangController::class,'showProduct']);
+// Kendaraan
+Route::get('/detail_kendaraan', [DetailKendaraanController::class, 'show']);
+
+// Produk
+Route::get('/produk', [BarangController::class, 'showProduct']);
 Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('produk.detail');
-Route::get('/profil', [ProfilController::class,'show']);
-Route::get('/tentang', [TentangController::class,'show']);
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+// Riwayat
+Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
+
+// Pembayaran
+Route::get('/pembayaran', [PembayaranController::class, 'show']);
 Route::post('/pembayaran/proses', [PaymentController::class, 'process'])->name('payment.process');
 
-// Route untuk Riwayat Transaksi yang benar
-Route::get('/riwayat', [RiwayatTransaksiController::class, 'index'])->middleware('auth')->name('riwayat.index');
+// Google Auth
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
 
-// Pesan didalam footer
+// Kontak/Pesan Footer
 Route::post('/kontak', [ContactController::class, 'store'])->name('pesan.simpan');
 
-Route::get('/dashboard', [BarangController::class,'showDashboard'])
+// Dashboard (hanya untuk user terverifikasi)
+Route::get('/dashboard', [BarangController::class, 'showDashboard'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
+// Group route yang membutuhkan autentikasi
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Riwayat Transaksi
+    Route::get('/riwayat-transaksi', [RiwayatTransaksiController::class, 'index'])->name('riwayat.index');
 });
 
-// Tambahkan temporary di routes/web.php untuk debug
+// Debug/Testing Recaptcha (sementara)
 Route::get('/test-recaptcha', function() {
     return [
         'site_key' => config('services.recaptcha.site_key'),
@@ -61,4 +63,5 @@ Route::get('/test-recaptcha', function() {
     ];
 });
 
+// Auth routes bawaan Laravel
 require __DIR__.'/auth.php';
