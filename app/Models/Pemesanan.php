@@ -6,17 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 class Pemesanan extends Model
 {
     protected $fillable = [
-        'user_id', 'kendaraan_id', 'tanggal_mulai', 'tanggal_selesai', 
-        'total_harga', 'status', 'catatan'
+        'nama', 'email', 'pickup_method',
+        'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos',
+        'alamat_detail', 'tanggal_mulai', 'tanggal_selesai',
+        'durasi', 'total_harga', 'nama_kendaraan'
     ];
+    
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    public function details()
-    {
-        return $this->hasMany(DetailPemesanan::class);
-    }
+ 
 }

@@ -10,7 +10,6 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\TentangController;
 use App\Http\Controllers\Pesan\ContactController;
 use App\Http\Controllers\RiwayatTransaksiController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UbahSandiController;
@@ -33,6 +32,8 @@ Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
 // Pembayaran
 Route::get('/pembayaran', [PembayaranController::class, 'show']);
 Route::post('/pembayaran/proses', [PembayaranController::class, 'process'])->name('payment.process');
+Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('payment.show');
+
 
 // Google Auth
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
