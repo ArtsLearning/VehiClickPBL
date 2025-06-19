@@ -39,26 +39,80 @@
             </div>
 
             <!-- Booking Form -->
-            <form class="space-y-6">
-
+            <form class="space-y-6" method="POST" action="{{ url('/pembayaran/proses') }}" id="bookingForm">
+                @csrf
+                <!-- Name -->
+                <div class="space-y-2">
+                    <label class="block font-semibold text-lg text-gradient">
+                        <i class="fas fa-user mr-2"></i>
+                        Nama Pemesan
+                    </label>
+                    <input type="text" id="namaPemesan" name="nama" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" value="{{ Auth::user()->name }}" required />
+                </div>
+                <!-- Email -->
+                <div class="space-y-2">
+                    <label class="block font-semibold text-lg text-gradient">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Email
+                    </label>
+                    <input type="email" id="emailPemesan" name="email" class="w-full bg-gray-800/50 border-2 border-gray-600 text-gray-400 cursor-not-allowed rounded-xl px-4 py-3 transition-colors duration-300 backdrop-blur-sm" value="{{ Auth::user()->email }}" readonly tabindex="-1" />
+                </div>
+                <!-- Pick Up Method -->
+                <div class="space-y-2">
+                    <label class="block font-semibold text-lg text-gradient">
+                        <i class="fas fa-truck mr-2"></i>
+                        Metode Pengambilan
+                    </label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="pickup_method" id="pickupDelivery" value="delivery" class="accent-orange-500" checked>
+                            Antar ke Alamat
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="pickup_method" id="pickupPlace" value="pickup" class="accent-orange-500">
+                            Ambil ke Tempat
+                        </label>
+                    </div>
+                </div>
+                <!-- Address Table (hidden if pick up to place) -->
+                <div class="space-y-2" id="addressSection">
+                    <label class="block font-semibold text-lg text-gradient">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        Alamat Lengkap
+                    </label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <select id="provinsi" name="provinsi" class="bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white" required>
+                            <option value="">Pilih Provinsi</option>
+                        </select>
+                        <select id="kabupaten" name="kabupaten" class="bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white" required>
+                            <option value="">Pilih Kabupaten/Kota</option>
+                        </select>
+                        <select id="kecamatan" name="kecamatan" class="bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white" required>
+                            <option value="">Pilih Kecamatan</option>
+                        </select>
+                        <select id="kelurahan" name="kelurahan" class="bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white" required>
+                            <option value="">Pilih Kelurahan/Desa</option>
+                        </select>
+                        <input type="text" id="kodepos" name="kodepos" class="bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white" placeholder="Kode Pos" readonly>
+                    </div>
+                    <input type="text" id="alamat_detail" name="alamat_detail" class="w-full bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white mt-2" placeholder="Detail Alamat (Jalan, No Rumah, dll)" required>
+                </div>
                 <!-- Start Date -->
                 <div class="space-y-2">
                     <label class="block font-semibold text-lg text-gradient">
                         <i class="fas fa-calendar-alt mr-2"></i>
                         Tanggal Mulai Sewa
                     </label>
-                    <input type="date" id="tanggalMulai" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" />
+                    <input type="date" id="tanggalMulai" name="tanggal_mulai" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" required />
                 </div>
-
                 <!-- End Date -->
                 <div class="space-y-2">
                     <label class="block font-semibold text-lg text-gradient">
                         <i class="fas fa-calendar-check mr-2"></i>
                         Tanggal Selesai Sewa
                     </label>
-                    <input type="date" id="tanggalSelesai" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" />
+                    <input type="date" id="tanggalSelesai" name="tanggal_selesai" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" required />
                 </div>
-
                 <!-- Rental Duration & Total -->
                 <div class="bg-gray-800/30 rounded-xl p-4 border border-gray-700">
                     <div class="flex justify-between items-center mb-2">
@@ -70,19 +124,21 @@
                         <span class="text-2xl font-bold text-gradient" id="totalPrice">Rp. 0</span>
                     </div>
                 </div>
-
+                <!-- Hidden Fields -->
+                <input type="hidden" name="total_harga" id="hiddenTotalHarga" />
+                <input type="hidden" name="durasi" id="hiddenDurasi" />
+                <input type="hidden" name="nama_kendaraan" value="{{ $barangs->nama_barang }}" />
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4 pt-6">
                     <button type="button" onclick="document.getElementById('popupModal').classList.add('hidden')" class="flex-1 border-2 border-gray-600 hover:border-red-400 hover:bg-red-400/10 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-times mr-2"></i>
                         Batal
                     </button>
-                    <a href="/pembayaran" class="flex-1 gradient-orange hover:glow-orange-strong text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 text-center pulse-glow">
+                    <button type="submit" class="flex-1 gradient-orange hover:glow-orange-strong text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 text-center pulse-glow">
                         <i class="fas fa-shopping-cart mr-2"></i>
                         Pesan Sekarang
-                    </a>
+                    </button>
                 </div>
-
             </form>
         </div>
 
@@ -97,10 +153,7 @@
                     <i class="fas fa-headset"></i>
                     <span class="text-sm">24/7 Support</span>
                 </div>
-                <div class="flex items-center justify-center space-x-2 text-yellow-400">
-                    <i class="fas fa-gas-pump"></i>
-                    <span class="text-sm">Full Tank Guarantee</span>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -111,6 +164,18 @@
             const durasi = document.getElementById('duration');
             const biayaTotal = document.getElementById('totalPrice');
             const hargaHarian = document.getElementById('hargaHarian');
+            const hiddenTotalHarga = document.getElementById('hiddenTotalHarga');
+            const hiddenDurasi = document.getElementById('hiddenDurasi');
+
+            // Set min date to tomorrow for both inputs
+            const today = new Date();
+            const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+            const yyyy = tomorrow.getFullYear();
+            const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+            const dd = String(tomorrow.getDate()).padStart(2, '0');
+            const minDate = `${yyyy}-${mm}-${dd}`;
+            if (tanggalMulai) tanggalMulai.setAttribute('min', minDate);
+            if (tanggalSelesai) tanggalSelesai.setAttribute('min', minDate);
 
             if (!tanggalMulai || !tanggalSelesai || !durasi || !biayaTotal || !hargaHarian) {
                 console.error('Data tidak ditemukan');
@@ -129,9 +194,13 @@
 
                     durasi.textContent = `${durasiPerHari} Hari`;
                     biayaTotal.textContent = `Rp. ${total.toLocaleString('id-ID')},00`;
+                    if (hiddenTotalHarga) hiddenTotalHarga.value = total;
+                    if (hiddenDurasi) hiddenDurasi.value = durasiPerHari;
                 } else {
                     durasi.textContent = '- Hari';
                     biayaTotal.textContent = 'Rp. 0';
+                    if (hiddenTotalHarga) hiddenTotalHarga.value = '';
+                    if (hiddenDurasi) hiddenDurasi.value = '';
                 }
             }
 
@@ -139,6 +208,103 @@
             tanggalSelesai.addEventListener('change', hitungBiayaTotal);
 
             hitungBiayaTotal();
+
+            // Address API base
+            const alamatApi = "https://alamat.thecloudalert.com/api/";
+
+            // Elements
+            const provinsi = document.getElementById('provinsi');
+            const kabupaten = document.getElementById('kabupaten');
+            const kecamatan = document.getElementById('kecamatan');
+            const kelurahan = document.getElementById('kelurahan');
+            const kodepos = document.getElementById('kodepos');
+
+            // Fetch Provinsi
+            fetch(alamatApi + 'provinsi/get/')
+                .then(res => res.json())
+                .then(data => {
+                    data.result.forEach(item => {
+                        provinsi.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                    });
+                });
+
+            provinsi.addEventListener('change', function() {
+                kabupaten.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
+                kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
+                kodepos.value = '';
+                if (this.value) {
+                    fetch(alamatApi + 'kabkota/get/?d_provinsi_id=' + this.value)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.result.forEach(item => {
+                                kabupaten.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                            });
+                        });
+                }
+            });
+
+            kabupaten.addEventListener('change', function() {
+                kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
+                kodepos.value = '';
+                if (this.value) {
+                    fetch(alamatApi + 'kecamatan/get/?d_kabkota_id=' + this.value)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.result.forEach(item => {
+                                kecamatan.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                            });
+                        });
+                }
+            });
+
+            kecamatan.addEventListener('change', function() {
+                kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
+                kodepos.value = '';
+                if (this.value) {
+                    fetch(alamatApi + 'kelurahan/get/?d_kecamatan_id=' + this.value)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.result.forEach(item => {
+                                kelurahan.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                            });
+                        });
+                }
+            });
+
+            // Fetch kodepos when kabupaten and kecamatan are selected
+            kelurahan.addEventListener('change', function() {
+                kodepos.value = '';
+                if (kabupaten.value && kecamatan.value) {
+                    fetch(alamatApi + `kodepos/get/?d_kabkota_id=${kabupaten.value}&d_kecamatan_id=${kecamatan.value}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.result && data.result.length > 0) {
+                                kodepos.value = data.result[0].text;
+                            }
+                        });
+                }
+            });
+
+            // Pickup method logic
+            const pickupDelivery = document.getElementById('pickupDelivery');
+            const pickupPlace = document.getElementById('pickupPlace');
+            const addressSection = document.getElementById('addressSection');
+            const addressInputs = addressSection.querySelectorAll('select, input');
+
+            function toggleAddressSection() {
+                if (pickupDelivery.checked) {
+                    addressSection.style.display = '';
+                    addressInputs.forEach(input => input.required = true);
+                } else {
+                    addressSection.style.display = 'none';
+                    addressInputs.forEach(input => input.required = false);
+                }
+            }
+            pickupDelivery.addEventListener('change', toggleAddressSection);
+            pickupPlace.addEventListener('change', toggleAddressSection);
+            toggleAddressSection();
         });
     </script>
 </div>

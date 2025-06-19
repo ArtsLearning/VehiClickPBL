@@ -45,27 +45,27 @@
 
                 <div>
                     <label class="block mb-2 text-lg font-semibold">Nama Pemesan</label>
-                    <input type="text" name="nama" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" required>
+                    <input type="text" name="nama" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" value="{{ isset($order['nama']) ? $order['nama'] : '' }}" {{ isset($order['nama']) ? 'readonly' : 'required' }}>
                 </div>
 
                 <div>
                     <label class="block mb-2 text-lg font-semibold">Email</label>
-                    <input type="email" name="email" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" required>
+                    <input type="email" name="email" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" value="{{ isset($order['email']) ? $order['email'] : '' }}" {{ isset($order['email']) ? 'readonly' : 'required' }}>
                 </div>
 
                 <div>
                     <label class="block mb-2 text-lg font-semibold">Metode Pembayaran</label>
-                    <select name="metode" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" required>
+                    <select name="metode" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" {{ isset($order['metode']) ? 'disabled' : 'required' }}>
                         <option value="">-- Pilih Metode --</option>
-                        <option value="transfer">Transfer Bank</option>
-                        <option value="ewallet">E-Wallet</option>
-                        <option value="kartu">Kartu Kredit/Debit</option>
+                        <option value="transfer" {{ (isset($order['metode']) && $order['metode'] == 'transfer') ? 'selected' : '' }}>Transfer Bank</option>
+                        <option value="ewallet" {{ (isset($order['metode']) && $order['metode'] == 'ewallet') ? 'selected' : '' }}>E-Wallet</option>
+                        <option value="kartu" {{ (isset($order['metode']) && $order['metode'] == 'kartu') ? 'selected' : '' }}>Kartu Kredit/Debit</option>
                     </select>
                 </div>
 
                 <div>
                     <label class="block mb-2 text-lg font-semibold">Nominal Pembayaran</label>
-                    <input type="number" name="nominal" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" required>
+                    <input type="number" name="nominal" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:border-orange-400 text-white" value="{{ isset($order['nominal']) ? $order['nominal'] : '' }}" {{ isset($order['nominal']) ? 'readonly' : 'required' }}>
                 </div>
 
                 <div class="text-center">
@@ -81,9 +81,9 @@
 
                 <ul class="space-y-3 text-sm text-gray-300">
                     <li><strong>ID Pemesanan:</strong> INV-{{ rand(1000,9999) }}</li>
-                    <li><strong>Nama:</strong> -</li>
-                    <li><strong>Metode:</strong> -</li>
-                    <li><strong>Total:</strong> Rp 100.000</li>
+                    <li><strong>Nama:</strong> {{ isset($order['nama']) ? $order['nama'] : '-' }}</li>
+                    <li><strong>Metode:</strong> {{ isset($order['metode']) ? ucfirst($order['metode']) : '-' }}</li>
+                    <li><strong>Total:</strong> Rp {{ isset($order['nominal']) ? number_format($order['nominal'], 0, ',', '.') : '100.000' }}</li>
                 </ul>
 
                 <div class="mt-6">

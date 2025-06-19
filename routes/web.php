@@ -32,7 +32,7 @@ Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
 
 // Pembayaran
 Route::get('/pembayaran', [PembayaranController::class, 'show']);
-Route::post('/pembayaran/proses', [PaymentController::class, 'process'])->name('payment.process');
+Route::post('/pembayaran/proses', [PembayaranController::class, 'process'])->name('payment.process');
 
 // Google Auth
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
