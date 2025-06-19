@@ -72,9 +72,17 @@
                     <div class="relative" x-ref="profileDropdown">
                         <button @click="profileOpen = !profileOpen"
                                 class="flex items-center space-x-2 text-orange-400 hover:text-orange-300 transition-all duration-300 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-2 rounded-lg">
-                            <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
-                                <span class="text-xs font-semibold text-white">{{ substr(Auth::user()->name, 0, 1) }}</span>
-                            </div>
+                            @if (Auth::user()->foto_customer)
+                                <img
+                                    src="{{ asset('storage/foto_user/' . Auth::user()->foto_customer) }}"
+                                    class="w-8 h-8 rounded-full object-cover"
+                                    alt="Foto Profil" />
+                            @else
+                                <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
+                                    <span class="text-xs font-semibold text-white">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                                </div>
+                            @endif
+
                             <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
                             <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': profileOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -212,9 +220,17 @@
                     @auth
                         <!-- Mobile Profile Section -->
                         <div class="flex items-center px-4 py-3 bg-orange-500/10 rounded-lg mb-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mr-3">
-                                <span class="text-sm font-semibold text-white">{{ substr(Auth::user()->name, 0, 1) }}</span>
-                            </div>
+                            @if (Auth::user()->foto_customer)
+                                <img
+                                    src="{{ asset('storage/foto_user/' . Auth::user()->foto_customer) }}"
+                                    class="w-10 h-10 rounded-full object-cover mr-3"
+                                    alt="Foto Profil" />
+                            @else
+                                <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mr-3">
+                                    <span class="text-sm font-semibold text-white">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                                </div>
+                            @endif
+
                             <div>
                                 <div class="text-orange-400 font-medium">{{ Auth::user()->name }}</div>
                                 <div class="text-xs text-orange-300">Logged in</div>

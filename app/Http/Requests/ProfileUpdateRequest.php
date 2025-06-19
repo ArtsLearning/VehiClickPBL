@@ -26,6 +26,8 @@ class ProfileUpdateRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
             'alamat' => ['nullable', 'string', 'max:255'],
+            'telepon' => ['nullable', 'regex:/^[0-9\s\-\+\(\)]+$/', 'max:20'],
+            'foto_customer' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }
