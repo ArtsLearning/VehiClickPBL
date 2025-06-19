@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Barang;
+use App\Models\User;
 
 class Transaksi extends Model
 {
@@ -29,8 +31,8 @@ class Transaksi extends Model
     }
 
     // Relasi ke Kendaraan
-    public function kendaraan()
+    public function barang()
     {
-        return $this->belongsTo(Kendaraan::class);
+        return $this->belongsTo(barang::class, 'kendaraan_id');
     }
 }

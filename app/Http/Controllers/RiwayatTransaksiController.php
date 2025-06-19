@@ -13,14 +13,13 @@ class RiwayatTransaksiController extends Controller
         // 1. Ambil ID pengguna yang sedang login
         $userId = Auth::id();
 
-        // 2. Ambil data dari database dan simpan ke variabel $riwayat_pengguna
-        $riwayat_pengguna = Transaksi::with('kendaraan')
-                            ->where('user_id', $userId)
-                            ->orderBy('created_at', 'desc')
-                            ->get();
+        // 2. Ambil data dari database (DENGAN PERBAIKAN)
+        $riwayat_pengguna = Transaksi::with('barang') // Diubah dari 'k' menjadi 'barang'
+                                   ->where('user_id', $userId) // Diubah dari 'id' menjadi 'user_id'
+                                   ->orderBy('created_at', 'desc')
+                                   ->paginate(10);
 
-        // 3. Kirim variabel $riwayat_pengguna ke view dengan nama 'riwayat'
-        //    Pastikan nama di sini ('riwayat') cocok dengan yang dipakai di file Blade (@forelse ($riwayat as ...))
+        // 3. Kirim data ke view
         return view('pages.riwayat_pemesanan', ['riwayat' => $riwayat_pengguna]);
     }
 }
