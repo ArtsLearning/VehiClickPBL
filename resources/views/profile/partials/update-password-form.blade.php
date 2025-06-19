@@ -35,13 +35,15 @@
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
-                <p
+                <div
                     x-data="{ show: true }"
                     x-show="show"
                     x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                    x-init="setTimeout(() => show = false, 3000)"
+                    class="text-sm text-green-600 bg-green-100 border border-green-300 rounded-md px-4 py-2"
+                >
+                    Kata sandi berhasil diperbarui.
+                </div>
             @endif
         </div>
     </form>
