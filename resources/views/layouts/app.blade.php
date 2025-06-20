@@ -21,7 +21,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-[#0f1419] text-gray-100" style="background-image:
+            radial-gradient(at 40% 20%, rgba(255, 107, 53, 0.1), transparent 50%),
+            radial-gradient(at 80% 0%, rgba(247, 147, 30, 0.1), transparent 50%),
+            radial-gradient(at 0% 50%, rgba(255, 107, 53, 0.05), transparent 50%);
+        ">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

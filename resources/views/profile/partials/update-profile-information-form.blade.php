@@ -22,7 +22,7 @@
         {{-- FOTO PROFIL --}}
         <div class="flex items-center gap-6">
             <div class="shrink-0">
-                <img class="h-28 w-28 rounded-full object-cover shadow-lg ring-2 ring-orange-400"
+                <img class="h-36 w-36 rounded-full object-cover shadow-lg ring-2 ring-orange-400"
                     src="{{ $user->foto_customer ? asset('storage/foto_user/' . $user->foto_customer) : 'https://img.icons8.com/ios-filled/100/000000/user.png' }}"
                     alt="Foto Profil Pengguna" />
             </div>
@@ -106,14 +106,13 @@
         </div>
     </form>
 
-    {{-- Tombol HAPUS FOTO (Form terpisah tapi sejajar dengan tombol Save) --}}
     @if ($user->foto_customer)
         <div class="mt-4">
             <form method="POST" action="{{ route('profile.delete-photo') }}" class="inline-block">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-md"
+                    class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     onclick="return confirm('Hapus foto profil?')">
                     {{ __('Delete Photo') }}
                 </button>
