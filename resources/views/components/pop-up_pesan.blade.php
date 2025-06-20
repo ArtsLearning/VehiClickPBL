@@ -129,7 +129,8 @@
                 <input type="hidden" name="total_harga" id="hiddenTotalHarga" />
                 <input type="hidden" name="durasi" id="hiddenDurasi" />
                 <input type="hidden" name="nama_kendaraan" value="{{ $barangs->nama_barang }}" />
-                <!-- Action Buttons -->
+                <input type="hidden" name="barang_id" value="{{ $barangs->id }}" />
+                <!-- Action Buttons --> 
                 <div class="flex flex-col sm:flex-row gap-4 pt-6">
                     <button type="button" onclick="document.getElementById('popupModal').classList.add('hidden')" class="flex-1 border-2 border-gray-600 hover:border-red-400 hover:bg-red-400/10 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-times mr-2"></i>

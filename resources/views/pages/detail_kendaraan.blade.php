@@ -189,8 +189,15 @@
 
                     <!-- Action Button -->
                     <div class="flex justify-end">
-                        <button onclick="document.getElementById('popupModal').classList.remove('hidden')" 
-                                class="gradient-orange hover:glow-orange-strong px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 pulse-glow">
+                        <button
+                            @if ($barangs->stok < 1) 
+                                disabled 
+                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300" 
+                            @else  
+                                onclick="document.getElementById('popupModal').classList.remove('hidden')" 
+                                class="gradient-orange hover:glow-orange-strong px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 pulse-glow"
+                            @endif
+                        >
                             <i class="fas fa-calendar-check mr-2"></i>
                             Pesan Sekarang
                         </button>

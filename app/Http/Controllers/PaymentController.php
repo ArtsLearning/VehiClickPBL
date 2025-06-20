@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
+use App\Models\Barang;
 use Midtrans\Snap;
 use Midtrans\Config;
 
 class PaymentController extends Controller
 {
-
     public function prosesPemesanan(Request $request)
     {
         $pemesanan = Pemesanan::create($request->only([
@@ -18,9 +18,14 @@ class PaymentController extends Controller
             'alamat_detail', 'tanggal_mulai', 'tanggal_selesai',
             'durasi', 'total_harga', 'nama_kendaraan'
         ]));
-        
 
-    return redirect()->route('payment.show', ['id' => $pemesanan->id]);
+        $barang = Barang::find($request->barang_id);
+
+        if ($barang && $barang->stok > 0) {
+            $barang->decrement('stok');
+        }
+
+        return redirect()->route('payment.show', ['id' => $pemesanan->id]);
     }
     public function show($id)
     {
