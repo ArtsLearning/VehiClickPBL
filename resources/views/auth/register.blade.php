@@ -165,6 +165,7 @@
                 </label>
                 <div class="relative">
                     <input type="email" name="email" id="email" value="{{ old('email') }}" required
+                        autocomplete="off"
                         placeholder="Masukkan email Anda"
                         class="input-focus w-full px-4 py-3 pr-12 bg-white/10 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -187,6 +188,7 @@
                 </label>
                 <div class="relative">
                     <input type="password" name="password" id="password" required
+                        autocomplete="new-password"
                         placeholder="Masukkan password Anda"
                         class="input-focus w-full px-4 py-3 pr-12 bg-white/10 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
                     <button type="button" id="togglePassword"
@@ -237,7 +239,7 @@
                     <!-- {!! NoCaptcha::display() !!} --> 
                     
                     <!-- Contoh reCAPTCHA placeholder (ganti dengan yang asli) -->
-                    <div class="g-recaptcha" data-sitekey="6Lc7FWQrAAAAAHkknzK9BefIewPNeoQhF7754nT8"></div>
+                    <div class="g-recaptcha" data-sitekey="6Lc7FWQrAAAAAHkknzK9BefIewPNeoQhF7754nT8" data-callback="recaptchaRegisterCallback" ></div>
                 </div>
                 
                 <!-- reCAPTCHA Error Messages -->
@@ -252,32 +254,16 @@
 
             <!-- Submit Button -->
             <div class="pt-2">
-                <button type="submit"
-                    class="btn-primary w-full text-white font-semibold py-3 rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent">
+                <button 
+                    id="registerBtn"
+                    type="submit"
+                    class="btn-primary w-full text-white font-semibold py-3 rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled>
                     <i class="fas fa-user-plus mr-2"></i>
                     DAFTAR SEKARANG
                 </button>
             </div>
         </form>
-
-        <!-- Divider -->
-        <div class="flex items-center my-6">
-            <div class="flex-grow border-t border-gray-600"></div>
-            <span class="mx-4 text-gray-400 text-sm">atau daftar dengan</span>
-            <div class="flex-grow border-t border-gray-600"></div>
-        </div>
-
-        <!-- Social Buttons -->
-        <div class="space-y-3">
-            <button class="social-btn w-full flex items-center justify-center gap-3 rounded-xl py-3 hover:bg-white/20 transition-all duration-200">
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
-                <span class="text-white font-medium">Google</span>
-            </button>
-            <button class="social-btn w-full flex items-center justify-center gap-3 rounded-xl py-3 hover:bg-white/20 transition-all duration-200">
-                <img src="https://www.svgrepo.com/show/448224/facebook.svg" alt="Facebook" class="w-5 h-5">
-                <span class="text-white font-medium">Facebook</span>
-            </button>
-        </div>
 
         <!-- Login Link -->
         <p class="mt-6 text-center text-sm text-gray-400">
@@ -397,6 +383,14 @@
                 }
             });
         });
+
+       
+        function recaptchaRegisterCallback() {
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.disabled = false;
+            }
+        }
 
         // Add error styling to inputs with validation errors
         document.addEventListener('DOMContentLoaded', function() {
