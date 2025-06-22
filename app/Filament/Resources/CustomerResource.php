@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 // use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\Select;   
 
 class CustomerResource extends Resource
 {
@@ -62,6 +63,15 @@ class CustomerResource extends Resource
                 //     ->imageEditor() // editor crop bawaan
                 //     ->downloadable()
                 //     ->previewable(), 
+                Select::make('role')
+                    ->label('Role')
+                    ->options([
+                        'admin' => 'Admin',
+                        'customer' => 'Customer',
+                    ])
+                    ->default('customer')
+                    ->required()
+                    ->visible(fn () => auth()->user()->role === 'admin'),
             ]);
     }
 
@@ -81,6 +91,14 @@ class CustomerResource extends Resource
                     ->label('Foto')
                     ->disk('public')
                     ->size(100),
+                TextColumn::make('role')
+                    ->label('Role')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'admin' => 'danger',
+                        'customer' => 'success',
+                        default => 'gray',
+        }),
             ])
             ->filters([
                 //

@@ -18,7 +18,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentController;
 
 // Landing Page
-Route::get('/', [IndexController::class, 'show']);
+Route::get('/', [IndexController::class, 'show'])->name('home');
 
 // Kendaraan
 Route::get('/detail_kendaraan', [DetailKendaraanController::class, 'show']);
