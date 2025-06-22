@@ -478,10 +478,10 @@ body {
 
 @keyframes pulse {
     0%, 100% {
-        opacity: 1;
+        opacity: 0.2;
     }
     50% {
-        opacity: 0.7;
+        opacity: 0.4;
     }
 }
 

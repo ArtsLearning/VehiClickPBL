@@ -22,7 +22,7 @@
         {{-- FOTO PROFIL --}}
         <div class="flex items-center gap-6">
             <div class="shrink-0">
-                <img class="h-36 w-36 rounded-full object-cover shadow-lg ring-2 ring-orange-400"
+                <img id="preview-foto" class="h-36 w-36 rounded-full object-cover shadow-lg ring-2 ring-orange-400"
                     src="{{ $user->foto_customer ? asset('storage/foto_user/' . $user->foto_customer) : 'https://img.icons8.com/ios-filled/100/000000/user.png' }}"
                     alt="Foto Profil Pengguna" />
             </div>
@@ -120,10 +120,23 @@
         </div>
     @endif
 
-    {{-- Feedback jika foto dihapus --}}
     @if (session('status') === 'photo-deleted')
         <p class="mt-2 text-sm text-green-600">
             {{ __('Foto profil berhasil dihapus.') }}
         </p>
     @endif
+
+    {{-- ✅ Script Preview Foto --}}
+    <script>
+        document.getElementById('foto_customer').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('preview-foto').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
 </section>

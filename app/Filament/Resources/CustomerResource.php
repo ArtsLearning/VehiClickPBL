@@ -87,14 +87,19 @@ class CustomerResource extends Resource
                 TextColumn::make('telepon')
                     ->label('Nomor Telepon'),
                 TextColumn::make('alamat'),
-                ImageColumn::make('foto_customer')
+                TextColumn::make('foto_customer')
                     ->label('Foto')
-                    ->disk('public')
-                    ->size(100),
+                    ->html()
+                    ->formatStateUsing(fn ($state) =>
+                        "<div style='width: 140px; height:150px; display: flex; align-items: center; justify-content: center;'>
+                            <img src='" . asset('storage/foto_user/' . $state) . "' 
+                                style='width: 120px; height: 120px; border-radius: 50%; object-fit: cover;'>
+                        </div>"
+                    ),
                 TextColumn::make('role')
                     ->label('Role')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {  
                         'admin' => 'danger',
                         'customer' => 'success',
                         default => 'gray',
