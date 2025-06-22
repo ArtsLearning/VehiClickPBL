@@ -23,7 +23,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/dashboard');
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return redirect()->route('filament.admin.pages.dashboard');
+        }
+
+        return redirect()->route('home'); // ganti dengan route dashboard customer kamu
     }
 
     public function destroy(Request $request): RedirectResponse
