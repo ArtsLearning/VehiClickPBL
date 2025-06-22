@@ -9,10 +9,10 @@ class Pemesanan extends Model
         'nama', 'email', 'pickup_method',
         'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos',
         'alamat_detail', 'tanggal_mulai', 'tanggal_selesai',
-        'durasi', 'total_harga', 'nama_kendaraan'
+        'durasi', 'total_harga', 'nama_kendaraan','status'
     ];
     
-
+    
 
  
 }

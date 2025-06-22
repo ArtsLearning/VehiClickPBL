@@ -107,7 +107,7 @@
                                     </svg>
                                     Profile
                                 </a>
-                                <a href="{{ route('riwayat.index') }}" class="dropdown-item flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
+                                <a href="{{ route('pemesanan.riwayat') }}" class="dropdown-item flex items-center px-4 py-3 text-sm text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 transition-all duration-200">
                                     <svg class="w-4 h-4 mr-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m5-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>

@@ -73,4 +73,13 @@ class PaymentController extends Controller
 
         return view('pembayaran-midtrans', compact('snapToken', 'pemesanan'));
     }
+    public function riwayat()
+    {
+        // Jika menggunakan auth
+        $riwayat = Pemesanan::where('email', auth()->user()->email)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        return view('riwayat', compact('riwayat'));
+    }
 }

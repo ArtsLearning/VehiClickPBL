@@ -28,7 +28,9 @@ Route::get('/produk', [BarangController::class, 'showProduct']);
 Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('produk.detail');
 
 // Riwayat
-Route::get('/riwayat', [RiwayatController::class, 'show'])->name('riwayat');
+Route::get('/riwayat', [PaymentController::class, 'riwayat'])->name('pemesanan.riwayat');
+
+
 
 // Pembayaran
 
