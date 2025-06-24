@@ -182,20 +182,39 @@
                         <p class="text-gray-300 text-lg leading-relaxed">{{ $barang->deskripsi }}</p>
                     </div>
 
+                    @php
+                        $statusVerifikasiSim = auth()->user()->status_verifikasi_sim ?? 'belum';
+                    @endphp
+
                     <div class="flex justify-end">
-                        <button
-                            @if ($barang->stok < 1) 
-                                disabled 
-                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300" 
-                            @else   
-                                onclick="document.getElementById('popupModal').classList.remove('hidden')" 
+                        @if ($statusVerifikasiSim !== 'terverifikasi')
+                            <button
+                                disabled
+                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300"
+                                title="Anda harus menyelesaikan verifikasi SIM terlebih dahulu"
+                            >
+                                <i class="fas fa-calendar-times mr-2"></i>
+                                Verifikasi SIM Diperlukan
+                            </button>
+                        @elseif ($barang->stok < 1)
+                            <button
+                                disabled
+                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300"
+                            >
+                                <i class="fas fa-calendar-times mr-2"></i>
+                                Stok Habis
+                            </button>
+                        @else
+                            <button
+                                onclick="document.getElementById('popupModal').classList.remove('hidden')"
                                 class="gradient-orange hover:glow-orange-strong px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 pulse-glow"
-                            @endif
-                        >
-                            <i class="fas fa-calendar-check mr-2"></i>
-                            Pesan Sekarang
-                        </button>
+                            >
+                                <i class="fas fa-calendar-check mr-2"></i>
+                                Pesan Sekarang
+                            </button>
+                        @endif
                     </div>
+
                 </div>
             </div>
 

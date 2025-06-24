@@ -93,33 +93,28 @@ class ProfileController extends Controller
         return redirect()->route('profile.edit')->with('status', 'photo-deleted');
     }
 
-    /* Verifikasi KTP */
-    public function verifikasiKtp(Request $request): RedirectResponse
+    /* Verifikasi SIM */
+    public function verifikasiSim(Request $request): RedirectResponse
     {
         $request->validate([
-            'foto_ktp' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_selfie_ktp' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_sim' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $user = $request->user();
 
-        // Upload foto
-        if ($request->hasFile('foto_ktp')) {
-            $ktpPath = $request->file('foto_ktp')->store('verifikasi/ktp', 'public');
-            $user->foto_ktp = $ktpPath;
-        }
-
-        if ($request->hasFile('foto_selfie_ktp')) {
-            $selfiePath = $request->file('foto_selfie_ktp')->store('verifikasi/selfie_ktp', 'public');
-            $user->foto_selfie_ktp = $selfiePath;
+        // Upload foto SIM
+        if ($request->hasFile('foto_sim')) {
+            $simPath = $request->file('foto_sim')->store('verifikasi/sim', 'public');
+            $user->foto_sim = $simPath;
         }
 
         // Set status ke "menunggu"
-        $user->status_verifikasi_ktp = 'menunggu';
+        $user->status_verifikasi_sim = 'menunggu';
         $user->save();
 
-        return back()->with('status', 'verifikasi-ktp-success');
+        return back()->with('status', 'verifikasi-sim-success');
     }
+
 
 }
 
