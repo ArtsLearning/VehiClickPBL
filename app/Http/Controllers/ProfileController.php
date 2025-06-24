@@ -93,4 +93,35 @@ class ProfileController extends Controller
         return redirect()->route('profile.edit')->with('status', 'photo-deleted');
     }
 
+    /* Verifikasi KTP */
+    public function verifikasiKtp(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'foto_ktp' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'foto_selfie_ktp' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user = $request->user();
+
+        // Upload foto
+        if ($request->hasFile('foto_ktp')) {
+            $ktpPath = $request->file('foto_ktp')->store('verifikasi/ktp', 'public');
+            $user->foto_ktp = $ktpPath;
+        }
+
+        if ($request->hasFile('foto_selfie_ktp')) {
+            $selfiePath = $request->file('foto_selfie_ktp')->store('verifikasi/selfie_ktp', 'public');
+            $user->foto_selfie_ktp = $selfiePath;
+        }
+
+        // Set status ke "menunggu"
+        $user->status_verifikasi_ktp = 'menunggu';
+        $user->save();
+
+        return back()->with('status', 'verifikasi-ktp-success');
+    }
+
 }
+
+
+?>
