@@ -16,6 +16,7 @@ use App\Http\Controllers\UbahSandiController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UlasanController;
 
 // Landing Page
 Route::get('/', [IndexController::class, 'show'])->name('home');
@@ -30,6 +31,7 @@ Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('prod
 // Riwayat
 
 Route::get('/riwayat', [PaymentController::class, 'riwayat'])->name('riwayat');
+Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store')->middleware('auth');
 Route::post('/midtrans/webhook', [PaymentController::class, 'handleWebhook']);
 
 

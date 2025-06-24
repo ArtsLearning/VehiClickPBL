@@ -262,6 +262,27 @@
         pointer-events: none;
         opacity: 0.7;
     }
+
+    .rating-stars {
+    direction: rtl; /* Balik arah agar hover bekerja dengan benar */
+}
+.rating-stars label {
+    font-size: 2.5rem; /* Ukuran bintang */
+    color: #4B5563; /* Warna bintang mati (abu-abu) */
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+.rating-stars input:checked ~ label,
+.rating-stars:not(:checked) > label:hover,
+.rating-stars:not(:checked) > label:hover ~ label {
+    color: #FBBF24; /* Warna bintang aktif (kuning) */
+}
+.rating-stars input:checked + label:hover,
+.rating-stars input:checked ~ label:hover,
+.rating-stars label:hover ~ input:checked ~ label,
+.rating-stars input:checked ~ label:hover ~ label {
+    color: #F59E0B; /* Warna bintang hover saat sudah dipilih (kuning lebih gelap) */
+}
 </style>
 <div class="min-h-screen pt-24 pb-10 px-4 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden bg-pattern">
     <!-- Background Pattern -->
@@ -358,21 +379,41 @@
                 </div>
 
                 <!-- Payment Button -->
-                @if($order->status == 'pending')
-                <div class="mt-6 md:mt-0 md:ml-6">
-                    <form method="POST" action="{{ route('payment.snap', $order->id) }}">
-                        @csrf
-                        <button type="submit" class="btn-enhanced group relative overflow-hidden">
-                            <div class="relative flex items-center gap-2 z-10">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                                </svg>
-                                Bayar Sekarang
-                            </div>
-                        </button>
-                    </form>
+                <div class="mt-6 md:mt-0 md:ml-6 flex-shrink-0">
+    @if($order->status == 'pending')
+        <form method="POST" action="{{ route('payment.snap', $order->id) }}">
+            @csrf
+            <button type="submit" class="btn-enhanced group relative overflow-hidden">
+                <div class="relative flex items-center gap-2 z-10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Bayar Sekarang
                 </div>
-                @endif
+            </button>
+        </form>
+    
+    {{-- INI KONDISI UNTUK MENAMPILKAN TOMBOL ULASAN --}}
+    @elseif($order->status == 'completed' && !$ulasanDiberikan->contains($order->id))
+        <button type="button" 
+                class="btn-enhanced group relative overflow-hidden tombol-beri-ulasan"
+                style="background: linear-gradient(135deg, #10B981 0%, #34D399 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);"
+                data-pesanan-id="{{ $order->id }}"
+                data-produk-id="{{ $order->barang_id }}"
+                data-nama-produk="{{ $order->nama_kendaraan }}">
+            <div class="relative flex items-center gap-2 z-10">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                Beri Ulasan
+            </div>
+        </button>
+    @elseif($ulasanDiberikan->contains($order->id))
+        <button class="btn-enhanced group relative overflow-hidden" disabled style="background: #4B5563; cursor: not-allowed; box-shadow: none;">
+            <div class="relative flex items-center gap-2 z-10">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                Ulasan Diberikan
+            </div>
+        </button>
+    @endif
+</div>
+                
             </div>
         </div>
         @empty
@@ -991,7 +1032,7 @@ body {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced loading state for forms
+    // Enhanced loading state for forms (KODE LAMA ANDA, TETAP ADA)
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', function() {
@@ -1000,11 +1041,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 button.classList.add('loading');
                 button.disabled = true;
                 
-                // Optional: Add loading text
                 const originalText = button.textContent;
                 button.textContent = 'Processing...';
                 
-                // Re-enable button after form processing (adjust timeout as needed)
                 setTimeout(() => {
                     button.classList.remove('loading');
                     button.disabled = false;
@@ -1014,22 +1053,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Auto-hide notifications
+    // Auto-hide notifications (KODE LAMA ANDA, TETAP ADA)
     const notifications = document.querySelectorAll('.order-notification');
     notifications.forEach(notification => {
         setTimeout(() => {
             notification.classList.add('show');
             setTimeout(() => {
                 notification.classList.remove('show');
-                // Optional: Remove from DOM after hiding
                 setTimeout(() => {
                     notification.remove();
-                }, 500); // Allow time for CSS transition
-            }, 5000); // Show notification for 5 seconds
-        }, 100); // Small delay before showing
+                }, 500);
+            }, 5000);
+        }, 100);
     });
     
-    // Enhanced notification system with close button
+    // Enhanced notification system with close button (KODE LAMA ANDA, TETAP ADA)
     const closeButtons = document.querySelectorAll('.notification-close');
     closeButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -1043,7 +1081,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Form validation enhancement
+    // Form validation enhancement (KODE LAMA ANDA, TETAP ADA)
     const inputs = document.querySelectorAll('input[required], textarea[required], select[required]');
     inputs.forEach(input => {
         input.addEventListener('blur', function() {
@@ -1061,7 +1099,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Smooth scroll for anchor links
+    // Smooth scroll for anchor links (KODE LAMA ANDA, TETAP ADA)
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
     anchorLinks.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -1077,6 +1115,98 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // ==========================================================
+    // ========== LOGIKA MODAL ULASAN (KODE BARU DITAMBAHKAN DI SINI) ==========
+    // ==========================================================
+    const ulasanModal = document.getElementById('ulasanModal');
+    if (ulasanModal) {
+        const closeUlasanModalBtn = document.getElementById('closeUlasanModal');
+        const tombolBeriUlasan = document.querySelectorAll('.tombol-beri-ulasan');
+
+        const modalIdPesanan = document.getElementById('modal_id_pesanan');
+        const modalIdProduk = document.getElementById('modal_id_produk');
+        const namaProdukModal = document.getElementById('namaProdukModal');
+
+        // Fungsi untuk membuka Modal
+        tombolBeriUlasan.forEach(button => {
+            button.addEventListener('click', function() {
+                // Ambil data dari tombol yang diklik
+                const pesananId = this.dataset.pesananId;
+                const produkId = this.dataset.produkId;
+                const namaProduk = this.dataset.namaProduk;
+
+                // Isi form di dalam modal dengan data yang sesuai
+                modalIdPesanan.value = pesananId;
+                modalIdProduk.value = produkId;
+                namaProdukModal.textContent = `untuk kendaraan "${namaProduk}"`;
+
+                // Tampilkan modal
+                ulasanModal.classList.remove('hidden');
+                ulasanModal.classList.add('flex');
+            });
+        });
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            ulasanModal.classList.add('hidden');
+            ulasanModal.classList.remove('flex');
+        }
+
+        // Event listener untuk tombol close
+        if (closeUlasanModalBtn) {
+            closeUlasanModalBtn.addEventListener('click', closeModal);
+        }
+
+        // Event listener untuk menutup saat klik di luar area modal
+        ulasanModal.addEventListener('click', function(event) {
+            if (event.target === ulasanModal) {
+                closeModal();
+            }
+        });
+    }
 });
 </script>
+        // Pop up ulasan
+        <div id="ulasanModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden" style="backdrop-filter: blur(5px);">
+            <div class="card-enhanced p-8 rounded-2xl shadow-2xl relative w-full max-w-lg mx-4 fade-in-up">
+        
+        <button id="closeUlasanModal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <div class="text-center mb-6">
+            <h3 class="text-3xl font-bold gradient-text">Beri Ulasan Anda</h3>
+            <p id="namaProdukModal" class="text-gray-400 mt-1">untuk kendaraan</p>
+        </div>
+
+        <form action="{{ route('ulasan.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id_pesanan" id="modal_id_pesanan">
+            <input type="hidden" name="id_produk" id="modal_id_produk">
+
+            <div class="mb-6">
+                <label class="block text-gray-300 text-sm font-bold mb-2 text-center">Rating Anda</label>
+                <div class="flex items-center justify-center gap-2 rating-stars">
+                    <input type="radio" id="star5" name="rating" value="5" class="hidden" required/><label for="star5" title="Sempurna">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" class="hidden"/><label for="star4" title="Bagus">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" class="hidden"/><label for="star3" title="Cukup">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" class="hidden"/><label for="star2" title="Kurang">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" class="hidden"/><label for="star1" title="Buruk">★</label>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <label for="komentar" class="block text-gray-300 text-sm font-bold mb-2">Komentar Anda</label>
+                <textarea name="komentar" id="komentar" rows="5" class="select-enhanced w-full" placeholder="Bagaimana pengalaman Anda dengan kendaraan ini?" required></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn-enhanced w-full">
+                    Kirim Ulasan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
