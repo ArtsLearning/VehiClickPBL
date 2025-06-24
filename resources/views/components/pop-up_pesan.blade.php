@@ -16,31 +16,37 @@
 
             <div class="flex flex-col items-center text-center space-y-6">
                 <div class="w-72 h-72 bg-gray-800 rounded-2xl overflow-hidden flex items-center justify-center glow-orange float-animation">
-                    {{-- PERBAIKAN: $barangs -> $barang --}}
                     <img src="{{ asset('storage/' . $barang->foto_barang) }}" alt="{{ $barang->nama_barang }}" class="object-cover w-full h-full hover:scale-110 transition-transform duration-500">
                 </div>
                         
                 <div class="space-y-3">
-                    {{-- PERBAIKAN: $barangs -> $barang --}}
                     <h3 class="text-2xl font-bold text-gradient">{{ $barang->nama_barang }}</h3>
-                    {{-- PERBAIKAN: $barangs -> $barang --}}
                     <p id="hargaHarian" data-harga="{{ $barang->harga_barang }}" class="text-xl text-orange-400 font-semibold">
-                        {{-- PERBAIKAN: $barangs -> $barang --}}
                         Rp. {{ number_format($barang->harga_barang, 0, ',', '.') }},00 / hari
                     </p>
-                    <div class="star-rating text-lg">
-                        @for ($i = 1; $i <= 5; $i++)
-                             {{-- PERBAIKAN: $barangs -> $barang --}}
-                            <i class="fas fa-star {{ $i <= $barang->rating ? '' : 'opacity-25' }}"></i>
-                        @endfor
-                         {{-- PERBAIKAN: $barangs -> $barang --}}
-                        <span class="text-gray-300 ml-2">{{ $barang->rating }}/5</span>
+                    
+                    {{-- ========================================================== --}}
+                    {{-- ==== BAGIAN RATING INI YANG TELAH DIPERBAIKI ==== --}}
+                    {{-- ========================================================== --}}
+                    <div class="star-rating text-lg flex items-center justify-center">
+                        @if ($reviewCount > 0)
+                            {{-- Bintang Dinamis --}}
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fas fa-star {{ $i <= round($averageRating) ? '' : 'opacity-25' }}"></i>
+                            @endfor
+                            {{-- Angka Rata-rata --}}
+                            <span class="text-gray-300 ml-2">{{ number_format($averageRating, 1) }}/5</span>
+                        @else
+                            <span class="text-sm text-gray-400">Belum ada ulasan</span>
+                        @endif
                     </div>
+                    {{-- ========================================================== --}}
+                    {{-- ========================================================== --}}
+
                 </div>
             </div>
 
             <form method="POST" action="{{ route('payment.process') }}" id="bookingForm">
-
                 @csrf
                 <div class="space-y-2">
                     <label class="block font-semibold text-lg text-gradient">
@@ -120,7 +126,6 @@
                 </div>
                 <input type="hidden" name="total_harga" id="hiddenTotalHarga" />
                 <input type="hidden" name="durasi" id="hiddenDurasi" />
-                {{-- PERBAIKAN: $barangs -> $barang --}}
                 <input type="hidden" name="nama_kendaraan" value="{{ $barang->nama_barang }}" />
                 <input type="hidden" name="barang_id" value="{{ $barang->id }}" />
                 <div class="flex flex-col sm:flex-row gap-4 pt-6">
