@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-    /* ... (CSS Anda tidak diubah) ... */
+    /* ... (CSS tidak berubah) ... */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
     * {
@@ -130,7 +130,6 @@
 
 <div class="bg-gray-900 text-white min-h-screen overflow-x-hidden">
     <div class="fixed inset-0 pointer-events-none z-0">
-        {{-- Partikel tidak diubah --}}
         <div class="particle" style="left: 10%; width: 4px; height: 4px; animation-delay: 0s;"></div>
         <div class="particle" style="left: 20%; width: 6px; height: 6px; animation-delay: 2s;"></div>
         <div class="particle" style="left: 30%; width: 3px; height: 3px; animation-delay: 4s;"></div>
@@ -160,13 +159,17 @@
                 <div class="flex-1 text-white">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gradient">{{ $barang->nama_barang }}</h2>
                     
-                    <div class="flex items-center space-x-2 mb-4">
-                        <span class="text-xl font-semibold">{{ $barang->rating }}/5</span>
-                        <div class="star-rating text-xl">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <i class="fas fa-star {{ $i <= $barang->rating ? '' : 'opacity-25' }}"></i>
-                            @endfor
-                        </div>
+                    <div class="flex items-center mb-4">
+                        @if ($reviewCount > 0)
+                            <span class="text-xl font-semibold text-orange-400 mr-3">{{ number_format($averageRating, 1) }}/5</span>
+                            <div class="star-rating text-xl">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="fas fa-star {{ $i <= round($averageRating) ? '' : 'opacity-25' }}"></i>
+                                @endfor
+                            </div>
+                        @else
+                            <span class="text-gray-400">Belum ada ulasan</span>
+                        @endif
                     </div>
                     
                     <div class="space-y-2 mb-6">
@@ -179,20 +182,39 @@
                         <p class="text-gray-300 text-lg leading-relaxed">{{ $barang->deskripsi }}</p>
                     </div>
 
+                    @php
+                        $statusVerifikasiSim = auth()->user()->status_verifikasi_sim ?? 'belum';
+                    @endphp
+
                     <div class="flex justify-end">
-                        <button
-                            @if ($barang->stok < 1) 
-                                disabled 
-                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300" 
-                            @else   
-                                onclick="document.getElementById('popupModal').classList.remove('hidden')" 
+                        @if ($statusVerifikasiSim !== 'terverifikasi')
+                            <button
+                                disabled
+                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300"
+                                title="Anda harus menyelesaikan verifikasi SIM terlebih dahulu"
+                            >
+                                <i class="fas fa-calendar-times mr-2"></i>
+                                Verifikasi SIM Diperlukan
+                            </button>
+                        @elseif ($barang->stok < 1)
+                            <button
+                                disabled
+                                class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300"
+                            >
+                                <i class="fas fa-calendar-times mr-2"></i>
+                                Stok Habis
+                            </button>
+                        @else
+                            <button
+                                onclick="document.getElementById('popupModal').classList.remove('hidden')"
                                 class="gradient-orange hover:glow-orange-strong px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 pulse-glow"
-                            @endif
-                        >
-                            <i class="fas fa-calendar-check mr-2"></i>
-                            Pesan Sekarang
-                        </button>
+                            >
+                                <i class="fas fa-calendar-check mr-2"></i>
+                                Pesan Sekarang
+                            </button>
+                        @endif
                     </div>
+
                 </div>
             </div>
 
@@ -248,7 +270,6 @@
                     </div>
 
                     <div class="mt-8">
-                        {{-- Menggunakan style pagination bawaan tailwind --}}
                         {{ $ulasans->links() }}
                     </div>
                 @else
@@ -265,7 +286,6 @@
 </div>
 
 <script>
-    // ... (Semua JS Anda tidak diubah) ...
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {

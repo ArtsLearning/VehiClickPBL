@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\Select;
 
 
 class OrderResource extends Resource
@@ -26,7 +26,16 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'process' => 'Process',
+                        'completed' => 'Completed',
+                        'canceled' => 'Canceled',
+                    ])
+                    ->required()
+                    ->visible(fn () => auth()->user()->role === 'admin'),
             ]);
     }
 
@@ -52,12 +61,16 @@ class OrderResource extends Resource
                 TextColumn::make('total_harga')
                     ->money('IDR'),
                 TextColumn::make('nama_kendaraan'),
-                BadgeColumn::make('status')->colors([
-                    'info' => 'pending',
-                    'warning' => 'process',
-                    'success' => 'completed',
-                    'danger' => 'cancelled',
-                ]),
+                TextColumn::make('status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'pending' => 'info',
+                        'process' => 'warning',
+                        'completed' => 'success',
+                        'canceled' => 'danger',
+                        default => 'gray',
+                    }),
             ])
             ->filters([
                 //

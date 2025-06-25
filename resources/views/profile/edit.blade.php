@@ -377,7 +377,7 @@
                     @include('profile.partials.update-profile-information-form')
                 </div>
 
-                {{-- Verifikasi KTP --}}
+                {{-- Verifikasi SIM --}}
                 <div class="dark-card p-6 rounded-xl">
                     <div class="flex items-center space-x-3 mb-6">
                         <div class="w-10 h-10 section-icon rounded-lg flex items-center justify-center">
@@ -385,14 +385,14 @@
                                 <path fill-rule="evenodd" d="M18 8a6 6 0 11-11.8 2H4a1 1 0 100 2h2.07a6 6 0 1111.93-2h-1.2zM10 2a1 1 0 00-1 1v1H8a1 1 0 100 2h1v1a1 1 0 102 0V6h1a1 1 0 100-2h-1V3a1 1 0 00-1-1z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <h2 class="text-2xl font-bold text-white">Verifikasi KTP</h2>
+                        <h2 class="text-2xl font-bold text-white">Verifikasi SIM</h2>
                     </div>
 
                     <p class="text-sm text-gray-300 mb-4">
-                        Unggah foto KTP dan foto diri sambil memegang KTP untuk verifikasi identitas Anda.
+                        Unggah foto SIM Anda untuk verifikasi identitas.
                     </p>
 
-                    @include('profile.partials.verifikasi-ktp')
+                    @include('profile.partials.verifikasi-sim')
                 </div>
 
 

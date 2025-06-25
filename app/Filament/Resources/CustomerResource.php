@@ -72,8 +72,8 @@ class CustomerResource extends Resource
                     ->default('customer')
                     ->required()
                     ->visible(fn () => auth()->user()->role === 'admin'),
-                Select::make('status_verifikasi_ktp')
-                    ->label('Status Verifikasi KTP')
+                Select::make('status_verifikasi_sim')
+                    ->label('Status Verifikasi SIM')
                     ->options([
                         'belum' => 'Belum Mengirim',
                         'menunggu' => 'Menunggu',
@@ -106,7 +106,7 @@ class CustomerResource extends Resource
                                 style='width: 120px; height: 120px; border-radius: 50%; object-fit: cover;'>
                         </div>"
                     ),
-                TextColumn::make('status_verifikasi_ktp')
+                TextColumn::make('status_verifikasi_sim')
                     ->label('Status Verifikasi')
                     ->badge()
                     ->color(fn ($state) => match ($state) {
@@ -115,20 +115,12 @@ class CustomerResource extends Resource
                         'ditolak' => 'danger',
                         default => 'gray',
                     }),
-                ImageColumn::make('foto_ktp')
-                    ->label('Foto KTP')
+                ImageColumn::make('foto_sim')
+                    ->label('Foto SIM')
                     ->disk('public')
                     ->height(120)
                     ->width(200)
                     ->extraImgAttributes(['class' => 'rounded-md shadow ring-2 ring-orange-400']),
-
-                ImageColumn::make('foto_selfie_ktp')
-                    ->label('Selfie + KTP')
-                    ->disk('public')
-                    ->circular() 
-                    ->height(80)
-                    ->width(80)
-                    ->extraImgAttributes(['class' => 'shadow ring-2 ring-orange-400']),
                 TextColumn::make('role')
                     ->label('Role')
                     ->badge()

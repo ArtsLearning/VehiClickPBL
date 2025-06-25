@@ -26,9 +26,8 @@ class User extends Authenticatable
         'foto_customer',
         'google_id',
         'avatar',
-        'foto_ktp',
-        'foto_selfie_ktp',
-        'status_verifikasi_ktp',
+        'foto_sim',
+        'status_verifikasi_sim',
         'role',
     ];
 
