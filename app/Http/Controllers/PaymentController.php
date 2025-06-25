@@ -110,9 +110,12 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function handleCallback(Request $request) // Di routes sepertinya handleWebhook
+    public function handleWebhook(Request $request)
     {
-        // ... (Tidak ada perubahan di fungsi ini)
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.is_sanitized');
+        Config::$is3ds = config('midtrans.is_3ds');
         $notif = new \Midtrans\Notification();
         $status = $notif->transaction_status;
         $order_id = $notif->order_id;
@@ -120,12 +123,16 @@ class PaymentController extends Controller
         $pemesanan = Pemesanan::find($pemesanan_id);
         if (!$pemesanan) return;
         if ($status == 'capture' || $status == 'settlement') {
-            $pemesanan->status = 'completed';
+            $pemesanan->status = 'process';
         } elseif ($status == 'pending') {
             $pemesanan->status = 'pending';
         } elseif ($status == 'cancel' || $status == 'expire') {
             $pemesanan->status = 'canceled';
         }
         $pemesanan->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Webhook received successfully',
+        ]);
     }
 }

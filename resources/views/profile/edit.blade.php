@@ -38,7 +38,7 @@
     .profile-wrapper textarea,
     .profile-wrapper select {
         color: #f3f4f6 !important;
-        background: linear-gradient(145deg, #1f2937, #111827) !important;
+        background: linear-gradient(145deg,rgb(7, 7, 8),rgb(35, 36, 39)) !important;
         border: 1px solid #374151 !important;
         border-radius: 0.75rem !important;
         box-shadow: 
@@ -115,8 +115,8 @@
     }
 
     .dark-card {
-        background: linear-gradient(145deg, #1f2937 0%, #111827 50%, #0f172a 100%);
-        border: 1px solid #374151;
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d2d2d 100%);;
+        border: 1px solidrgb(36, 42, 53);
         position: relative;
         border-radius: 1rem;
         overflow: hidden;
