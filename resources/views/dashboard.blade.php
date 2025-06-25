@@ -19,7 +19,7 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            background: #111827;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d2d2d 100%);
         }
         
         .gradient-orange {
@@ -171,9 +171,78 @@
             background: rgba(255, 107, 53, 0.1);
             transform: translateX(5px);
         }
+
+        /* --- Vehicle Memory Game Styles --- */
+        .minigame-container {
+            background: linear-gradient(135deg, #18181b 70%, #23263f 100%);
+            border: 2px solid #ff6b35;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .game-card {
+            aspect-ratio: 1;
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 2rem;
+        }
+        .game-card:hover {
+            border-color: #ff6b35;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+            transform: scale(1.05);
+        }
+        .game-card.flipped {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+        }
+        .game-card.matched {
+            background: #10b981;
+            border-color: #10b981;
+        }
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 12px;
+            border: 1px solid #ff6b35;
+        }
+        .game-btn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .game-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
     </style>
      
-    <div class="min-h-screen bg-gray-900 text-white">
+    <div class="min-h-screen bg-transparent text-white">
         <!-- Setelah navbar -->
         <div class="pt-24 px-6"> <!-- ganti p-6 menjadi pt-24 px-6 -->
             <div class="welcome-card text-white relative z-10">
@@ -218,133 +287,98 @@
                 </div>
             </div>
         
-            <!-- My Rentals Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-bold mb-4">
-                        My <span class="text-gradient">Active Rentals</span>
-                    </h2>
-                    <div class="space-y-4">
-                        <div class="vehicle-card rounded-xl p-6 flex items-center justify-between">
-                            <div class="flex items-center">
-                                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
-                                    alt="Toyota Camry" class="w-16 h-16 rounded-lg object-cover mr-4">
-                                <div>
-                                    <h3 class="text-lg font-bold">Toyota Camry 2023</h3>
-                                    <p class="text-gray-400">B 1234 ABC</p>
-                                    <p class="text-sm text-orange-400">Return: Dec 15, 2024</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-2xl font-bold text-gradient">$80/day</p>
-                                <button class="mt-2 bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                    Extend
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="vehicle-card rounded-xl p-6 flex items-center justify-between">
-                            <div class="flex items-center">
-                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
-                                    alt="Yamaha R1" class="w-16 h-16 rounded-lg object-cover mr-4">
-                                <div>
-                                    <h3 class="text-lg font-bold">Yamaha R1 2022</h3>
-                                    <p class="text-gray-400">B 5678 DEF</p>
-                                    <p class="text-sm text-orange-400">Return: Dec 20, 2024</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-2xl font-bold text-gradient">$45/day</p>
-                                <button class="mt-2 bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                    Extend
-                                </button>
-                            </div>
-                        </div>
+            <!-- Search and Filter Section -->
+            <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
+                    <!-- Search Bar -->
+                    <div class="search-container w-full lg:w-1/2">
+                        <input type="text" 
+                               id="searchInput"
+                               placeholder="Search vehicles by name, model, or license plate..." 
+                                class="search-input w-full px-4 py-3 rounded-lg focus:outline-none">
+                        <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
-                </div>
-
-                <div>
-                    <h2 class="text-2xl font-bold mb-4">
-                        Recent <span class="text-gradient">Activity</span>
-                    </h2>
-                    <div class="recent-activity">
-                        <div class="activity-item">
-                            <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                            <div>
-                                <p class="font-medium">Toyota Camry Rented</p>
-                                <p class="text-sm text-gray-400">2 days ago</p>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <i class="fas fa-star text-yellow-400 mr-3"></i>
-                            <div>
-                                <p class="font-medium">Rated BMW M3</p>
-                                <p class="text-sm text-gray-400">5 days ago</p>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <i class="fas fa-calendar text-blue-400 mr-3"></i>
-                            <div>
-                                <p class="font-medium">Booking Confirmed</p>
-                                <p class="text-sm text-gray-400">1 week ago</p>
-                            </div>
-                        </div>
+                        
+                    <!-- Category Filters -->
+                    <div class="flex flex-wrap gap-3">
+                        <button class="filter-btn active px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="all">
+                            All Vehicles
+                        </button>
+                        <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="Mobil">
+                            <i class="fas fa-car mr-2"></i>Cars
+                        </button>
+                        <button  class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="Motor">
+                            <i class="fas fa-motorcycle mr-2"></i>Motorcycles
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Search and Filter Section -->
-        <div class="bg-gray-800 rounded-xl p-6 mb-8">
-            <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
-                <!-- Search Bar -->
-                <div class="search-container w-full lg:w-1/2">
-                    <input type="text" 
-                           id="searchInput"
-                           placeholder="Search vehicles by name, model, or license plate..." 
-                            class="search-input w-full px-4 py-3 rounded-lg focus:outline-none">
-                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                </div>
-                    
-                <!-- Category Filters -->
-                <div class="flex flex-wrap gap-3">
-                    <button class="filter-btn active px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="all">
-                        All Vehicles
-                    </button>
-                    <button class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="Mobil">
-                        <i class="fas fa-car mr-2"></i>Cars
-                    </button>
-                    <button  class="filter-btn px-6 py-2 rounded-full bg-gray-700 text-white font-medium" data-category="Motor">
-                        <i class="fas fa-motorcycle mr-2"></i>Motorcycles
-                    </button>
+            <!-- Available Vehicles Section -->
+            <div class="max-w-screen-xl mx-auto px-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-3xl font-bold">
+                        Ketersediaan <span class="text-gradient">Kendaraan</span>
+                    </h2>
+                    <span class="text-gray-400">Found {{ $jumlah }} Vehicles</span>
                 </div>
             </div>
+
+            <!-- Vehicles Grid -->
+            <div class="flex justify-center">
+                @include('components.product_card')
+            </div>
+
+            <!-- Pagination Centered and Styled -->
+            <div class="flex flex-col items-center mt-12 pb-8">
+                <div class="bg-gray-800 rounded-full px-4 py-2 shadow-lg flex items-center gap-2 mb-2">
+                    {{ $barangs->links('pagination::tailwind') }}
+                </div>
+                
+            </div>
+
+            <!-- Vehicle Memory Game Section -->
+            <div class="max-w-screen-xl mx-auto px-6 mb-8">
+                <div class="minigame-container">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-bold mb-2">
+                            Vehicle <span class="text-gradient">Memory Game</span>
+                        </h2>
+                        <p class="text-gray-300">Match the vehicle pairs to win!</p>
+                    </div>
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <div class="text-2xl font-bold text-gradient" id="moves">0</div>
+                            <div class="text-sm text-gray-300">Moves</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="text-2xl font-bold text-gradient" id="timer">00:00</div>
+                            <div class="text-sm text-gray-300">Time</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="text-2xl font-bold text-gradient" id="score">0</div>
+                            <div class="text-sm text-gray-300">Score</div>
+                        </div>
+                    </div>
+                    <div class="game-board" id="gameBoard">
+                        <!-- Cards will be generated by JavaScript -->
+                    </div>
+                    <div class="text-center mt-6">
+                        <button class="game-btn" onclick="startNewGame()">New Game</button>
+                        <button class="game-btn ml-4" onclick="resetGame()">Reset</button>
+                    </div>
+                </div>
+            </div>
+            <!-- End Vehicle Memory Game Section -->
+
         </div>
 
-        <!-- Available Vehicles Section -->
-        <div class="max-w-screen-xl mx-auto px-6">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-3xl font-bold">
-                    Ketersediaan <span class="text-gradient">Kendaraan</span>
-                </h2>
-                <span class="text-gray-400">Found {{ $jumlah }} Vehicles</span>
-            </div>
-        </div>
-
-        <!-- Vehicles Grid -->
-        @include('components.product_card')
-
-        <!-- Pagination Right-aligned -->
-            <div class="flex justify-end mt-12 pb-8 pr-6">
-                {{ $barangs->links('pagination::tailwind') }}
-            </div>
+        <!-- Footer -->
+        <footer class="bg-gray-900">
+            @include('components.footer')
+        </footer>
 
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900">
-        @include('components.footer')
-    </footer>
 
     <script>
         // Filter functionality
@@ -433,6 +467,125 @@
                 });
             }
         });
+
+        // --- Vehicle Memory Game Logic ---
+        const vehicleIcons = ['🚗', '🏍️', '🚙', '🚕', '🚐', '🚛', '🏎️', '🚜'];
+        let gameBoard = [];
+        let flippedCards = [];
+        let moves = 0;
+        let score = 0;
+        let timer = 0;
+        let gameTimer;
+        let isGameActive = false;
+
+        function initializeGame() {
+            const cards = [...vehicleIcons, ...vehicleIcons];
+            gameBoard = cards.sort(() => Math.random() - 0.5);
+            renderBoard();
+            resetStats();
+        }
+
+        function renderBoard() {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            gameBoard.forEach((icon, index) => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.dataset.index = index;
+                card.dataset.icon = icon;
+                card.addEventListener('click', flipCard);
+                board.appendChild(card);
+            });
+        }
+
+        function flipCard(e) {
+            if (!isGameActive) startTimer();
+            const card = e.target;
+            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+            if (flippedCards.length >= 2) return;
+            card.classList.add('flipped');
+            card.textContent = card.dataset.icon;
+            flippedCards.push(card);
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (card1.dataset.icon === card2.dataset.icon) {
+                setTimeout(() => {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    score += 10;
+                    document.getElementById('score').textContent = score;
+                    flippedCards = [];
+                    checkWin();
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '';
+                    card2.textContent = '';
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function checkWin() {
+            const matchedCards = document.querySelectorAll('.matched');
+            if (matchedCards.length === gameBoard.length) {
+                clearInterval(gameTimer);
+                setTimeout(() => {
+                    alert(`Congratulations! You won in ${moves} moves and ${formatTime(timer)}!`);
+                }, 500);
+            }
+        }
+
+        function startTimer() {
+            if (isGameActive) return;
+            isGameActive = true;
+            gameTimer = setInterval(() => {
+                timer++;
+                document.getElementById('timer').textContent = formatTime(timer);
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function resetStats() {
+            moves = 0;
+            score = 0;
+            timer = 0;
+            isGameActive = false;
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('score').textContent = '0';
+            document.getElementById('timer').textContent = '00:00';
+            flippedCards = [];
+            if (gameTimer) clearInterval(gameTimer);
+        }
+
+        function startNewGame() {
+            initializeGame();
+        }
+
+        function resetGame() {
+            resetStats();
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.classList.remove('flipped', 'matched');
+                card.textContent = '';
+            });
+        }
+
+        // Initialize game on page load
+        document.addEventListener('DOMContentLoaded', initializeGame);
     </script>
 
     <!-- Font Awesome for icons -->
