@@ -13,15 +13,26 @@ class GoogleController extends Controller
 {
     public function redirectToGoogle()
     {
+        $redirectUrl = request()->getHost() === 'localhost:8000' 
+            ? 'http://localhost:8000/auth/google/callback'
+            : 'https://vehiclick.web.id/auth/google/callback';
+
         return Socialite::driver('google')
-        ->with(['prompt' => 'select_account'])
-        ->redirect();
+            ->redirectUrl($redirectUrl)
+            ->with(['prompt' => 'select_account'])
+            ->redirect();
     }
 
     public function handleGoogleCallback()
     {
+        $redirectUrl = request()->getHost() === 'localhost:8000' 
+            ? 'http://localhost:8000/auth/google/callback'
+            : 'https://vehiclick.web.id/auth/google/callback';
+
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')
+            ->redirectUrl($redirectUrl)
+            ->user();
             
             $user = User::where('google_id', $googleUser->getId())->first();
             
