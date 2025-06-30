@@ -12,7 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
+
 use Filament\Tables\Columns\TextColumn;
 
 class UlasanResource extends Resource
@@ -27,13 +27,7 @@ class UlasanResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('nama_lengkap')
-                    ->required()
-                    ->label('Nama Lengkap')
-                    ->placeholder('Masukkan Nama Lengkap'),
-                TextInput::make('ulasan')
-                    ->required()
-                    ->placeholder('Masukkan Ulasan'),
+                //
             ]);
     }
 
@@ -41,10 +35,26 @@ class UlasanResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama_lengkap')
-                    ->searchable()
-                    ->label('Nama Lengkap'),
-                TextColumn::make('ulasan'),
+                TextColumn::make('user.email')
+                    ->label('Email')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('produk.nama_barang')
+                    ->label('Produk')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('rating')
+                    ->label('Rating'),
+
+                TextColumn::make('komentar')
+                    ->label('Komentar')
+                    ->limit(75),
+
+                TextColumn::make('created_at')
+                    ->label('Tanggal')
+                    ->date('d M Y'),
             ])
             ->filters([
                 //
