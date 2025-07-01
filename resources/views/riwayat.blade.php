@@ -285,7 +285,6 @@
 }
 </style>
 <div class="min-h-screen pt-24 pb-10 px-4 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden bg-pattern">
-    <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-5">
         <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-orange-500/10 to-transparent"></div>
         <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl"></div>
@@ -293,7 +292,6 @@
     </div>
 
     <div class="max-w-5xl mx-auto relative z-10">
-        <!-- Header with Gradient Text -->
         <div class="text-center mb-12 fade-in-up">
             <h2 class="text-5xl font-bold mb-4 gradient-text">
                 Riwayat Pemesanan
@@ -301,7 +299,6 @@
             <div class="w-24 h-1 bg-gradient-to-r from-orange-400 to-orange-600 mx-auto rounded-full glow-effect"></div>
         </div>
 
-        <!-- Enhanced Filter Form -->
         <form method="GET" action="{{ route('riwayat') }}" class="mb-8 text-center slide-in-left">
             <div class="inline-block relative">
                 <select name="status" onchange="this.form.submit()" 
@@ -309,10 +306,10 @@
                     <option value="all">🔍 Semua Status</option>
                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>⏳ Pending</option>
                     <option value="process" {{ request('status') == 'process' ? 'selected' : '' }}>⚙️ Diproses</option>
+                    <option value="disewa" {{ request('status') == 'disewa' ? 'selected' : '' }}> 🔑 Disewa</option>
                     <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>✅ Selesai</option>
                     <option value="canceled" {{ request('status') == 'canceled' ? 'selected' : '' }}>❌ Dibatalkan</option>
                 </select>
-                <!-- Custom Arrow -->
                 <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
                     <svg class="w-5 h-5 text-orange-500 pulse-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -321,22 +318,18 @@
             </div>
         </form>
 
-        <!-- Enhanced Order Cards -->
         @forelse($pemesanans as $index => $order)
         <div class="card-enhanced p-8 rounded-2xl mb-6 shadow-2xl relative slide-in-right" style="animation-delay: {{ $index * 0.1 }}s;">
             
-            <!-- Subtle Background Glow -->
             <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-orange-500/10 to-transparent rounded-full blur-xl float-animation"></div>
             
             <div class="flex flex-col md:flex-row md:justify-between md:items-center relative z-10">
                 <div class="flex-1">
-                    <!-- Invoice Header -->
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-2 h-8 bg-gradient-to-b from-orange-400 to-orange-600 rounded-full glow-effect"></div>
                         <h3 class="text-2xl font-bold text-orange-400 gradient-text">#INV-{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</h3>
                     </div>
                     
-                    <!-- Date Range -->
                     <div class="flex items-center gap-2 mb-3">
                         <svg class="w-5 h-5 text-orange-500 pulse-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -344,7 +337,6 @@
                         <p class="text-gray-300 font-medium">{{ \Carbon\Carbon::parse($order->tanggal_mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($order->tanggal_selesai)->format('d M Y') }}</p>
                     </div>
                     
-                    <!-- Vehicle Name -->
                     <div class="flex items-center gap-2 mb-3">
                         <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 118 0v1h4a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2v-3a2 2 0 012-2h4V7z"></path>
@@ -352,7 +344,18 @@
                         <p class="text-white text-lg font-semibold">{{ $order->nama_kendaraan }}</p>
                     </div>
                     
-                    <!-- Duration & Total in Grid -->
+                    {{-- ========================================================== --}}
+                    {{-- ================= AWAL PENAMBAHAN PLAT NOMOR ================= --}}
+                    {{-- ========================================================== --}}
+                    <div class="flex items-center gap-2 -mt-2 mb-4 pl-7">
+                        <span class="text-xs font-mono tracking-wider text-gray-300 bg-gray-700/50 px-3 py-1 rounded-md border border-gray-600">
+                            {{ $order->barang->nomor_plat ?? 'N/A' }}
+                        </span>
+                    </div>
+                    {{-- ========================================================== --}}
+                    {{-- ================= AKHIR PENAMBAHAN PLAT NOMOR ================ --}}
+                    {{-- ========================================================== --}}
+                    
                     <div class="info-grid mb-4">
                         <div class="info-card">
                             <p class="text-gray-400 text-sm">Durasi Rental</p>
@@ -364,60 +367,72 @@
                         </div>
                     </div>
                     
-                    <!-- Status Badge -->
                     <div class="inline-flex items-center gap-2">
                         <span class="text-sm font-medium text-gray-300">Status:</span>
                         <span class="status-badge 
                             {{ $order->status == 'pending' ? 'status-pending' : 
-                               ($order->status == 'process' ? 'status-process' : 
-                               ($order->status == 'completed' ? 'status-completed' : 'status-canceled')) }}">
+                                ($order->status == 'process' ? 'status-process' :
+                                ($order->status == 'disewa' ? 'status-onrent' :
+                                ($order->status == 'completed' ? 'status-completed' : 'status-canceled'))) }}">
                             {{ $order->status == 'pending' ? '⏳ Pending' : 
-                               ($order->status == 'process' ? '⚙️ Diproses' : 
-                               ($order->status == 'completed' ? '✅ Selesai' : '❌ Dibatalkan')) }}
+                                ($order->status == 'process' ? '⚙️ Diproses' :
+                                ($order->status == 'disewa' ? '🔑 Disewa' : 
+                                ($order->status == 'completed' ? '✅ Selesai' : '❌ Dibatalkan'))) }}
                         </span>
                     </div>
                 </div>
 
-                <!-- Payment Button -->
-                <div class="mt-6 md:mt-0 md:ml-6 flex-shrink-0">
-    @if($order->status == 'pending')
-        <form method="POST" action="{{ route('payment.snap', $order->id) }}">
-            @csrf
-            <button type="submit" class="btn-enhanced group relative overflow-hidden">
-                <div class="relative flex items-center gap-2 z-10">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                    Bayar Sekarang
+                <div class="mt-6 md:mt-0 md:ml-6 flex-shrink-0 flex flex-col items-center gap-4">
+                    @if($order->status == 'pending')
+                        <form method="POST" action="{{ route('payment.snap', $order->id) }}" class="w-full">
+                            @csrf
+                            <button type="submit" class="btn-enhanced group relative overflow-hidden w-full">
+                                <div class="relative flex items-center justify-center gap-2 z-10">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                    Bayar Sekarang
+                                </div>
+                            </button>
+                        </form>
+                    
+                    @elseif($order->status == 'completed' && !$ulasanDiberikan->contains($order->id))
+                        <button type="button" 
+                                class="btn-enhanced group relative overflow-hidden tombol-beri-ulasan w-full"
+                                style="background: linear-gradient(135deg, #10B981 0%, #34D399 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);"
+                                data-pesanan-id="{{ $order->id }}"
+                                data-produk-id="{{ $order->barang_id }}"
+                                data-nama-produk="{{ $order->nama_kendaraan }}">
+                            <div class="relative flex items-center justify-center gap-2 z-10">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                                Beri Ulasan
+                            </div>
+                        </button>
+                    @elseif($ulasanDiberikan->contains($order->id))
+                        <button class="btn-enhanced group relative overflow-hidden w-full" disabled style="background: #4B5563; cursor: not-allowed; box-shadow: none;">
+                            <div class="relative flex items-center justify-center gap-2 z-10">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Ulasan Diberikan
+                            </div>
+                        </button>
+                    @endif
+
+                    @if($order->status != 'pending')
+                        <button type="button" 
+                                class="tombol-tracking btn-secondary-enhanced group"
+                                data-pesanan-id="{{ $order->id }}">
+                            <div class="relative flex items-center justify-center gap-2 z-10">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span>Lacak Pesanan</span>
+                            </div>
+                        </button>
+                    @endif
                 </div>
-            </button>
-        </form>
-    
-    {{-- INI KONDISI UNTUK MENAMPILKAN TOMBOL ULASAN --}}
-    @elseif($order->status == 'completed' && !$ulasanDiberikan->contains($order->id))
-        <button type="button" 
-                class="btn-enhanced group relative overflow-hidden tombol-beri-ulasan"
-                style="background: linear-gradient(135deg, #10B981 0%, #34D399 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);"
-                data-pesanan-id="{{ $order->id }}"
-                data-produk-id="{{ $order->barang_id }}"
-                data-nama-produk="{{ $order->nama_kendaraan }}">
-            <div class="relative flex items-center gap-2 z-10">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
-                Beri Ulasan
-            </div>
-        </button>
-    @elseif($ulasanDiberikan->contains($order->id))
-        <button class="btn-enhanced group relative overflow-hidden" disabled style="background: #4B5563; cursor: not-allowed; box-shadow: none;">
-            <div class="relative flex items-center gap-2 z-10">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Ulasan Diberikan
-            </div>
-        </button>
-    @endif
-</div>
                 
             </div>
         </div>
         @empty
-        <!-- Empty State -->
         <div class="empty-state fade-in-up">
             <div class="empty-state-icon glow-effect">
                 <svg class="w-12 h-12 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -429,7 +444,6 @@
         </div>
         @endforelse
 
-        <!-- Enhanced Pagination -->
         <div class="mt-12 text-center">
             <div class="inline-block bg-gray-800/50 backdrop-blur-sm rounded-xl p-2 border border-orange-500/20">
                 {{ $pemesanans->links() }}
@@ -704,6 +718,27 @@ body {
     transform: translateY(0) scale(0.98);
 }
 
+.btn-secondary-enhanced {
+    position: relative;
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--accent-orange);
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.btn-secondary-enhanced:hover {
+    background: var(--primary-orange);
+    border-color: var(--primary-orange);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+}
+
 /* ===== SELECT DROPDOWN ===== */
 .select-enhanced {
     background: linear-gradient(135deg, 
@@ -773,6 +808,12 @@ body {
     background: rgba(239, 68, 68, 0.2);
     color: #ef4444;
     border-color: rgba(239, 68, 68, 0.5);
+}
+
+.status-onrent {
+    background: rgba(249, 115, 22, 0.2); /* Warna oranye/kuning */
+    color: #f97316;
+    border-color: rgba(249, 115, 22, 0.5);
 }
 
 /* ===== INFO GRID STYLES ===== */
@@ -1028,6 +1069,37 @@ body {
         -webkit-text-fill-color: black !important;
     }
 }
+
+/* ===== MODAL & TRACKING STYLES ===== */
+#trackingModal.flex {
+    display: flex;
+}
+#trackingModal.hidden {
+    display: none;
+}
+.tracking-item {
+    position: relative;
+    padding-left: 30px; 
+    padding-bottom: 20px;
+    border-left: 2px solid var(--border-color);
+}
+.tracking-item:last-child {
+    border-left: 2px solid transparent;
+    padding-bottom: 0;
+}
+.tracking-item::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--dark-bg);
+    border: 3px solid var(--primary-orange);
+    border-radius: 50%;
+    z-index: 1;
+}
+
 </style>
 
 <script>
@@ -1117,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ==========================================================
-    // ========== LOGIKA MODAL ULASAN (KODE BARU DITAMBAHKAN DI SINI) ==========
+    // ========== LOGIKA MODAL ULASAN (KODE LAMA ANDA) ==========
     // ==========================================================
     const ulasanModal = document.getElementById('ulasanModal');
     if (ulasanModal) {
@@ -1128,40 +1200,110 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalIdProduk = document.getElementById('modal_id_produk');
         const namaProdukModal = document.getElementById('namaProdukModal');
 
-        // Fungsi untuk membuka Modal
+        // Fungsi untuk membuka Modal Ulasan
         tombolBeriUlasan.forEach(button => {
             button.addEventListener('click', function() {
-                // Ambil data dari tombol yang diklik
                 const pesananId = this.dataset.pesananId;
                 const produkId = this.dataset.produkId;
                 const namaProduk = this.dataset.namaProduk;
 
-                // Isi form di dalam modal dengan data yang sesuai
                 modalIdPesanan.value = pesananId;
                 modalIdProduk.value = produkId;
                 namaProdukModal.textContent = `untuk kendaraan "${namaProduk}"`;
 
-                // Tampilkan modal
                 ulasanModal.classList.remove('hidden');
                 ulasanModal.classList.add('flex');
             });
         });
 
-        // Fungsi untuk menutup modal
-        function closeModal() {
+        // Fungsi untuk menutup Modal Ulasan
+        function closeUlasanModal() {
             ulasanModal.classList.add('hidden');
             ulasanModal.classList.remove('flex');
         }
 
-        // Event listener untuk tombol close
         if (closeUlasanModalBtn) {
-            closeUlasanModalBtn.addEventListener('click', closeModal);
+            closeUlasanModalBtn.addEventListener('click', closeUlasanModal);
         }
 
-        // Event listener untuk menutup saat klik di luar area modal
         ulasanModal.addEventListener('click', function(event) {
             if (event.target === ulasanModal) {
-                closeModal();
+                closeUlasanModal();
+            }
+        });
+    }
+
+    // ==========================================================
+    // ========== LOGIKA MODAL TRACKING (KODE BARU) =============
+    // ==========================================================
+    const trackingModal = document.getElementById('trackingModal');
+    if (trackingModal) {
+        const closeTrackingModalBtn = document.getElementById('closeTrackingModal');
+        const tombolTracking = document.querySelectorAll('.tombol-tracking');
+        const trackingHistoryContainer = document.getElementById('tracking-history-container');
+        const trackingOrderId = document.getElementById('tracking-order-id');
+
+        // Fungsi untuk membuka Modal Tracking
+        tombolTracking.forEach(button => {
+            button.addEventListener('click', function() {
+                const pesananId = this.dataset.pesananId;
+                
+                // 1. Tampilkan modal dengan pesan "Memuat..."
+                trackingOrderId.textContent = `#INV-${String(pesananId).padStart(4, '0')}`;
+                trackingHistoryContainer.innerHTML = '<p class="text-center text-gray-500">Memuat riwayat...</p>';
+                trackingModal.classList.remove('hidden');
+                trackingModal.classList.add('flex');
+
+                // 2. Ambil data dari server
+                fetch(`/tracking/${pesananId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // 3. Bangun tampilan HTML dari data yang diterima
+                        let historyHtml = '';
+                        if (data.length > 0) {
+                            data.forEach(item => {
+                                // Format tanggal menggunakan Javascript
+                                const date = new Date(item.created_at);
+                                const formattedDate = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':');
+
+                                historyHtml += `
+                                    <div class="tracking-item">
+                                        <p class="font-semibold text-white">${item.deskripsi}</p>
+                                        <p class="text-sm text-gray-400">${formattedDate}</p>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            historyHtml = '<p class="text-center text-gray-500">Belum ada riwayat untuk pesanan ini.</p>';
+                        }
+                        // 4. Masukkan HTML ke dalam modal
+                        trackingHistoryContainer.innerHTML = historyHtml;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching tracking history:', error);
+                        trackingHistoryContainer.innerHTML = '<p class="text-center text-red-500">Gagal memuat riwayat. Silakan coba lagi.</p>';
+                    });
+            });
+        });
+
+        // Fungsi untuk menutup modal
+        function closeTrackingModal() {
+            trackingModal.classList.add('hidden');
+            trackingModal.classList.remove('flex');
+        }
+
+        if (closeTrackingModalBtn) {
+            closeTrackingModalBtn.addEventListener('click', closeTrackingModal);
+        }
+
+        trackingModal.addEventListener('click', function(event) {
+            if (event.target === trackingModal) {
+                closeTrackingModal();
             }
         });
     }
@@ -1207,6 +1349,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>
             </div>
         </form>
+    </div>
+</div>
+
+{{-- ========================================================== --}}
+{{-- ============= KODE MODAL TRACKING DI SINI ================ --}}
+{{-- ========================================================== --}}
+
+<div id="trackingModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden" style="backdrop-filter: blur(5px);">
+    <div class="card-enhanced p-8 rounded-2xl shadow-2xl relative w-full max-w-lg mx-4 fade-in-up">
+
+        {{-- Tombol Close --}}
+        <button id="closeTrackingModal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        {{-- Header Modal --}}
+        <div class="text-center mb-6">
+            <h3 class="text-3xl font-bold gradient-text">Riwayat Pesanan</h3>
+            <p id="tracking-order-id" class="text-gray-400 mt-1">#INV-0000</p>
+        </div>
+
+        {{-- Konten Riwayat Tracking --}}
+        <div id="tracking-history-container" class="space-y-6">
+            {{-- Konten akan diisi oleh JavaScript --}}
+            <div class="text-center py-8">
+                <p class="text-gray-500">Memuat riwayat...</p>
+            </div>
+        </div>
+        
     </div>
 </div>
 @endsection

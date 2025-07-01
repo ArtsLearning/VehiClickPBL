@@ -17,6 +17,7 @@ use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\TrackingController;
 
 // Landing Page
 Route::get('/', [IndexController::class, 'show'])->name('home');
@@ -67,6 +68,8 @@ Route::middleware('auth')->group(function () {
     // Riwayat Transaksi
     Route::get('/riwayat-transaksi', [RiwayatTransaksiController::class, 'index'])->name('riwayat.index');
 });
+
+Route::get('/tracking/{id}', [TrackingController::class, 'getHistory'])->name('tracking.history')->middleware('auth');
 
 // Debug/Testing Recaptcha (sementara)
 Route::get('/test-recaptcha', function() {

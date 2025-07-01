@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use App\Models\Barang;
-use App\Models\Ulasan; // Pastikan use Ulasan sudah ada
+use App\Models\Ulasan;
 use Midtrans\Snap;
 use Midtrans\Config;
 
@@ -85,28 +85,30 @@ class PaymentController extends Controller
         return view('pembayaran-midtrans', compact('snapToken', 'pemesanan'));
     }
     
-    // --- PERUBAHAN 2: Fungsi riwayat() yang sudah disempurnakan ---
+    // --- FUNGSI RIWAYAT YANG SUDAH DIPERBAIKI ---
     public function riwayat(Request $request)
     {
-        // 1. Mengambil pesanan berdasarkan user_id (lebih baik daripada email)
-        $query = Pemesanan::where('user_id', Auth::id());
+        // ==========================================================
+        // ================== PERUBAHAN DI BARIS INI ==================
+        // ==========================================================
+        $query = Pemesanan::with('barang')->where('user_id', Auth::id());
 
-        // 2. Filter status jika dipilih (logika ini sudah benar, kita pertahankan)
+        // Filter status jika dipilih (logika ini sudah benar, kita pertahankan)
         if ($request->has('status') && $request->status !== 'all') {
             $query->where('status', $request->status);
         }
 
         $pemesanans = $query->orderByDesc('created_at')->paginate(10);
 
-        // 3. TAMBAHAN BARU: Ambil semua ID pesanan yang SUDAH PERNAH DIULAS
+        // Ambil semua ID pesanan yang SUDAH PERNAH DIULAS
         $ulasanDiberikan = Ulasan::where('id_user', Auth::id())
-                                  ->pluck('id_pesanan') // Ambil hanya kolom id_pesanan, sangat efisien
-                                  ->unique();
+                                    ->pluck('id_pesanan') // Ambil hanya kolom id_pesanan, sangat efisien
+                                    ->unique();
 
-        // 4. Kirim semua data yang dibutuhkan ke view
+        // Kirim semua data yang dibutuhkan ke view
         return view('riwayat', [
             'pemesanans' => $pemesanans,
-            'ulasanDiberikan' => $ulasanDiberikan, // Variabel baru yang penting
+            'ulasanDiberikan' => $ulasanDiberikan,
         ]);
     }
 

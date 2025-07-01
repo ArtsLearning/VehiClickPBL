@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Barang; // <-- Pastikan baris ini ada
 
 class Pemesanan extends Model
 {
@@ -31,6 +32,14 @@ class Pemesanan extends Model
         return $this->belongsTo(User::class);
     }
     
-
- 
+    // ==========================================================
+    // ================ FUNGSI RELASI DITAMBAHKAN DI SINI ===============
+    // ==========================================================
+    /**
+     * Mendefinisikan relasi bahwa setiap Pemesanan "milik" satu Barang.
+     */
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'barang_id');
+    }
 }
