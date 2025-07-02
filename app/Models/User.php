@@ -22,12 +22,22 @@ class User extends Authenticatable
         'email',
         'password',
         'telepon',
-        'alamat',
         'foto_customer',
         'google_id',
         'avatar',
         'foto_sim',
         'status_verifikasi_sim',
+        'provinsi',
+        'nama_provinsi',
+        'kabupaten',
+        'nama_kabupaten',
+        'kecamatan',
+        'nama_kecamatan',
+        'kelurahan',
+        'nama_kelurahan',
+        'kodepos',
+        'alamat_detail',
+        'status_verifikasi_alamat',
         'role',
     ];
 
@@ -54,4 +64,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getAlamatTerverifikasiAttribute()
+    {
+        return implode(', ', array_filter([
+            $this->alamat_detail,
+            $this->kelurahan,
+            $this->kecamatan,
+            $this->kabupaten,
+            $this->provinsi,
+            $this->kodepos
+        ]));
+    }
+
 }

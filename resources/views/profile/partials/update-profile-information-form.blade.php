@@ -55,8 +55,18 @@
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                :value="old('email', $user->email)" required autocomplete="username" />
+
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                value="{{ Auth::user()->email }}" 
+                readonly 
+                tabindex="-1"
+                required
+                class="mt-1 block w-full bg-gray-800/50 border-2 border-gray-600 text-gray-400 rounded-xl px-4 py-3 transition-colors duration-300 backdrop-blur-sm cursor-not-allowed"
+            />
+
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -84,13 +94,6 @@
             <x-text-input id="telepon" name="telepon" type="text" class="mt-1 block w-full"
                 :value="old('telepon', $user->telepon)" required autocomplete="tel" />
             <x-input-error class="mt-2" :messages="$errors->get('telepon')" />
-        </div>
-
-        <div>
-            <x-input-label for="alamat" :value="__('Alamat')" />
-            <x-text-input id="alamat" name="alamat" type="text" class="mt-1 block w-full"
-                :value="old('alamat', $user->alamat)" required autocomplete="street-address" />
-            <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
         </div>
 
         {{-- Tombol SIMPAN --}}
