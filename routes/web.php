@@ -34,7 +34,7 @@ Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('prod
 Route::get('/riwayat', [PaymentController::class, 'riwayat'])->name('riwayat');
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store')->middleware('auth');
 Route::post('/midtrans/webhook', [PaymentController::class, 'handleWebhook']);
-
+Route::post('/pesanan/{order}/cancel', [PaymentController::class, 'cancel'])->name('pesanan.cancel')->middleware('auth');
 
 
 // Pembayaran

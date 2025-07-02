@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use App\Models\Barang;
 use App\Models\Ulasan;
+use App\Models\TrackingStatus; // DITAMBAHKAN
 use Midtrans\Snap;
 use Midtrans\Config;
 
@@ -32,11 +33,11 @@ class PaymentController extends Controller
 
         $pemesanan = Pemesanan::create($dataPemesanan);
 
-        $barang = Barang::find($request->barang_id);
-
-        if ($barang && $barang->stok > 0) {
-            $barang->decrement('stok');
-        }
+        // --- DIHAPUS: Logika pengurangan stok dipindahkan ke webhook ---
+        // $barang = Barang::find($request->barang_id);
+        // if ($barang && $barang->stok > 0) {
+        //     $barang->decrement('stok');
+        // }
 
         return redirect()->route('payment.show', ['id' => $pemesanan->id]);
     }
@@ -102,8 +103,8 @@ class PaymentController extends Controller
 
         // Ambil semua ID pesanan yang SUDAH PERNAH DIULAS
         $ulasanDiberikan = Ulasan::where('id_user', Auth::id())
-                                    ->pluck('id_pesanan') // Ambil hanya kolom id_pesanan, sangat efisien
-                                    ->unique();
+                                        ->pluck('id_pesanan') // Ambil hanya kolom id_pesanan, sangat efisien
+                                        ->unique();
 
         // Kirim semua data yang dibutuhkan ke view
         return view('riwayat', [
@@ -126,6 +127,13 @@ class PaymentController extends Controller
         if (!$pemesanan) return;
         if ($status == 'capture' || $status == 'settlement') {
             $pemesanan->status = 'process';
+
+            // LOGIKA BARU: Kurangi stok setelah pembayaran berhasil
+            $barang = Barang::find($pemesanan->barang_id);
+            if ($barang && $barang->stok > 0) {
+                $barang->decrement('stok');
+            }
+
         } elseif ($status == 'pending') {
             $pemesanan->status = 'pending';
         } elseif ($status == 'cancel' || $status == 'expire') {
@@ -136,5 +144,35 @@ class PaymentController extends Controller
             'status' => 'success',
             'message' => 'Webhook received successfully',
         ]);
+    }
+
+    /**
+     * FUNGSI BARU
+     * Menangani logika pembatalan pesanan oleh pengguna.
+     */
+    public function cancel(Pemesanan $order)
+    {
+        // 1. Validasi: Pastikan yang membatalkan adalah pemilik pesanan
+        if (Auth::id() !== $order->user_id) {
+            return back()->with('error', 'Anda tidak berhak membatalkan pesanan ini.');
+        }
+
+        // 2. Validasi: Pastikan pesanan masih bisa dibatalkan (statusnya 'pending')
+        if ($order->status !== 'pending') {
+            return back()->with('error', 'Pesanan ini tidak dapat dibatalkan lagi.');
+        }
+
+        // 3. Ubah status pesanan di database menjadi 'canceled'
+        $order->status = 'canceled';
+        $order->save();
+
+        // 4. Catat di tabel tracking agar riwayatnya jelas
+        TrackingStatus::create([
+            'pesanan_id' => $order->id,
+            'deskripsi' => 'Pesanan dibatalkan oleh pelanggan.',
+        ]);
+
+        // 5. Kembalikan ke halaman riwayat dengan pesan sukses
+        return redirect()->route('riwayat')->with('success', 'Pesanan berhasil dibatalkan.');
     }
 }
