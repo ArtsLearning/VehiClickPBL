@@ -283,6 +283,56 @@
 .rating-stars input:checked ~ label:hover ~ label {
     color: #F59E0B; /* Warna bintang hover saat sudah dipilih (kuning lebih gelap) */
 }
+
+/* ===== DESAIN TOMBOL AKSI BARU ===== */
+
+/* Tombol Aksi Utama (Seperti Bayar Sekarang) */
+.btn-primary-action {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 
+        0 4px 15px rgba(249, 115, 22, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Jarak antara ikon dan teks */
+}
+
+.btn-primary-action:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(249, 115, 22, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Tombol Aksi Destruktif (Seperti Batalkan Pesanan) */
+.btn-destructive-action {
+    background-color: transparent;
+    border: none;
+    color: #9ca3af; /* Warna abu-abu netral */
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-destructive-action:hover {
+    background-color: rgba(239, 68, 68, 0.1); /* Latar merah transparan saat hover */
+    color: #ef4444; /* Teks merah saat hover */
+}
 </style>
 <div class="min-h-screen pt-24 pb-10 px-4 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden bg-pattern">
     <div class="absolute inset-0 opacity-5">
@@ -382,19 +432,20 @@
                     </div>
                 </div>
 
-                <div class="mt-6 md:mt-0 md:ml-6 flex-shrink-0 flex flex-col items-center gap-4">
+                <div class="mt-6 md:mt-0 md:ml-6 flex-shrink-0 flex flex-col items-center justify-center gap-4 w-full md:w-auto">
+
+                    {{-- === TOMBOL AKSI UTAMA === --}}
                     @if($order->status == 'pending')
                         <form method="POST" action="{{ route('payment.snap', $order->id) }}" class="w-full">
                             @csrf
-                            <button type="submit" class="btn-enhanced group relative overflow-hidden w-full">
-                                <div class="relative flex items-center justify-center gap-2 z-10">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                                    Bayar Sekarang
-                                </div>
+                            <button type="submit" class="btn-primary-action w-full">
+                                <i class="fas fa-credit-card"></i>
+                                <span>Bayar Sekarang</span>
                             </button>
                         </form>
                     
                     @elseif($order->status == 'completed' && !$ulasanDiberikan->contains($order->id))
+                        {{-- Tombol Beri Ulasan --}}
                         <button type="button" 
                                 class="btn-enhanced group relative overflow-hidden tombol-beri-ulasan w-full"
                                 style="background: linear-gradient(135deg, #10B981 0%, #34D399 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);"
@@ -407,6 +458,7 @@
                             </div>
                         </button>
                     @elseif($ulasanDiberikan->contains($order->id))
+                         {{-- Tombol Ulasan Diberikan --}}
                         <button class="btn-enhanced group relative overflow-hidden w-full" disabled style="background: #4B5563; cursor: not-allowed; box-shadow: none;">
                             <div class="relative flex items-center justify-center gap-2 z-10">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -414,8 +466,19 @@
                             </div>
                         </button>
                     @endif
-
-                    @if($order->status != 'pending')
+                
+                    {{-- === TOMBOL AKSI KEDUA (LACAK / BATAL) === --}}
+                    @if($order->status == 'pending')
+                        {{-- Tombol Batalkan --}}
+                        <form method="POST" action="{{ route('pesanan.cancel', $order->id) }}" class="cancel-form w-full">
+                            @csrf
+                            <button type="submit" class="btn-destructive-action w-full">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Batalkan</span>
+                            </button>
+                        </form>
+                    @elseif($order->status != 'canceled')
+                         {{-- Tombol Lacak --}}
                         <button type="button" 
                                 class="tombol-tracking btn-secondary-enhanced group"
                                 data-pesanan-id="{{ $order->id }}">
@@ -477,25 +540,6 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== CUSTOM SCROLLBAR ===== */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(31, 41, 55, 0.5);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, var(--primary-orange), var(--secondary-orange));
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(to bottom, var(--accent-orange), var(--primary-orange));
-}
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
@@ -1100,6 +1144,29 @@ body {
     z-index: 1;
 }
 
+/* KODE BARU: Tombol di dalam Modal Konfirmasi */
+.modal-btn {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+.modal-btn-confirm {
+    background-color: #ef4444; /* Merah */
+    color: white;
+}
+.modal-btn-confirm:hover {
+    background-color: #dc2626; /* Merah lebih gelap */
+}
+.modal-btn-cancel {
+    background-color: #4b5563; /* Abu-abu */
+    color: white;
+}
+.modal-btn-cancel:hover {
+    background-color: #6b7280; /* Abu-abu lebih terang */
+}
 </style>
 
 <script>
@@ -1107,20 +1174,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhanced loading state for forms (KODE LAMA ANDA, TETAP ADA)
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
-        form.addEventListener('submit', function() {
-            const button = this.querySelector('button[type="submit"]');
-            if (button) {
-                button.classList.add('loading');
-                button.disabled = true;
-                
-                const originalText = button.textContent;
-                button.textContent = 'Processing...';
-                
-                setTimeout(() => {
-                    button.classList.remove('loading');
-                    button.disabled = false;
-                    button.textContent = originalText;
-                }, 3000);
+        form.addEventListener('submit', function(event) {
+            // Pengecualian untuk form pembatalan agar tidak mengubah teks tombolnya
+            if (!this.classList.contains('cancel-form')) {
+                const button = this.querySelector('button[type="submit"]');
+                if (button) {
+                    button.classList.add('loading');
+                    button.disabled = true;
+                    
+                    const originalText = button.innerHTML;
+                    button.textContent = 'Processing...';
+                    
+                    setTimeout(() => {
+                        button.classList.remove('loading');
+                        button.disabled = false;
+                        button.innerHTML = originalText;
+                    }, 3000);
+                }
             }
         });
     });
@@ -1200,7 +1270,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const modalIdProduk = document.getElementById('modal_id_produk');
         const namaProdukModal = document.getElementById('namaProdukModal');
 
-        // Fungsi untuk membuka Modal Ulasan
         tombolBeriUlasan.forEach(button => {
             button.addEventListener('click', function() {
                 const pesananId = this.dataset.pesananId;
@@ -1216,7 +1285,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Fungsi untuk menutup Modal Ulasan
         function closeUlasanModal() {
             ulasanModal.classList.add('hidden');
             ulasanModal.classList.remove('flex');
@@ -1234,7 +1302,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================================
-    // ========== LOGIKA MODAL TRACKING (KODE BARU) =============
+    // ========== LOGIKA MODAL TRACKING (KODE LAMA ANDA) ========
     // ==========================================================
     const trackingModal = document.getElementById('trackingModal');
     if (trackingModal) {
@@ -1243,18 +1311,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const trackingHistoryContainer = document.getElementById('tracking-history-container');
         const trackingOrderId = document.getElementById('tracking-order-id');
 
-        // Fungsi untuk membuka Modal Tracking
         tombolTracking.forEach(button => {
             button.addEventListener('click', function() {
                 const pesananId = this.dataset.pesananId;
                 
-                // 1. Tampilkan modal dengan pesan "Memuat..."
                 trackingOrderId.textContent = `#INV-${String(pesananId).padStart(4, '0')}`;
                 trackingHistoryContainer.innerHTML = '<p class="text-center text-gray-500">Memuat riwayat...</p>';
                 trackingModal.classList.remove('hidden');
                 trackingModal.classList.add('flex');
 
-                // 2. Ambil data dari server
                 fetch(`/tracking/${pesananId}`)
                     .then(response => {
                         if (!response.ok) {
@@ -1263,14 +1328,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         return response.json();
                     })
                     .then(data => {
-                        // 3. Bangun tampilan HTML dari data yang diterima
                         let historyHtml = '';
                         if (data.length > 0) {
                             data.forEach(item => {
-                                // Format tanggal menggunakan Javascript
                                 const date = new Date(item.created_at);
                                 const formattedDate = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':');
-
                                 historyHtml += `
                                     <div class="tracking-item">
                                         <p class="font-semibold text-white">${item.deskripsi}</p>
@@ -1281,7 +1343,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else {
                             historyHtml = '<p class="text-center text-gray-500">Belum ada riwayat untuk pesanan ini.</p>';
                         }
-                        // 4. Masukkan HTML ke dalam modal
                         trackingHistoryContainer.innerHTML = historyHtml;
                     })
                     .catch(error => {
@@ -1291,7 +1352,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Fungsi untuk menutup modal
         function closeTrackingModal() {
             trackingModal.classList.add('hidden');
             trackingModal.classList.remove('flex');
@@ -1307,26 +1367,61 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // KODE BARU: LOGIKA UNTUK MODAL KONFIRMASI PEMBATALAN
+    const confirmationModal = document.getElementById('confirmationModal');
+    if (confirmationModal) {
+        const cancelForms = document.querySelectorAll('.cancel-form');
+        const confirmBtn = document.getElementById('confirmCancelBtn');
+        const cancelBtn = document.getElementById('cancelActionBtn');
+        let formToSubmit = null;
+
+        cancelForms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Mencegah form submit secara langsung
+                formToSubmit = this; // Simpan form yang akan di-submit
+                confirmationModal.classList.remove('hidden');
+                confirmationModal.classList.add('flex');
+            });
+        });
+
+        // Saat tombol "Ya, Batalkan" di dalam modal diklik
+        confirmBtn.addEventListener('click', function() {
+            if (formToSubmit) {
+                formToSubmit.submit(); // Submit form yang sudah disimpan
+            }
+        });
+
+        // Fungsi untuk menutup modal konfirmasi
+        function closeConfirmationModal() {
+            confirmationModal.classList.add('hidden');
+            confirmationModal.classList.remove('flex');
+            formToSubmit = null; // Reset form
+        }
+
+        cancelBtn.addEventListener('click', closeConfirmationModal);
+        confirmationModal.addEventListener('click', function(event) {
+            if (event.target === confirmationModal) {
+                closeConfirmationModal();
+            }
+        });
+    }
 });
 </script>
-        // Pop up ulasan
-        <div id="ulasanModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden" style="backdrop-filter: blur(5px);">
-            <div class="card-enhanced p-8 rounded-2xl shadow-2xl relative w-full max-w-lg mx-4 fade-in-up">
-        
+
+<div id="ulasanModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden" style="backdrop-filter: blur(5px);">
+    <div class="card-enhanced p-8 rounded-2xl shadow-2xl relative w-full max-w-lg mx-4 fade-in-up">
         <button id="closeUlasanModal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-
         <div class="text-center mb-6">
             <h3 class="text-3xl font-bold gradient-text">Beri Ulasan Anda</h3>
             <p id="namaProdukModal" class="text-gray-400 mt-1">untuk kendaraan</p>
         </div>
-
         <form action="{{ route('ulasan.store') }}" method="POST">
             @csrf
             <input type="hidden" name="id_pesanan" id="modal_id_pesanan">
             <input type="hidden" name="id_produk" id="modal_id_produk">
-
             <div class="mb-6">
                 <label class="block text-gray-300 text-sm font-bold mb-2 text-center">Rating Anda</label>
                 <div class="flex items-center justify-center gap-2 rating-stars">
@@ -1337,12 +1432,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <input type="radio" id="star1" name="rating" value="1" class="hidden"/><label for="star1" title="Buruk">★</label>
                 </div>
             </div>
-
             <div class="mb-8">
                 <label for="komentar" class="block text-gray-300 text-sm font-bold mb-2">Komentar Anda</label>
                 <textarea name="komentar" id="komentar" rows="5" class="select-enhanced w-full" placeholder="Bagaimana pengalaman Anda dengan kendaraan ini?" required></textarea>
             </div>
-
             <div class="text-center">
                 <button type="submit" class="btn-enhanced w-full">
                     Kirim Ulasan
@@ -1352,32 +1445,36 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
-{{-- ========================================================== --}}
-{{-- ============= KODE MODAL TRACKING DI SINI ================ --}}
-{{-- ========================================================== --}}
-
 <div id="trackingModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden" style="backdrop-filter: blur(5px);">
     <div class="card-enhanced p-8 rounded-2xl shadow-2xl relative w-full max-w-lg mx-4 fade-in-up">
-
-        {{-- Tombol Close --}}
         <button id="closeTrackingModal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-
-        {{-- Header Modal --}}
         <div class="text-center mb-6">
             <h3 class="text-3xl font-bold gradient-text">Riwayat Pesanan</h3>
             <p id="tracking-order-id" class="text-gray-400 mt-1">#INV-0000</p>
         </div>
-
-        {{-- Konten Riwayat Tracking --}}
         <div id="tracking-history-container" class="space-y-6">
-            {{-- Konten akan diisi oleh JavaScript --}}
             <div class="text-center py-8">
                 <p class="text-gray-500">Memuat riwayat...</p>
             </div>
         </div>
-        
+    </div>
+</div>
+
+<div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden" style="backdrop-filter: blur(5px);">
+    <div class="card-enhanced p-8 rounded-2xl shadow-2xl relative w-full max-w-md mx-4 fade-in-up">
+        <div class="text-center mb-6">
+            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-red-500/10 rounded-full">
+                <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white">Konfirmasi Pembatalan</h3>
+            <p class="text-gray-400 mt-2">Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat diurungkan.</p>
+        </div>
+        <div class="flex items-center justify-center gap-4">
+            <button id="cancelActionBtn" class="modal-btn modal-btn-cancel">Tidak, Kembali</button>
+            <button id="confirmCancelBtn" class="modal-btn modal-btn-confirm">Ya, Batalkan</button>
+        </div>
     </div>
 </div>
 @endsection

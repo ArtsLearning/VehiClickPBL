@@ -377,6 +377,24 @@
                     @include('profile.partials.update-profile-information-form')
                 </div>
 
+                {{-- Verifikasi Alamat --}}
+                <div class="dark-card p-6 rounded-xl">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 section-icon rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2a1 1 0 001 1h1a1 1 0 100-2h-1V7z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">Verifikasi Alamat</h2>
+                    </div>
+
+                    <p class="text-sm text-gray-300 mb-4">
+                        Masukkan alamat lengkap Anda untuk proses verifikasi.
+                    </p>
+
+                    @include('profile.partials.verifikasi-alamat')
+                </div>
+
                 {{-- Verifikasi SIM --}}
                 <div class="dark-card p-6 rounded-xl">
                     <div class="flex items-center space-x-3 mb-6">

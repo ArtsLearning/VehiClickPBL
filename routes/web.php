@@ -34,7 +34,7 @@ Route::get('/produk/{id}', [BarangController::class, 'showDetails'])->name('prod
 Route::get('/riwayat', [PaymentController::class, 'riwayat'])->name('riwayat');
 Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store')->middleware('auth');
 Route::post('/midtrans/webhook', [PaymentController::class, 'handleWebhook']);
-
+Route::post('/pesanan/{order}/cancel', [PaymentController::class, 'cancel'])->name('pesanan.cancel')->middleware('auth');
 
 
 // Pembayaran
@@ -44,6 +44,9 @@ Route::post('/midtrans/webhook', [PaymentController::class, 'handleWebhook']);
 Route::post('/payment/process', [PaymentController::class, 'prosesPemesanan'])->name('payment.process');
 Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
 Route::post('/payment/snap/{id}', [PaymentController::class, 'createSnap'])->name('payment.snap');
+
+// KODE BARU: Route untuk halaman finish setelah pembayaran
+Route::get('/payment/finish/{pemesanan}', [PaymentController::class, 'paymentFinish'])->name('payment.finish');
 
 
 // Google Auth

@@ -72,6 +72,7 @@ class CustomerResource extends Resource
                     ->default('customer')
                     ->required()
                     ->visible(fn () => auth()->user()->role === 'admin'),
+                    
                 Select::make('status_verifikasi_sim')
                     ->label('Status Verifikasi SIM')
                     ->options([
@@ -80,7 +81,16 @@ class CustomerResource extends Resource
                         'terverifikasi' => 'Terverifikasi',
                         'ditolak' => 'Ditolak',
                     ])
-                    ->required()
+                    ->visible(fn () => auth()->user()->role === 'admin'),
+
+                Select::make('status_verifikasi_alamat')
+                    ->label('Status Verifikasi Alamat')
+                    ->options([
+                        'belum' => 'Belum Mengirim',
+                        'menunggu' => 'Menunggu',
+                        'terverifikasi' => 'Terverifikasi',
+                        'ditolak' => 'Ditolak',
+                    ])
                     ->visible(fn () => auth()->user()->role === 'admin'),
 
             ]);
@@ -96,9 +106,8 @@ class CustomerResource extends Resource
                     ->label('Email'),
                 TextColumn::make('telepon')
                     ->label('Nomor Telepon'),
-                TextColumn::make('alamat'),
                 TextColumn::make('foto_customer')
-                    ->label('Foto')
+                    ->label('Foto Profile')
                     ->html()
                     ->formatStateUsing(fn ($state) =>
                         "<div style='width: 140px; height:150px; display: flex; align-items: center; justify-content: center;'>
@@ -106,8 +115,17 @@ class CustomerResource extends Resource
                                 style='width: 120px; height: 120px; border-radius: 50%; object-fit: cover;'>
                         </div>"
                     ),
-                TextColumn::make('status_verifikasi_sim')
-                    ->label('Status Verifikasi')
+                TextColumn::make('nama_provinsi'),
+                TextColumn::make('nama_kabupaten'),
+                TextColumn::make('nama_kecamatan'),
+                TextColumn::make('nama_kelurahan'),
+                TextColumn::make('kodepos')
+                    ->label('Kode Pos'),
+                TextColumn::make('alamat_detail')
+                    ->label('Alamat'),
+                
+                TextColumn::make('status_verifikasi_alamat')
+                    ->label('Status Verifikasi Alamat')
                     ->badge()
                     ->color(fn ($state) => match ($state) {
                         'menunggu' => 'warning',
@@ -115,12 +133,24 @@ class CustomerResource extends Resource
                         'ditolak' => 'danger',
                         default => 'gray',
                     }),
+
                 ImageColumn::make('foto_sim')
                     ->label('Foto SIM')
                     ->disk('public')
                     ->height(120)
                     ->width(200)
                     ->extraImgAttributes(['class' => 'rounded-md shadow ring-2 ring-orange-400']),
+
+                TextColumn::make('status_verifikasi_sim')
+                    ->label('Status Verifikasi SIM')
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'menunggu' => 'warning',
+                        'terverifikasi' => 'success',
+                        'ditolak' => 'danger',
+                        default => 'gray',
+                    }),
+                
                 TextColumn::make('role')
                     ->label('Role')
                     ->badge()

@@ -78,6 +78,44 @@
                         </label>
                     </div>
                 </div>
+
+                <!-- 🟢 LETAK YANG BENAR untuk PILIH SUMBER ALAMAT -->
+                @php
+                    $alamatTerverifikasi = auth()->check() && auth()->user()->status_verifikasi_alamat === 'terverifikasi'
+                        ? auth()->user()->alamat_terverifikasi
+                        : null;
+                @endphp
+
+                <div id="alamatPilihanWrapper" class="space-y-2 mt-4">
+                    <label class="font-semibold text-sm text-orange-300">Pilih Sumber Alamat</label>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="alamat_type" id="alamatTerverifikasi" value="verified"
+                                class="accent-orange-500"
+                                {{ !$alamatTerverifikasi ? 'disabled' : 'checked' }}>
+                            Gunakan Alamat Terverifikasi dari profil
+                        </label>
+                        <label class="flex items-center gap-2">
+                            <input type="radio" name="alamat_type" id="alamatManual" value="manual" class="accent-orange-500"
+                                {{ !$alamatTerverifikasi ? 'checked' : '' }}>
+                            Masukkan alamat baru
+                        </label>
+                    </div>
+
+                    <div id="alamatDariProfil" class="bg-gray-800/40 border border-green-400 text-green-200 rounded-xl p-4 text-sm space-y-2">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><strong>Provinsi:</strong> <span id="terverifikasiProvinsi">-</span></div>
+                            <div><strong>Kabupaten:</strong> <span id="terverifikasiKabupaten">-</span></div>
+                            <div><strong>Kecamatan:</strong> <span id="terverifikasiKecamatan">-</span></div>
+                            <div><strong>Kelurahan:</strong> <span id="terverifikasiKelurahan">-</span></div>
+                            <div><strong>Kode Pos:</strong> <span id="terverifikasiKodepos">-</span></div>
+                        </div>
+                        <div><strong>Alamat Detail:</strong> <span id="terverifikasiDetail">-</span></div>
+                    </div>
+
+                    <input type="hidden" name="alamat_terverifikasi" value="{{ $alamatTerverifikasi }}">
+                </div>
+
                 <div class="space-y-2" id="addressSection">
                     <label class="block font-semibold text-lg text-gradient">
                         <i class="fas fa-map-marker-alt mr-2"></i>
@@ -154,6 +192,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const alamatLengkapTerverifikasi = {
+            provinsi: "{{ auth()->check() ? Auth::user()->nama_provinsi : '' }}",
+            kabupaten: "{{ auth()->check() ? Auth::user()->nama_kabupaten : '' }}",
+            kecamatan: "{{ auth()->check() ? Auth::user()->nama_kecamatan : '' }}",
+            kelurahan: "{{ auth()->check() ? Auth::user()->nama_kelurahan : '' }}",
+            kodepos: "{{ auth()->check() ? Auth::user()->kodepos : '' }}",
+            alamat_detail: "{{ auth()->check() ? Auth::user()->alamat_detail : '' }}"
+        };
+    </script>
+
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const tanggalMulai = document.getElementById('tanggalMulai');
@@ -177,6 +229,7 @@
                 console.error('Data tidak ditemukan');
                 return;
             }
+
             const hargaPerHari = parseInt(hargaHarian.getAttribute('data-harga'));
 
             function hitungBiayaTotal() {
@@ -202,9 +255,11 @@
 
             tanggalMulai.addEventListener('change', hitungBiayaTotal);
             tanggalSelesai.addEventListener('change', hitungBiayaTotal);
-
             hitungBiayaTotal();
 
+            // ===============================
+            // 📦 Wilayah Indonesia API
+            // ===============================
             const alamatApi = "https://alamat.thecloudalert.com/api/";
             const provinsi = document.getElementById('provinsi');
             const kabupaten = document.getElementById('kabupaten');
@@ -220,7 +275,7 @@
                     });
                 });
 
-            provinsi.addEventListener('change', function() {
+            provinsi.addEventListener('change', function () {
                 kabupaten.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
@@ -236,7 +291,7 @@
                 }
             });
 
-            kabupaten.addEventListener('change', function() {
+            kabupaten.addEventListener('change', function () {
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
@@ -251,7 +306,7 @@
                 }
             });
 
-            kecamatan.addEventListener('change', function() {
+            kecamatan.addEventListener('change', function () {
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
                 if (this.value) {
@@ -265,7 +320,7 @@
                 }
             });
 
-            kelurahan.addEventListener('change', function() {
+            kelurahan.addEventListener('change', function () {
                 kodepos.value = '';
                 if (kabupaten.value && kecamatan.value) {
                     fetch(alamatApi + `kodepos/get/?d_kabkota_id=${kabupaten.value}&d_kecamatan_id=${kecamatan.value}`)
@@ -278,23 +333,59 @@
                 }
             });
 
+            // ===============================
+            // 📍 Toggle Alamat (Verified / Manual)
+            // ===============================
             const pickupDelivery = document.getElementById('pickupDelivery');
             const pickupPlace = document.getElementById('pickupPlace');
+            const alamatPilihanWrapper = document.getElementById('alamatPilihanWrapper');
+            const alamatTerverifikasi = document.getElementById('alamatTerverifikasi');
+            const alamatManual = document.getElementById('alamatManual');
+            const alamatDariProfil = document.getElementById('alamatDariProfil');
             const addressSection = document.getElementById('addressSection');
             const addressInputs = addressSection.querySelectorAll('select, input');
 
-            function toggleAddressSection() {
+            function tampilkanAlamatTerverifikasi() {
+                document.getElementById('terverifikasiProvinsi').textContent = alamatLengkapTerverifikasi.provinsi;
+                document.getElementById('terverifikasiKabupaten').textContent = alamatLengkapTerverifikasi.kabupaten;
+                document.getElementById('terverifikasiKecamatan').textContent = alamatLengkapTerverifikasi.kecamatan;
+                document.getElementById('terverifikasiKelurahan').textContent = alamatLengkapTerverifikasi.kelurahan;
+                document.getElementById('terverifikasiKodepos').textContent = alamatLengkapTerverifikasi.kodepos;
+                document.getElementById('terverifikasiDetail').textContent = alamatLengkapTerverifikasi.alamat_detail;
+            }
+
+            function toggleAlamatPilihan() {
                 if (pickupDelivery.checked) {
-                    addressSection.style.display = '';
-                    addressInputs.forEach(input => input.required = true);
+                    alamatPilihanWrapper.style.display = 'block';
+                    if (alamatTerverifikasi?.checked) {
+                        addressSection.style.display = 'none';
+                        alamatDariProfil.style.display = 'block';
+                        addressInputs.forEach(input => input.required = false);
+
+                        // ⬅️ Menampilkan alamat ke <span> saat opsi terverifikasi dipilih
+                        tampilkanAlamatTerverifikasi();
+
+                    } else {
+                        addressSection.style.display = 'block';
+                        alamatDariProfil.style.display = 'none';
+                        addressInputs.forEach(input => input.required = true);
+                    }
                 } else {
+                    alamatPilihanWrapper.style.display = 'none';
                     addressSection.style.display = 'none';
+                    alamatDariProfil.style.display = 'none';
                     addressInputs.forEach(input => input.required = false);
                 }
             }
-            pickupDelivery.addEventListener('change', toggleAddressSection);
-            pickupPlace.addEventListener('change', toggleAddressSection);
-            toggleAddressSection();
+
+            pickupDelivery.addEventListener('change', toggleAlamatPilihan);
+            pickupPlace.addEventListener('change', toggleAlamatPilihan);
+            alamatTerverifikasi?.addEventListener('change', toggleAlamatPilihan);
+            alamatManual?.addEventListener('change', toggleAlamatPilihan);
+
+            // Trigger awal saat DOM selesai diload
+            toggleAlamatPilihan();
+
         });
     </script>
 </div>

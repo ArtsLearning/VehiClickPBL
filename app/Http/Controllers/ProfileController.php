@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Http;
 
 class ProfileController extends Controller
 {
@@ -115,8 +116,43 @@ class ProfileController extends Controller
         return back()->with('status', 'verifikasi-sim-success');
     }
 
+    /* ✅ Verifikasi Alamat */
+    public function verifikasiAlamat(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'provinsi' => 'required|string',
+            'kabupaten' => 'required|string',
+            'kecamatan' => 'required|string',
+            'kelurahan' => 'required|string',
+            'kodepos' => 'required|string',
+            'alamat_detail' => 'required|string',
+            'nama_provinsi' => 'required|string',
+            'nama_kabupaten' => 'required|string',
+            'nama_kecamatan' => 'required|string',
+            'nama_kelurahan' => 'required|string',
+        ]);
+
+        $user = $request->user();
+
+        // Simpan ID wilayah
+        $user->provinsi = $request->provinsi;
+        $user->kabupaten = $request->kabupaten;
+        $user->kecamatan = $request->kecamatan;
+        $user->kelurahan = $request->kelurahan;
+        $user->kodepos = $request->kodepos;
+        $user->alamat_detail = $request->alamat_detail;
+
+        // Simpan nama wilayah dari input hidden (BUKAN ambil ulang dari API)
+        $user->nama_provinsi = $request->nama_provinsi;
+        $user->nama_kabupaten = $request->nama_kabupaten;
+        $user->nama_kecamatan = $request->nama_kecamatan;
+        $user->nama_kelurahan = $request->nama_kelurahan;
+
+        // Set status verifikasi
+        $user->status_verifikasi_alamat = 'menunggu';
+        $user->save();
+
+        return back()->with('status', 'verifikasi-alamat-success');
+    }
 
 }
-
-
-?>
