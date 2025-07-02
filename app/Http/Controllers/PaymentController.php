@@ -10,6 +10,7 @@ use App\Models\Ulasan;
 use App\Models\TrackingStatus;
 use Midtrans\Snap;
 use Midtrans\Config;
+// use Midtrans\Transaction; // --- DINONAKTIFKAN SEMENTARA ---
 
 class PaymentController extends Controller
 {
@@ -44,17 +45,20 @@ class PaymentController extends Controller
         
         $params = [
             'transaction_details' => [
-                'order_id' => 'INV-' . $pemesanan->id . '-' . time(),
+                'order_id' => $pemesanan->id . '-' . time(),
                 'gross_amount' => $pemesanan->total_harga,
             ],
             'customer_details' => [
                 'first_name' => $pemesanan->nama,
                 'email' => $pemesanan->email,
             ],
+            /*
+            // --- BAGIAN REDIRECT DINONAKTIFKAN SEMENTARA ---
+            'callbacks' => [
+                'finish' => route('payment.finish')
+            ]
+            */
         ];
-
-        // PERUBAHAN: Menambahkan URL Redirect setelah pembayaran
-        $params['finish_redirect_url'] = route('payment.finish', ['pemesanan' => $pemesanan->id]);
 
         $snapToken = Snap::getSnapToken($params);
         return view('pembayaran-midtrans', compact('pemesanan', 'snapToken'));
@@ -70,18 +74,21 @@ class PaymentController extends Controller
 
         $params = [
             'transaction_details' => [
-                'order_id' => 'INV-' . $pemesanan->id . '-' . time(),
+                'order_id' => $pemesanan->id . '-' . time(),
                 'gross_amount' => $pemesanan->total_harga,
             ],
             'customer_details' => [
                 'first_name' => $pemesanan->nama,
                 'email' => $pemesanan->email,
             ],
+            /*
+            // --- BAGIAN REDIRECT DINONAKTIFKAN SEMENTARA ---
+            'callbacks' => [
+                'finish' => route('payment.finish')
+            ]
+            */
         ];
-
-        // PERUBAHAN: Menambahkan URL Redirect setelah pembayaran
-        $params['finish_redirect_url'] = route('payment.finish', ['pemesanan' => $pemesanan->id]);
-
+        
         $snapToken = Snap::getSnapToken($params);
         return view('pembayaran-midtrans', compact('snapToken', 'pemesanan'));
     }
@@ -97,8 +104,8 @@ class PaymentController extends Controller
         $pemesanans = $query->orderByDesc('created_at')->paginate(10);
 
         $ulasanDiberikan = Ulasan::where('id_user', Auth::id())
-                                        ->pluck('id_pesanan')
-                                        ->unique();
+                                    ->pluck('id_pesanan')
+                                    ->unique();
 
         return view('riwayat', [
             'pemesanans' => $pemesanans,
@@ -106,32 +113,33 @@ class PaymentController extends Controller
         ]);
     }
 
-    /**
-     * FUNGSI BARU
-     * Menangani redirect dari Midtrans setelah user selesai melakukan aksi.
-     */
-    public function paymentFinish(Request $request, Pemesanan $pemesanan)
+    /*
+    // --- FUNGSI BARU DINONAKTIFKAN SEMENTARA ---
+    public function paymentFinish(Request $request)
     {
-        $statusCode = $request->query('status_code');
-        $transactionStatus = $request->query('transaction_status');
+        $orderId = $request->query('order_id');
+        $pemesanan_id = explode('-', $orderId)[0];
+        $pemesanan = Pemesanan::findOrFail($pemesanan_id);
 
-        // Jika pembayaran sukses (status code 200 dan status settlement)
-        if ($statusCode == '200' && $transactionStatus == 'settlement') {
-            // Hanya update jika statusnya masih 'pending' untuk mencegah duplikasi
-            if ($pemesanan->status == 'pending') {
-                // 1. Update status pesanan
+        if ($pemesanan->status !== 'pending') {
+            return redirect()->route('riwayat')->with('info', 'Status pesanan ini sudah diproses.');
+        }
+
+        try {
+            Config::$serverKey = config('midtrans.server_key');
+            Config::$isProduction = config('midtrans.is_production');
+            $status = Transaction::status($orderId);
+
+            if ($status->transaction_status == 'settlement' || $status->transaction_status == 'capture') {
                 $pemesanan->status = 'process';
                 $pemesanan->save();
 
-                // 2. Update status ketersediaan barang
                 $barang = Barang::find($pemesanan->barang_id);
                 if ($barang) {
-                    // Asumsi nama kolom adalah 'ketersediaan' dan nilainya 'tersedia' / 'tidak tersedia'
                     $barang->ketersediaan = 'tidak tersedia';
                     $barang->save();
                 }
 
-                // 3. Catat di tracking
                 TrackingStatus::create([
                     'pesanan_id' => $pemesanan->id,
                     'deskripsi' => 'Pembayaran berhasil, pesanan sedang diproses.',
@@ -139,50 +147,44 @@ class PaymentController extends Controller
 
                 return redirect()->route('riwayat')->with('success', 'Pembayaran berhasil! Pesanan Anda sedang diproses.');
             }
+        } catch (\Exception $e) {
+            return redirect()->route('riwayat')->with('error', 'Terjadi kesalahan saat verifikasi pembayaran.');
         }
-        
-        // Jika pembayaran gagal atau belum selesai, redirect dengan pesan error/info
+
         return redirect()->route('riwayat')->with('error', 'Pembayaran tidak berhasil atau masih tertunda.');
     }
+    */
 
     public function handleWebhook(Request $request)
     {
-        // Fungsi webhook ini tetap ada sebagai cadangan jika notifikasi dari server berhasil masuk (di lingkungan produksi)
         Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = config('midtrans.is_sanitized');
-        Config::$is3ds = config('midtrans.is_3ds');
         $notif = new \Midtrans\Notification();
         $status = $notif->transaction_status;
-        $order_id = $notif->order_id;
-        $pemesanan_id = explode('-', $order_id)[1];
+        $order_id_full = $notif->order_id;
+        $pemesanan_id = explode('-', $order_id_full)[0];
         $pemesanan = Pemesanan::find($pemesanan_id);
-        if (!$pemesanan) return;
 
-        if ($status == 'capture' || $status == 'settlement') {
-            if ($pemesanan->status == 'pending') {
+        if ($pemesanan && $pemesanan->status == 'pending') {
+            if ($status == 'capture' || $status == 'settlement') {
                 $pemesanan->status = 'process';
                 $barang = Barang::find($pemesanan->barang_id);
                 if ($barang) {
                     $barang->ketersediaan = 'tidak tersedia';
                     $barang->save();
                 }
-            }
-        } elseif ($status == 'cancel' || $status == 'expire') {
-            if ($pemesanan->status == 'pending') {
+                $pemesanan->save();
+            } elseif ($status == 'cancel' || $status == 'expire' || $status == 'deny') {
                 $pemesanan->status = 'canceled';
                 $barang = Barang::find($pemesanan->barang_id);
                 if ($barang) {
                     $barang->ketersediaan = 'tersedia';
                     $barang->save();
                 }
+                $pemesanan->save();
             }
         }
-        $pemesanan->save();
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Webhook received successfully',
-        ]);
+        
+        return response()->json(['status' => 'success']);
     }
 
     public function cancel(Pemesanan $order)
@@ -198,10 +200,8 @@ class PaymentController extends Controller
         $order->status = 'canceled';
         $order->save();
 
-        // Kembalikan stok kendaraan
         $barang = Barang::find($order->barang_id);
         if ($barang) {
-            // Asumsi nama kolom adalah 'ketersediaan' dan nilainya 'tersedia'
             $barang->ketersediaan = 'tersedia';
             $barang->save();
         }
