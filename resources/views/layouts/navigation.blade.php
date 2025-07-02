@@ -60,7 +60,7 @@
 
                 
                 
-                <a href="#contact" class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10">
+                <a href="{{ url('/#contact') }}" class="nav-link text-orange-400 hover:text-orange-300 transition-all duration-300 px-4 py-2 text-sm font-medium rounded-lg hover:bg-orange-500/10">
                     Contact
                 </a>
             </div>
@@ -210,7 +210,7 @@
                 
 
                                 
-                <a href="#contact" 
+                <a href="{{ url('/#contact') }}" 
                    class="mobile-nav-link block px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200">
                     Contact
                 </a>

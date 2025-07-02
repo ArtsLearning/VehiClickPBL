@@ -248,7 +248,9 @@
             <div class="welcome-card text-white relative z-10">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-4xl font-bold mb-2">Welcome Back!</h1>
+                        <h1 class="text-4xl font-bold mb-2">
+                            Welcome To VehiClick, {{ Auth::check() ? Auth::user()->name : 'Guest' }}!
+                        </h1>
                         <p class="text-xl opacity-90">Ready to explore our vehicle collection?</p>
                     </div>
                     <div class="text-right">
@@ -280,10 +282,10 @@
                     
                 <div class="stats-card rounded-xl p-6 text-center">
                     <div class="flex items-center justify-center mb-4">
-                        <i class="fas fa-clock text-orange-400 text-3xl"></i>
+                        <i class="fas fa-check-circle text-orange-400 text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gradient">2</h3>
-                    <p class="text-gray-300">Active Rentals</p>
+                    <h3 class="text-2xl font-bold text-gradient">{{ $jumlah }}</h3>
+                    <p class="text-gray-300">All Vehicles Registered</p>
                 </div>
             </div>
         

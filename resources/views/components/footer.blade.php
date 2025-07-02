@@ -146,37 +146,22 @@
                         </h4>
                         <ul class="space-y-4">
                             <li>
-                                <a href="#" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
+                                <a href="{{ route('dashboard') }}" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
                                     <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500 transition-all">
                                         <i class="fas fa-car text-orange-400 group-hover:text-white text-sm"></i>
                                     </div>
-                                    <span>Rental Mobil Premium</span>
+                                    <span>Rental Mobil</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
+                                <a href="{{ route('dashboard') }}" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
                                     <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500 transition-all">
                                         <i class="fas fa-motorcycle text-orange-400 group-hover:text-white text-sm"></i>
                                     </div>
                                     <span>Rental Motor</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
-                                    <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500 transition-all">
-                                        <i class="fas fa-handshake text-orange-400 group-hover:text-white text-sm"></i>
-                                    </div>
-                                    <span>Program Kemitraan</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
-                                    <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500 transition-all">
-                                        <i class="fas fa-users text-orange-400 group-hover:text-white text-sm"></i>
-                                    </div>
-                                    <span>Corporate Solution</span>
-                                </a>
-                            </li>
+                           
                         </ul>
                     </div>
 
@@ -212,12 +197,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center text-gray-300 hover:text-white transition duration-300 group p-2 rounded-lg hover:bg-orange-500/10">
-                                    <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3 group-hover:bg-orange-500 transition-all">
-                                        <i class="fas fa-headset text-orange-400 group-hover:text-white text-sm"></i>
-                                    </div>
-                                    <span>Pusat Bantuan</span>
-                                </a>
+                               
                             </li>
                         </ul>
                     </div>
@@ -253,7 +233,7 @@
                                     <i class="fas fa-phone text-orange-400 text-sm"></i>
                                 </div>
                                 <a href="tel:+6281234567890" class="text-gray-300 hover:text-orange-400 transition text-sm">
-                                    +62 812-3456-7890
+                                    +62 812-6734-3080
                                 </a>
                             </div>
 
@@ -274,10 +254,10 @@
                     <div id="contact" class="text-center mb-8">
                         <h3 class="text-2xl font-bold gradient-text mb-4 flex items-center justify-center">
                             <i class="fas fa-paper-plane mr-3"></i>
-                            Kirim Pesan Kepada Kami
+                            Kirim Keluhan & Saran Kepada Kami!
                         </h3>
                         <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
-                            Ada pertanyaan, saran, atau ingin berbagi pengalaman? Kirim pesan kepada kami dan tim akan merespons dengan cepat.
+                            Ada pertanyaan, saran, atau ingin menyampaikan keluhan? Kirim pesan kepada kami dan tim akan merespons.
                         </p>
                     </div>
 
