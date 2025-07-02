@@ -45,6 +45,9 @@ Route::post('/payment/process', [PaymentController::class, 'prosesPemesanan'])->
 Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
 Route::post('/payment/snap/{id}', [PaymentController::class, 'createSnap'])->name('payment.snap');
 
+// KODE BARU: Route untuk halaman finish setelah pembayaran
+Route::get('/payment/finish/{pemesanan}', [PaymentController::class, 'paymentFinish'])->name('payment.finish');
+
 
 // Google Auth
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
