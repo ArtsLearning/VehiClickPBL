@@ -53,14 +53,14 @@
                         <i class="fas fa-user mr-2"></i>
                         Nama Pemesan
                     </label>
-                    <input type="text" id="namaPemesan" name="nama" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" value="{{ Auth::user()->name }}" required />
+                    <input type="text" id="namaPemesan" name="nama" class="w-full bg-gray-800/50 border-2 border-gray-600 hover:border-orange-400 focus:border-orange-400 rounded-xl px-4 py-3 text-white placeholder-gray-400 transition-colors duration-300 backdrop-blur-sm" value="{{ Auth::check() ? Auth::user()->name : '' }}" required />
                 </div>
                 <div class="space-y-2">
                     <label class="block font-semibold text-lg text-gradient">
                         <i class="fas fa-envelope mr-2"></i>
                         Email
                     </label>
-                    <input type="email" id="emailPemesan" name="email" class="w-full bg-gray-800/50 border-2 border-gray-600 text-gray-400 cursor-not-allowed rounded-xl px-4 py-3 transition-colors duration-300 backdrop-blur-sm" value="{{ Auth::user()->email }}" readonly tabindex="-1" />
+                    <input type="email" id="emailPemesan" name="email" class="w-full bg-gray-800/50 border-2 border-gray-600 text-gray-400 rounded-xl px-4 py-3 transition-colors duration-300 backdrop-blur-sm {{ Auth::check() ? 'cursor-not-allowed' : '' }}" value="{{ Auth::check() ? Auth::user()->email : '' }}" {{ Auth::check() ? 'readonly tabindex="-1"' : '' }} required />
                 </div>
                 <div class="space-y-2">
                     <label class="block font-semibold text-lg text-gradient">

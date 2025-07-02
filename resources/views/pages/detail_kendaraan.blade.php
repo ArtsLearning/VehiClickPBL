@@ -183,11 +183,19 @@
                     </div>
 
                     @php
-                        $statusVerifikasiSim = auth()->user()->status_verifikasi_sim ?? 'belum';
+                        $user = auth()->user();
+                        $statusVerifikasiSim = $user->status_verifikasi_sim ?? 'belum';
                     @endphp
 
                     <div class="flex justify-end">
-                        @if ($statusVerifikasiSim !== 'terverifikasi')
+                        @if (!$user)
+                            <a href="{{ route('login') }}"
+                               class="gradient-orange hover:glow-orange-strong px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 pulse-glow"
+                               title="Silakan login untuk memesan kendaraan">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Login untuk Pesan
+                            </a>
+                        @elseif ($statusVerifikasiSim !== 'terverifikasi')
                             <button
                                 disabled
                                 class="bg-gray-600 text-gray-400 pointer-events-none px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300"

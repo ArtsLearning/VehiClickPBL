@@ -55,7 +55,7 @@ Route::post('/kontak', [ContactController::class, 'store'])->name('pesan.simpan'
 
 // Dashboard (hanya untuk user terverifikasi)
 Route::get('/dashboard', [BarangController::class, 'showDashboard'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
+    ->name('dashboard');
 
 // Group route yang membutuhkan autentikasi
 Route::middleware('auth')->group(function () {
@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::delete('/profile/delete-photo', [ProfileController::class, 'deletePhoto'])->name('profile.delete-photo');
     Route::post('/profile/verifikasi-sim', [ProfileController::class, 'verifikasiSim'])->name('profile.verifikasi-sim');
-
+    Route::post('/profile/verifikasi-alamat', [ProfileController::class, 'verifikasiAlamat'])->name('profile.verifikasi-alamat');
     // Riwayat Transaksi
     Route::get('/riwayat-transaksi', [RiwayatTransaksiController::class, 'index'])->name('riwayat.index');
 });
