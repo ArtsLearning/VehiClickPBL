@@ -195,14 +195,15 @@
 
     <script>
         const alamatLengkapTerverifikasi = {
-            provinsi: "{{ Auth::user()->nama_provinsi }}",
-            kabupaten: "{{ Auth::user()->nama_kabupaten }}",
-            kecamatan: "{{ Auth::user()->nama_kecamatan }}",
-            kelurahan: "{{ Auth::user()->nama_kelurahan }}",
-            kodepos: "{{ Auth::user()->kodepos }}",
-            alamat_detail: "{{ Auth::user()->alamat_detail }}"
+            provinsi: "{{ auth()->check() ? Auth::user()->nama_provinsi : '' }}",
+            kabupaten: "{{ auth()->check() ? Auth::user()->nama_kabupaten : '' }}",
+            kecamatan: "{{ auth()->check() ? Auth::user()->nama_kecamatan : '' }}",
+            kelurahan: "{{ auth()->check() ? Auth::user()->nama_kelurahan : '' }}",
+            kodepos: "{{ auth()->check() ? Auth::user()->kodepos : '' }}",
+            alamat_detail: "{{ auth()->check() ? Auth::user()->alamat_detail : '' }}"
         };
     </script>
+
 
 
     <script>
