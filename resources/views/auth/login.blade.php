@@ -236,7 +236,7 @@
                      <!-- {!! NoCaptcha::display() !!} --> 
                     
                     <!-- Contoh reCAPTCHA placeholder (ganti dengan yang asli) -->
-                    <div class="g-recaptcha" data-sitekey="6Lc7FWQrAAAAAHkknzK9BefIewPNeoQhF7754nT8" data-callback="recaptchaCallback"></div>
+                    <div class="g-recaptcha" data-sitekey="6LdD4GwrAAAAAFLHmTIFZcTlk3QIQw27_yFnurTi" data-callback="recaptchaCallback"></div>
                 </div>
                 
                 <!-- reCAPTCHA Error Messages -->
