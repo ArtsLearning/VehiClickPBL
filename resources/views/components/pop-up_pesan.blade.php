@@ -79,7 +79,6 @@
                     </div>
                 </div>
 
-                <!-- 🟢 LETAK YANG BENAR untuk PILIH SUMBER ALAMAT -->
                 @php
                     $alamatTerverifikasi = auth()->check() && auth()->user()->status_verifikasi_alamat === 'terverifikasi'
                         ? auth()->user()->alamat_terverifikasi
@@ -243,13 +242,13 @@
 
                     durasi.textContent = `${durasiPerHari} Hari`;
                     biayaTotal.textContent = `Rp. ${total.toLocaleString('id-ID')},00`;
-                    if (hiddenTotalHarga) hiddenTotalHarga.value = total;
-                    if (hiddenDurasi) hiddenDurasi.value = durasiPerHari;
+                    hiddenTotalHarga.value = total;
+                    hiddenDurasi.value = durasiPerHari;
                 } else {
                     durasi.textContent = '- Hari';
                     biayaTotal.textContent = 'Rp. 0';
-                    if (hiddenTotalHarga) hiddenTotalHarga.value = '';
-                    if (hiddenDurasi) hiddenDurasi.value = '';
+                    hiddenTotalHarga.value = '';
+                    hiddenDurasi.value = '';
                 }
             }
 
@@ -267,11 +266,20 @@
             const kelurahan = document.getElementById('kelurahan');
             const kodepos = document.getElementById('kodepos');
 
+            function applyOptionDarkTheme(option) {
+                option.style.backgroundColor = '#1f2937';
+                option.style.color = 'white';
+            }
+
             fetch(alamatApi + 'provinsi/get/')
                 .then(res => res.json())
                 .then(data => {
                     data.result.forEach(item => {
-                        provinsi.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.text;
+                        applyOptionDarkTheme(option);
+                        provinsi.appendChild(option);
                     });
                 });
 
@@ -280,12 +288,17 @@
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+
                 if (this.value) {
-                    fetch(alamatApi + 'kabkota/get/?d_provinsi_id=' + this.value)
+                    fetch(`${alamatApi}kabkota/get/?d_provinsi_id=${this.value}`)
                         .then(res => res.json())
                         .then(data => {
                             data.result.forEach(item => {
-                                kabupaten.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                                const option = document.createElement('option');
+                                option.value = item.id;
+                                option.textContent = item.text;
+                                applyOptionDarkTheme(option);
+                                kabupaten.appendChild(option);
                             });
                         });
                 }
@@ -295,12 +308,17 @@
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+
                 if (this.value) {
-                    fetch(alamatApi + 'kecamatan/get/?d_kabkota_id=' + this.value)
+                    fetch(`${alamatApi}kecamatan/get/?d_kabkota_id=${this.value}`)
                         .then(res => res.json())
                         .then(data => {
                             data.result.forEach(item => {
-                                kecamatan.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                                const option = document.createElement('option');
+                                option.value = item.id;
+                                option.textContent = item.text;
+                                applyOptionDarkTheme(option);
+                                kecamatan.appendChild(option);
                             });
                         });
                 }
@@ -309,12 +327,17 @@
             kecamatan.addEventListener('change', function () {
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+
                 if (this.value) {
-                    fetch(alamatApi + 'kelurahan/get/?d_kecamatan_id=' + this.value)
+                    fetch(`${alamatApi}kelurahan/get/?d_kecamatan_id=${this.value}`)
                         .then(res => res.json())
                         .then(data => {
                             data.result.forEach(item => {
-                                kelurahan.innerHTML += `<option value="${item.id}">${item.text}</option>`;
+                                const option = document.createElement('option');
+                                option.value = item.id;
+                                option.textContent = item.text;
+                                applyOptionDarkTheme(option);
+                                kelurahan.appendChild(option);
                             });
                         });
                 }
@@ -323,7 +346,7 @@
             kelurahan.addEventListener('change', function () {
                 kodepos.value = '';
                 if (kabupaten.value && kecamatan.value) {
-                    fetch(alamatApi + `kodepos/get/?d_kabkota_id=${kabupaten.value}&d_kecamatan_id=${kecamatan.value}`)
+                    fetch(`${alamatApi}kodepos/get/?d_kabkota_id=${kabupaten.value}&d_kecamatan_id=${kecamatan.value}`)
                         .then(res => res.json())
                         .then(data => {
                             if (data.result && data.result.length > 0) {
@@ -361,10 +384,7 @@
                         addressSection.style.display = 'none';
                         alamatDariProfil.style.display = 'block';
                         addressInputs.forEach(input => input.required = false);
-
-                        // ⬅️ Menampilkan alamat ke <span> saat opsi terverifikasi dipilih
                         tampilkanAlamatTerverifikasi();
-
                     } else {
                         addressSection.style.display = 'block';
                         alamatDariProfil.style.display = 'none';
@@ -383,9 +403,8 @@
             alamatTerverifikasi?.addEventListener('change', toggleAlamatPilihan);
             alamatManual?.addEventListener('change', toggleAlamatPilihan);
 
-            // Trigger awal saat DOM selesai diload
             toggleAlamatPilihan();
-
         });
     </script>
+
 </div>

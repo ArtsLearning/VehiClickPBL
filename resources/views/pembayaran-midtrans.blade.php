@@ -327,6 +327,33 @@
                             <p class="text-white font-semibold text-lg">
                                 @if(isset($pemesanan->pickup_method) && $pemesanan->pickup_method === 'pickup')
                                     Ambil di tempat
+
+                                @elseif(auth()->check() && auth()->user()->status_verifikasi_alamat === 'terverifikasi' && empty($pemesanan->alamat_detail))
+                                    @php
+                                        $alamatLengkap = '';
+                                        $user = auth()->user();
+
+                                        if (!empty($user->alamat_detail)) {
+                                            $alamatLengkap .= $user->alamat_detail;
+                                        }
+                                        if (!empty($user->nama_kelurahan)) {
+                                            $alamatLengkap .= ', ' . $user->nama_kelurahan;
+                                        }
+                                        if (!empty($user->nama_kecamatan)) {
+                                            $alamatLengkap .= ', ' . $user->nama_kecamatan;
+                                        }
+                                        if (!empty($user->nama_kabupaten)) {
+                                            $alamatLengkap .= ', ' . $user->nama_kabupaten;
+                                        }
+                                        if (!empty($user->nama_provinsi)) {
+                                            $alamatLengkap .= ', ' . $user->nama_provinsi;
+                                        }
+                                        if (!empty($user->kodepos)) {
+                                            $alamatLengkap .= ' ' . $user->kodepos;
+                                        }
+                                    @endphp
+                                    {{ trim($alamatLengkap, ', ') }} <span class="text-green-400 text-sm">(Terverifikasi dari profil)</span>
+
                                 @elseif(!empty($pemesanan->alamat_detail) || !empty($pemesanan->provinsi))
                                     @php
                                         $alamatLengkap = '';
@@ -350,9 +377,11 @@
                                         }
                                     @endphp
                                     {{ trim($alamatLengkap, ', ') }}
+
                                 @else
                                     Ambil di tempat
                                 @endif
+
                             </p>
                         </div>
                     </div>
