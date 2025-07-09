@@ -69,6 +69,14 @@ class OrderResource extends Resource
                 TextColumn::make('email')
                     ->searchable(),
                 TextColumn::make('pickup_method'),
+                TextColumn::make('nama_provinsi')
+                    ->label('Nama Provinsi'),
+                TextColumn::make('nama_kabupaten')
+                    ->label('Nama Kabupaten'),
+                TextColumn::make('nama_kecamatan')
+                    ->label('Nama Kecamatan'),
+                TextColumn::make('nama_kelurahan')
+                    ->label('Nama Kelurahan'),
                 TextColumn::make('alamat_detail')
                     ->label('Alamat')
                     ->wrap()

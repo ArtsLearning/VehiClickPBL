@@ -237,14 +237,6 @@
                             </div>
                         </div>
                         
-                        <a href="{{ route('dashboard') }}" 
-                           class="mobile-nav-link flex items-center px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200 mb-2">
-                            <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
-                            </svg>
-                            Dashboard
-                        </a>
-                        
                         <a href="{{ route('profile.edit') }}" 
                            class="mobile-nav-link flex items-center px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200 mb-2">
                             <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,6 +244,15 @@
                             </svg>
                             Profile
                         </a>
+
+                        <a href="{{ route('riwayat') }}" 
+                            class="mobile-nav-link flex items-center px-4 py-3 text-orange-400 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-all duration-200 mb-2">
+                            <svg class="w-4 h-4 mr-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m5-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Order History
+                        </a>
+
                         
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

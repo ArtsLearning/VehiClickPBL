@@ -34,11 +34,8 @@
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    @if ($kendaraan->stok > 0)
-                        <button class="flex-1 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 py-2 rounded-lg font-medium transition-colors text-white shadow-md border border-orange-500">
-                            Pesan Sekarang
-                        </button>
-                    @endif
+                 
+                   
                     <a href="{{ route('produk.detail', $kendaraan->id) }}" class="block flex-1">
                         <button class="w-full bg-gray-600 hover:bg-gray-700 py-2 rounded-lg font-medium transition-colors">
                             Details

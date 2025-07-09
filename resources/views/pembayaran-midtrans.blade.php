@@ -354,30 +354,29 @@
                                     @endphp
                                     {{ trim($alamatLengkap, ', ') }} <span class="text-green-400 text-sm">(Terverifikasi dari profil)</span>
 
-                                @elseif(!empty($pemesanan->alamat_detail) || !empty($pemesanan->provinsi))
+                                @elseif(!empty($pemesanan->alamat_detail) || !empty($pemesanan->nama_provinsi))
                                     @php
                                         $alamatLengkap = '';
                                         if (!empty($pemesanan->alamat_detail)) {
                                             $alamatLengkap .= $pemesanan->alamat_detail;
                                         }
-                                        if (!empty($pemesanan->kelurahan)) {
-                                            $alamatLengkap .= ', ' . $pemesanan->kelurahan;
+                                        if (!empty($pemesanan->nama_kelurahan)) {
+                                            $alamatLengkap .= ', ' . $pemesanan->nama_kelurahan;
                                         }
-                                        if (!empty($pemesanan->kecamatan)) {
-                                            $alamatLengkap .= ', ' . $pemesanan->kecamatan;
+                                        if (!empty($pemesanan->nama_kecamatan)) {
+                                            $alamatLengkap .= ', ' . $pemesanan->nama_kecamatan;
                                         }
-                                        if (!empty($pemesanan->kabupaten)) {
-                                            $alamatLengkap .= ', ' . $pemesanan->kabupaten;
+                                        if (!empty($pemesanan->nama_kabupaten)) {
+                                            $alamatLengkap .= ', ' . $pemesanan->nama_kabupaten;
                                         }
-                                        if (!empty($pemesanan->provinsi)) {
-                                            $alamatLengkap .= ', ' . $pemesanan->provinsi;
+                                        if (!empty($pemesanan->nama_provinsi)) {
+                                            $alamatLengkap .= ', ' . $pemesanan->nama_provinsi;
                                         }
                                         if (!empty($pemesanan->kodepos)) {
                                             $alamatLengkap .= ' ' . $pemesanan->kodepos;
                                         }
                                     @endphp
                                     {{ trim($alamatLengkap, ', ') }}
-
                                 @else
                                     Ambil di tempat
                                 @endif

@@ -16,12 +16,29 @@ class PaymentController extends Controller
 {
     public function prosesPemesanan(Request $request)
     {
+        if ($request->pickup_method === 'delivery' && $request->alamat_type === 'verified') {
+            $user = Auth::user();
+            $request->merge([
+                'provinsi' => $user->provinsi,
+                'nama_provinsi' => $user->nama_provinsi,
+                'kabupaten' => $user->kabupaten,
+                'nama_kabupaten' => $user->nama_kabupaten,
+                'kecamatan' => $user->kecamatan,
+                'nama_kecamatan' => $user->nama_kecamatan,
+                'kelurahan' => $user->kelurahan,
+                'nama_kelurahan' => $user->nama_kelurahan,
+                'kodepos' => $user->kodepos,
+                'alamat_detail' => $user->alamat_detail,
+            ]);
+        }
+        
         $dataPemesanan = array_merge(
             $request->only([
                 'nama', 'email', 'pickup_method',
                 'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos',
                 'alamat_detail', 'tanggal_mulai', 'tanggal_selesai',
-                'durasi', 'total_harga', 'nama_kendaraan'
+                'durasi', 'total_harga', 'nama_kendaraan',
+                'nama_provinsi', 'nama_kabupaten', 'nama_kecamatan', 'nama_kelurahan'
             ]),
             [
                 'status' => 'pending',

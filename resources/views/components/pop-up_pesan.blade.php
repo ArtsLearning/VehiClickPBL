@@ -79,6 +79,20 @@
                     </div>
                 </div>
 
+                @if(auth()->check() && auth()->user()->status_verifikasi_alamat === 'terverifikasi')
+                    <input type="hidden" name="provinsi" value="{{ auth()->user()->provinsi }}" id="hidden_provinsi" disabled>
+                    <input type="hidden" name="kabupaten" value="{{ auth()->user()->kabupaten }}" id="hidden_kabupaten" disabled>
+                    <input type="hidden" name="kecamatan" value="{{ auth()->user()->kecamatan }}" id="hidden_kecamatan" disabled>
+                    <input type="hidden" name="kelurahan" value="{{ auth()->user()->kelurahan }}" id="hidden_kelurahan" disabled>
+                    <input type="hidden" name="kodepos" value="{{ auth()->user()->kodepos }}" id="hidden_kodepos" disabled>
+                    <input type="hidden" name="alamat_detail" value="{{ auth()->user()->alamat_detail }}" id="hidden_alamat_detail" disabled>
+
+                    <input type="hidden" name="nama_provinsi" value="{{ auth()->user()->nama_provinsi }}" id="hidden_nama_provinsi" disabled>
+                    <input type="hidden" name="nama_kabupaten" value="{{ auth()->user()->nama_kabupaten }}" id="hidden_nama_kabupaten" disabled>
+                    <input type="hidden" name="nama_kecamatan" value="{{ auth()->user()->nama_kecamatan }}" id="hidden_nama_kecamatan" disabled>
+                    <input type="hidden" name="nama_kelurahan" value="{{ auth()->user()->nama_kelurahan }}" id="hidden_nama_kelurahan" disabled>
+                @endif
+
                 @php
                     $alamatTerverifikasi = auth()->check() && auth()->user()->status_verifikasi_alamat === 'terverifikasi'
                         ? auth()->user()->alamat_terverifikasi
@@ -135,6 +149,11 @@
                         </select>
                         <input type="text" id="kodepos" name="kodepos" class="bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white" placeholder="Kode Pos" readonly>
                     </div>
+                    <input type="hidden" id="provinsi_text" name="nama_provinsi">
+                    <input type="hidden" id="kabupaten_text" name="nama_kabupaten">
+                    <input type="hidden" id="kecamatan_text" name="nama_kecamatan">
+                    <input type="hidden" id="kelurahan_text" name="nama_kelurahan">
+
                     <input type="text" id="alamat_detail" name="alamat_detail" class="w-full bg-gray-800/50 border-2 border-gray-600 rounded-xl px-4 py-3 text-white mt-2" placeholder="Detail Alamat (Jalan, No Rumah, dll)" required>
                 </div>
                 <div class="space-y-2">
@@ -207,6 +226,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // ===============================
+            // 📅 Perhitungan Tanggal dan Harga
+            // ===============================
             const tanggalMulai = document.getElementById('tanggalMulai');
             const tanggalSelesai = document.getElementById('tanggalSelesai');
             const durasi = document.getElementById('duration');
@@ -224,22 +246,14 @@
             if (tanggalMulai) tanggalMulai.setAttribute('min', minDate);
             if (tanggalSelesai) tanggalSelesai.setAttribute('min', minDate);
 
-            if (!tanggalMulai || !tanggalSelesai || !durasi || !biayaTotal || !hargaHarian) {
-                console.error('Data tidak ditemukan');
-                return;
-            }
-
             const hargaPerHari = parseInt(hargaHarian.getAttribute('data-harga'));
 
             function hitungBiayaTotal() {
                 const mulai = new Date(tanggalMulai.value);
                 const selesai = new Date(tanggalSelesai.value);
-
                 if (!isNaN(mulai.getTime()) && !isNaN(selesai.getTime()) && selesai >= mulai) {
-                    const selisih = selesai - mulai;
-                    const durasiPerHari = Math.floor(selisih / (1000 * 60 * 60 * 24)) + 1;
+                    const durasiPerHari = Math.floor((selesai - mulai) / (1000 * 60 * 60 * 24)) + 1;
                     const total = durasiPerHari * hargaPerHari;
-
                     durasi.textContent = `${durasiPerHari} Hari`;
                     biayaTotal.textContent = `Rp. ${total.toLocaleString('id-ID')},00`;
                     hiddenTotalHarga.value = total;
@@ -266,6 +280,11 @@
             const kelurahan = document.getElementById('kelurahan');
             const kodepos = document.getElementById('kodepos');
 
+            const provinsiText = document.getElementById('provinsi_text');
+            const kabupatenText = document.getElementById('kabupaten_text');
+            const kecamatanText = document.getElementById('kecamatan_text');
+            const kelurahanText = document.getElementById('kelurahan_text');
+
             function applyOptionDarkTheme(option) {
                 option.style.backgroundColor = '#1f2937';
                 option.style.color = 'white';
@@ -288,6 +307,7 @@
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+                provinsiText.value = this.options[this.selectedIndex]?.text || '';
 
                 if (this.value) {
                     fetch(`${alamatApi}kabkota/get/?d_provinsi_id=${this.value}`)
@@ -308,6 +328,7 @@
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+                kabupatenText.value = this.options[this.selectedIndex]?.text || '';
 
                 if (this.value) {
                     fetch(`${alamatApi}kecamatan/get/?d_kabkota_id=${this.value}`)
@@ -327,6 +348,7 @@
             kecamatan.addEventListener('change', function () {
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+                kecamatanText.value = this.options[this.selectedIndex]?.text || '';
 
                 if (this.value) {
                     fetch(`${alamatApi}kelurahan/get/?d_kecamatan_id=${this.value}`)
@@ -344,6 +366,7 @@
             });
 
             kelurahan.addEventListener('change', function () {
+                kelurahanText.value = this.options[this.selectedIndex]?.text || '';
                 kodepos.value = '';
                 if (kabupaten.value && kecamatan.value) {
                     fetch(`${alamatApi}kodepos/get/?d_kabkota_id=${kabupaten.value}&d_kecamatan_id=${kecamatan.value}`)
@@ -357,7 +380,7 @@
             });
 
             // ===============================
-            // 📍 Toggle Alamat (Verified / Manual)
+            // 📍 Toggle Alamat (Profil / Manual)
             // ===============================
             const pickupDelivery = document.getElementById('pickupDelivery');
             const pickupPlace = document.getElementById('pickupPlace');
@@ -376,6 +399,21 @@
                 document.getElementById('terverifikasiKodepos').textContent = alamatLengkapTerverifikasi.kodepos;
                 document.getElementById('terverifikasiDetail').textContent = alamatLengkapTerverifikasi.alamat_detail;
             }
+
+            function toggleHiddenAlamatTerverifikasi() {
+                const isVerified = alamatTerverifikasi?.checked;
+                const fieldIds = [
+                    'hidden_provinsi', 'hidden_kabupaten', 'hidden_kecamatan', 'hidden_kelurahan',
+                    'hidden_kodepos', 'hidden_alamat_detail',
+                    'hidden_nama_provinsi', 'hidden_nama_kabupaten',
+                    'hidden_nama_kecamatan', 'hidden_nama_kelurahan'
+                ];
+                fieldIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.disabled = !isVerified;
+                });
+            }
+
 
             function toggleAlamatPilihan() {
                 if (pickupDelivery.checked) {
@@ -396,15 +434,33 @@
                     alamatDariProfil.style.display = 'none';
                     addressInputs.forEach(input => input.required = false);
                 }
+
+                toggleHiddenAlamatTerverifikasi();
             }
 
             pickupDelivery.addEventListener('change', toggleAlamatPilihan);
             pickupPlace.addEventListener('change', toggleAlamatPilihan);
             alamatTerverifikasi?.addEventListener('change', toggleAlamatPilihan);
             alamatManual?.addEventListener('change', toggleAlamatPilihan);
-
             toggleAlamatPilihan();
+            toggleHiddenAlamatTerverifikasi();
+
+
+            // ===============================
+            // 📤 Isi Hidden Field Saat Submit
+            // ===============================
+            const bookingForm = document.getElementById('bookingForm');
+            bookingForm.addEventListener('submit', function () {
+                if (alamatManual && alamatManual.checked) {
+                    provinsiText.value = provinsi.options[provinsi.selectedIndex]?.text || '';
+                    kabupatenText.value = kabupaten.options[kabupaten.selectedIndex]?.text || '';
+                    kecamatanText.value = kecamatan.options[kecamatan.selectedIndex]?.text || '';
+                    kelurahanText.value = kelurahan.options[kelurahan.selectedIndex]?.text || '';
+                }
+            });
         });
     </script>
+
+
 
 </div>

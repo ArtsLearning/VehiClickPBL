@@ -14,7 +14,8 @@ class Pemesanan extends Model
         'nama', 'email', 'pickup_method',
         'provinsi', 'kabupaten', 'kecamatan', 'kelurahan', 'kodepos',
         'alamat_detail', 'tanggal_mulai', 'tanggal_selesai',
-        'durasi', 'total_harga', 'nama_kendaraan', 'status'
+        'durasi', 'total_harga', 'nama_kendaraan', 'status', 'nama_provinsi',
+        'nama_kabupaten', 'nama_kecamatan', 'nama_kelurahan'
     ];
 
     protected $casts = [
