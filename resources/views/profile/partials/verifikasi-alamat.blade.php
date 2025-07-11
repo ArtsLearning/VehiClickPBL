@@ -72,131 +72,135 @@
 
 <!-- Alamat dari profil untuk ditampilkan -->
 <script>
-    const alamatLengkapTerverifikasi = {
-        provinsi: "{{ Auth::user()->nama_provinsi }}",
-        kabupaten: "{{ Auth::user()->nama_kabupaten }}",
-        kecamatan: "{{ Auth::user()->nama_kecamatan }}",
-        kelurahan: "{{ Auth::user()->nama_kelurahan }}",
-        kodepos: "{{ Auth::user()->kodepos }}",
-        alamat_detail: "{{ Auth::user()->alamat_detail }}"
-    };
-</script>
+    const wilayahApi = "https://www.emsifa.com/api-wilayah-indonesia/api/";
+const kodeposApi = "https://kodepos.vercel.app/search?q="; // pencarian kode pos by nama kelurahan
 
-<!-- Script chained dropdown -->
-<script>
-    const apiUrl = "https://alamat.thecloudalert.com/api/";
+// Referensi elemen
+const provinsi     = document.getElementById('provinsi');
+const kabupaten    = document.getElementById('kabupaten');
+const kecamatan    = document.getElementById('kecamatan');
+const kelurahan    = document.getElementById('kelurahan');
+const kodepos      = document.getElementById('kodepos');
 
-    const provinsiSelect = document.getElementById("provinsi");  
-    const kabupatenSelect = document.getElementById("kabupaten");
-    const kecamatanSelect = document.getElementById("kecamatan");
-    const kelurahanSelect = document.getElementById("kelurahan");
-    const kodeposInput = document.getElementById("kodepos");
+const provinsiText  = document.getElementById('nama_provinsi');
+const kabupatenText = document.getElementById('nama_kabupaten');
+const kecamatanText = document.getElementById('nama_kecamatan');
+const kelurahanText = document.getElementById('nama_kelurahan');
 
-    const namaProvinsi = document.getElementById("nama_provinsi");
-    const namaKabupaten = document.getElementById("nama_kabupaten");
-    const namaKecamatan = document.getElementById("nama_kecamatan");
-    const namaKelurahan = document.getElementById("nama_kelurahan");
+// Theme option <option>
+function applyOptionDarkTheme(option) {
+    option.style.backgroundColor = '#1f2937';
+    option.style.color = 'white';
+}
 
-    fetch(`${apiUrl}provinsi/get/`)
-        .then(res => res.json())
-        .then(data => {
-            data.result.forEach(prov => {
-                const option = document.createElement("option");
-                option.value = prov.id;
-                option.textContent = prov.text;
-                option.style.backgroundColor = "#1f2937";
-                option.style.color = "white";
-                provinsiSelect.appendChild(option);
-            });
+// ============== LOAD PROVINSI (on load)
+fetch(wilayahApi + 'provinces.json')
+    .then(res => res.json())
+    .then(list => {
+        list.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.name;
+            applyOptionDarkTheme(option);
+            provinsi.appendChild(option);
         });
-
-    provinsiSelect.addEventListener("change", function () {
-        const provId = this.value;
-        namaProvinsi.value = this.options[this.selectedIndex].text;
-
-        kabupatenSelect.innerHTML = `<option value="">Pilih Kabupaten/Kota</option>`;
-        kecamatanSelect.innerHTML = `<option value="">Pilih Kecamatan</option>`;
-        kelurahanSelect.innerHTML = `<option value="">Pilih Kelurahan/Desa</option>`;
-        kodeposInput.value = '';
-
-        if (provId) {
-            fetch(`${apiUrl}kabkota/get/?d_provinsi_id=${provId}`)
-                .then(res => res.json())
-                .then(data => {
-                    data.result.forEach(kab => {
-                        const option = document.createElement("option");
-                        option.value = kab.id;
-                        option.textContent = kab.text;
-                        option.style.backgroundColor = "#1f2937";
-                        option.style.color = "white";
-                        kabupatenSelect.appendChild(option);
-                    });
-                });
-        }
     });
 
-    kabupatenSelect.addEventListener("change", function () {
-        const kabId = this.value;
-        namaKabupaten.value = this.options[this.selectedIndex].text;
+// ============== ON CHANGE PROVINSI -> KABUPATEN
+provinsi.addEventListener('change', function () {
+    kabupaten.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
+    kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+    kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
+    kodepos.value = '';
 
-        kecamatanSelect.innerHTML = `<option value="">Pilih Kecamatan</option>`;
-        kelurahanSelect.innerHTML = `<option value="">Pilih Kelurahan/Desa</option>`;
-        kodeposInput.value = '';
+    provinsiText.value = this.options[this.selectedIndex]?.text || '';
 
-        if (kabId) {
-            fetch(`${apiUrl}kecamatan/get/?d_kabkota_id=${kabId}`)
-                .then(res => res.json())
-                .then(data => {
-                    data.result.forEach(kec => {
-                        const option = document.createElement("option");
-                        option.value = kec.id;
-                        option.textContent = kec.text;
-                        option.style.backgroundColor = "#1f2937";
-                        option.style.color = "white";
-                        kecamatanSelect.appendChild(option);
-                    });
+    if (this.value) {
+        fetch(`${wilayahApi}regencies/${this.value}.json`)
+            .then(res => res.json())
+            .then(list => {
+                list.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    applyOptionDarkTheme(option);
+                    kabupaten.appendChild(option);
                 });
-        }
-    });
+            });
+    }
+});
 
-    kecamatanSelect.addEventListener("change", function () {
-        const kecId = this.value;
-        namaKecamatan.value = this.options[this.selectedIndex].text;
+// ============== ON CHANGE KABUPATEN -> KECAMATAN
+kabupaten.addEventListener('change', function () {
+    kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+    kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
+    kodepos.value = '';
 
-        kelurahanSelect.innerHTML = `<option value="">Pilih Kelurahan/Desa</option>`;
-        kodeposInput.value = '';
+    kabupatenText.value = this.options[this.selectedIndex]?.text || '';
 
-        if (kecId) {
-            fetch(`${apiUrl}kelurahan/get/?d_kecamatan_id=${kecId}`)
-                .then(res => res.json())
-                .then(data => {
-                    data.result.forEach(kel => {
-                        const option = document.createElement("option");
-                        option.value = kel.id;
-                        option.textContent = kel.text;
-                        option.style.backgroundColor = "#1f2937";
-                        option.style.color = "white";
-                        kelurahanSelect.appendChild(option);
-                    });
+    if (this.value) {
+        fetch(`${wilayahApi}districts/${this.value}.json`)
+            .then(res => res.json())
+            .then(list => {
+                list.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    applyOptionDarkTheme(option);
+                    kecamatan.appendChild(option);
                 });
-        }
-    });
+            });
+    }
+});
 
-    kelurahanSelect.addEventListener("change", function () {
-        const kelId = this.value;
-        namaKelurahan.value = this.options[this.selectedIndex].text;
+// ============== ON CHANGE KECAMATAN -> KELURAHAN
+kecamatan.addEventListener('change', function () {
+    kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
+    kodepos.value = '';
 
-        const kabupatenId = kabupatenSelect.value;
-        const kecamatanId = kecamatanSelect.value;
+    kecamatanText.value = this.options[this.selectedIndex]?.text || '';
 
-        if (kabupatenId && kecamatanId) {
-            fetch(`${apiUrl}kodepos/get/?d_kabkota_id=${kabupatenId}&d_kecamatan_id=${kecamatanId}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.result && data.result.length > 0) {
-                        kodeposInput.value = data.result[0].text;
-                    }
+    if (this.value) {
+        fetch(`${wilayahApi}villages/${this.value}.json`)
+            .then(res => res.json())
+            .then(list => {
+                list.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    applyOptionDarkTheme(option);
+                    kelurahan.appendChild(option);
                 });
-        }
-    });
+            });
+    }
+});
+
+// ============== ON CHANGE KELURAHAN -> KODEPOS OTOMATIS
+kelurahan.addEventListener('change', function () {
+    kelurahanText.value = this.options[this.selectedIndex]?.text || '';
+    kodepos.value = '';
+
+    // Kodepos auto by nama kelurahan (lebih akurat jika filter kecamatan juga)
+    if (kelurahanText.value) {
+        fetch(kodeposApi + encodeURIComponent(kelurahanText.value))
+            .then(res => res.json())
+            .then(response => {
+                // console.log('Kodepos API:', response);
+                let kodePosFinal = '';
+                if (Array.isArray(response.data) && response.data.length > 0) {
+                    // Pilih kodepos dengan kecamatan yang sama jika ada (biar lebih akurat)
+                    const kecamatanNama = kecamatanText.value?.toLowerCase();
+                    const kecMatch = response.data.find(item =>
+                        item.subdistrict?.toLowerCase() === kecamatanNama
+                    );
+                    kodePosFinal = kecMatch ? kecMatch.code : response.data[0].code;
+                }
+                kodepos.value = kodePosFinal || '';
+            })
+            .catch(() => {
+                kodepos.value = '';
+            });
+    }
+});
+
 </script>

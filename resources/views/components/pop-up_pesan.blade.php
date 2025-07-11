@@ -270,53 +270,69 @@
             tanggalSelesai.addEventListener('change', hitungBiayaTotal);
             hitungBiayaTotal();
 
-            // ===============================
-            // 📦 Wilayah Indonesia API
-            // ===============================
-            const alamatApi = "https://alamat.thecloudalert.com/api/";
-            const provinsi = document.getElementById('provinsi');
-            const kabupaten = document.getElementById('kabupaten');
-            const kecamatan = document.getElementById('kecamatan');
-            const kelurahan = document.getElementById('kelurahan');
-            const kodepos = document.getElementById('kodepos');
+            /* ===============================================
+            🔗  KONFIGURASI ENDPOINT BARU
+            =============================================== */
+            const wilayahApi = "https://www.emsifa.com/api-wilayah-indonesia/api/";
+            const kodeposApi = "https://kodepos.vercel.app/search?q=";   // pencarian kode pos berdasar nama kelurahan
 
-            const provinsiText = document.getElementById('provinsi_text');
+            /* ===============================================
+            🔗  REFERENSI ELEMEN  <select>/<input>
+            =============================================== */
+            const provinsi     = document.getElementById('provinsi');
+            const kabupaten    = document.getElementById('kabupaten');
+            const kecamatan    = document.getElementById('kecamatan');
+            const kelurahan    = document.getElementById('kelurahan');
+            const kodepos      = document.getElementById('kodepos');
+
+            const provinsiText  = document.getElementById('provinsi_text');
             const kabupatenText = document.getElementById('kabupaten_text');
             const kecamatanText = document.getElementById('kecamatan_text');
             const kelurahanText = document.getElementById('kelurahan_text');
 
+            /* ===============================================
+            🎨  DARK THEME UNTUK <option>
+            =============================================== */
             function applyOptionDarkTheme(option) {
                 option.style.backgroundColor = '#1f2937';
                 option.style.color = 'white';
             }
 
-            fetch(alamatApi + 'provinsi/get/')
+            /* ===============================================
+            🏁  LOAD PROVINSI (on page load)
+            =============================================== */
+            fetch(wilayahApi + 'provinces.json')
                 .then(res => res.json())
-                .then(data => {
-                    data.result.forEach(item => {
+                .then(list => {
+                    list.forEach(item => {
                         const option = document.createElement('option');
-                        option.value = item.id;
-                        option.textContent = item.text;
+                        option.value = item.id;      // ← integer
+                        option.textContent = item.name;
                         applyOptionDarkTheme(option);
                         provinsi.appendChild(option);
                     });
                 });
 
+            /* ===============================================
+            🏙️  ON CHANGE PROVINSI → LOAD KABUPATEN
+            =============================================== */
             provinsi.addEventListener('change', function () {
+                // reset child dropdown
                 kabupaten.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+
                 provinsiText.value = this.options[this.selectedIndex]?.text || '';
 
                 if (this.value) {
-                    fetch(`${alamatApi}kabkota/get/?d_provinsi_id=${this.value}`)
+                    fetch(`${wilayahApi}regencies/${this.value}.json`)
                         .then(res => res.json())
-                        .then(data => {
-                            data.result.forEach(item => {
+                        .then(list => {
+                            list.forEach(item => {
                                 const option = document.createElement('option');
                                 option.value = item.id;
-                                option.textContent = item.text;
+                                option.textContent = item.name;
                                 applyOptionDarkTheme(option);
                                 kabupaten.appendChild(option);
                             });
@@ -324,20 +340,24 @@
                 }
             });
 
+            /* ===============================================
+            🏘️  ON CHANGE KABUPATEN → LOAD KECAMATAN
+            =============================================== */
             kabupaten.addEventListener('change', function () {
                 kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+
                 kabupatenText.value = this.options[this.selectedIndex]?.text || '';
 
                 if (this.value) {
-                    fetch(`${alamatApi}kecamatan/get/?d_kabkota_id=${this.value}`)
+                    fetch(`${wilayahApi}districts/${this.value}.json`)
                         .then(res => res.json())
-                        .then(data => {
-                            data.result.forEach(item => {
+                        .then(list => {
+                            list.forEach(item => {
                                 const option = document.createElement('option');
                                 option.value = item.id;
-                                option.textContent = item.text;
+                                option.textContent = item.name;
                                 applyOptionDarkTheme(option);
                                 kecamatan.appendChild(option);
                             });
@@ -345,19 +365,23 @@
                 }
             });
 
+            /* ===============================================
+            🏡  ON CHANGE KECAMATAN → LOAD KELURAHAN
+            =============================================== */
             kecamatan.addEventListener('change', function () {
                 kelurahan.innerHTML = '<option value="">Pilih Kelurahan/Desa</option>';
                 kodepos.value = '';
+
                 kecamatanText.value = this.options[this.selectedIndex]?.text || '';
 
                 if (this.value) {
-                    fetch(`${alamatApi}kelurahan/get/?d_kecamatan_id=${this.value}`)
+                    fetch(`${wilayahApi}villages/${this.value}.json`)
                         .then(res => res.json())
-                        .then(data => {
-                            data.result.forEach(item => {
+                        .then(list => {
+                            list.forEach(item => {
                                 const option = document.createElement('option');
                                 option.value = item.id;
-                                option.textContent = item.text;
+                                option.textContent = item.name;
                                 applyOptionDarkTheme(option);
                                 kelurahan.appendChild(option);
                             });
@@ -365,19 +389,35 @@
                 }
             });
 
+            /* ===============================================
+            📨  ON CHANGE KELURAHAN → CARI KODE POS OTOMATIS
+            =============================================== */
             kelurahan.addEventListener('change', function () {
                 kelurahanText.value = this.options[this.selectedIndex]?.text || '';
                 kodepos.value = '';
-                if (kabupaten.value && kecamatan.value) {
-                    fetch(`${alamatApi}kodepos/get/?d_kabkota_id=${kabupaten.value}&d_kecamatan_id=${kecamatan.value}`)
+
+                if (kelurahanText.value) {
+                    fetch(kodeposApi + encodeURIComponent(kelurahanText.value))
                         .then(res => res.json())
-                        .then(data => {
-                            if (data.result && data.result.length > 0) {
-                                kodepos.value = data.result[0].text;
+                        .then(response => {
+                            console.log('Hasil kodepos API:', response);
+                            if (Array.isArray(response.data) && response.data.length > 0) {
+                                // Ambil kodepos pertama
+                                const result = response.data[0];
+                                kodepos.value = result && result.code ? result.code : '';
+
+                            } else {
+                                kodepos.value = '';
                             }
+                        })
+                        .catch(err => {
+                            console.warn('Gagal fetch kodepos:', err);
+                            kodepos.value = '';
                         });
                 }
             });
+
+
 
             // ===============================
             // 📍 Toggle Alamat (Profil / Manual)
