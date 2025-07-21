@@ -131,7 +131,7 @@
                                 <a href="https://x.com/ArtsHeree" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
                                     <i class="fab fa-twitter text-orange-400 group-hover:text-white"></i>
                                 </a>
-                                <a href="https://www.youtube.com/@VehiClickPBLIF-001" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
+                                <a href="#" class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center hover:bg-orange-500 transition-all duration-300 group">
                                     <i class="fab fa-youtube text-orange-400 group-hover:text-white"></i>
                                 </a>
                             </div>
